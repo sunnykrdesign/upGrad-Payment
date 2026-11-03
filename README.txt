@@ -17,8 +17,8 @@ upGrad: keep this file internal. The UPI QR is a sample and cannot take a paymen
 
 For user testing, add ?test to the link (index.html?test): no Scenario bar, no version switch and
 no prototype notes; it opens on V11, option B, at the offer page, with the Full header on
-phones (add &v=11a or &v=11c for another coupon option, &pd=minimal or &pd=medium for another
-phone header). The code hint reads "For this test, enter any 6 digits as the code.", and Proceed to
+phones (add &v=11a or &v=11c for another coupon option, &pd=minimal, &pd=medium or &pd=full2 for
+another phone header). The code hint reads "For this test, enter any 6 digits as the code.", and Proceed to
 Pay ends with "That's the end of this test. No payment is taken."
 
 On the payment page, the switch in the bottom-left corner also has Restart (that page has no
@@ -26,8 +26,8 @@ Scenario bar), and the upGrad logo starts the flow again every time it is presse
 
 Preview: V11 only; V9 and V10 are out of the switch (an old ?v=9 or ?v=10a to ?v=10c link opens
 V11, with the same coupon option). The switch in the bottom-left corner has the coupon options A,
-B and C (or ?v=11a to ?v=11c) and, on phones, the details page's header: Min, Mid and Full (or
-&pd=minimal, medium or full). It opens on option B with the Full header. On phones the switch has
+B and C (or ?v=11a to ?v=11c) and, on phones, the details page's header: Min, Mid, Full and Full
+2 (or &pd=minimal, medium, full or full2). It opens on option B with the Full header. On phones the switch has
 no V11 button (there is one version), so it fits the screen. What V11 builds on
 (V10, V9, then V5 to V8) is described after it.
 
@@ -60,10 +60,10 @@ V11          V10, the final direction: the link names no centre or batch, and th
                   continue", no "We'll send a code to verify your mobile", which the mobile's own
                   help already says). Pressed while off, it does not go on: it shows what is
                   missing under each field, moves to the first and shakes them.
-                - Phones, how much of the offer the pinned header shows, in three versions
-                  (switch: Min, Mid, Full; or &pd=minimal, medium or full in the link; Full unless
-                  another is picked, the recommended one). In all three the whole header is
-                  pinned at the top, the course's name included. There is no title row ("‹ Your
+                - Phones, how much of the offer the pinned header shows, in four versions
+                  (switch: Min, Mid, Full, Full 2; or &pd=minimal, medium, full or full2 in the
+                  link; Full unless another is picked, the recommended one). In all four the whole
+                  header is pinned at the top, the course's name included. There is no title row ("‹ Your
                   Details"; the card under it is titled "Your details"): back is at the start of
                   the course row, so the header is 50px shorter and the room is the offer's.
                   Minimal: as before, the course, then the strip (the countdown, "Lock for
@@ -77,8 +77,13 @@ V11          V10, the final direction: the link names no centre or batch, and th
                   number) and "Remaining ₹85,000" (grey, regular, smaller), then the strip at the
                   foot (the countdown and when the offer ends, "9:00 PM today"); 184px. Once the
                   page is scrolled, the course fee line folds away (about 156px pinned); back at
-                  the top, it is back. Once the offer has ended, only "Offer ended at …"
-                  stays over the button.
+                  the top, it is back.
+                  Full 2: the top keeps the offer, the course, "Course fee ₹90,000 ₹1,00,000"
+                  with "You save ₹10,000" (never folding) and the strip with the countdown and
+                  when it ends; about 126px. No Pay now / Remaining box: the ₹5,000 is in the
+                  button's own words ("Continue to pay ₹5,000"), and under the button, in grey,
+                  "Remaining ₹85,000, pay later", so both parts of the payment sit where it is
+                  made. That line goes once the offer has ended.
                   Once the offer has ended, the extra lines go (the strip shows the full price).
                 - Logged in, the name, email and mobile come filled in from the account and can
                   be edited ("Filled in from your upGrad account. You can edit them."; the heading
