@@ -3553,7 +3553,7 @@ html[data-pvx] .vx-clock { display: inline; }
 html[data-pvx] .vx-tick { display: block; }
 html[data-pv13] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
 /* 1. the countdown, quiet (the coupon's own line stays for screen readers and once the offer ends).
-   V12: a small hold pill at the top of the coupon, "We'll hold this price for 01:14:33" (GetYourGuide).
+   V12: one red line under the button, "We'll hold this price for 01:14:33" (GetYourGuide's words).
    V13: one small centred line over the button, "Offer ends in 01:14:33" (Tinder) */
 html[data-pvx] .vx-hide { display: none !important; }
 html[data-pvx] .cp-ticket .lk3-ends:not(.is-ended) { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -3561,10 +3561,10 @@ html[data-pvx] .cp-ticket .ck-offer:has(.lk3-ends:not(.is-ended)) { padding-top:
 .vx-hold, .vx-line { display: none; }
 html[data-pv12] .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-hold { display: inline-flex; }
 html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-line { display: block; }
-.vx-hold { align-items: center; gap: 6px; justify-self: start; margin: 0 0 14px; padding: 5px 11px 5px 9px; border-radius: 999px; background: #FFF0F1; color: #B3121F; font-size: 12px; line-height: 16px; font-weight: 500; }
+.vx-hold { align-items: center; justify-content: center; gap: 6px; justify-self: center; margin: 2px 0 0; color: #C21F2E; font-size: 13px; line-height: 18px; font-weight: 500; }
 .vx-hold svg { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
 .vx-hold strong { font-weight: 700; font-variant-numeric: tabular-nums; }
-.vx-hold.is-urgent { background: #EE2C3C; color: #fff; }
+.vx-hold.is-urgent { color: #EE2C3C; }
 .vx-line { margin: 0 0 2px; text-align: center; font-size: 13px; line-height: 18px; color: var(--ck-text-2); }
 .vx-line strong { font-weight: 600; color: #C21F2E; font-variant-numeric: tabular-nums; }
 .vx-line.is-urgent strong { color: #EE2C3C; }
@@ -7424,10 +7424,10 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
 
   // 1. the countdown: V12's hold pill at the top of the coupon; V13's line over the button
   var hold, line;
-  var head = ticket && ticket.querySelector('.cp-head');
-  if (head) {
-    head.insertAdjacentHTML('afterbegin', '<p class="vx-hold" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2 2M10 2.75h4"/></svg>We’ll hold this price for <strong>00:00:00</strong></p>');
-    hold = head.querySelector('.vx-hold');
+  var under = ticket && ticket.querySelector('.cp-stub [data-ck-next]');
+  if (under) {
+    under.insertAdjacentHTML('afterend', '<p class="vx-hold" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2 2M10 2.75h4"/></svg>We’ll hold this price for <strong>00:00:00</strong></p>');
+    hold = ticket.querySelector('.vx-hold');
   }
   var stubBtn = ticket && ticket.querySelector('.cp-stub [data-ck-next]');
   if (stubBtn) {

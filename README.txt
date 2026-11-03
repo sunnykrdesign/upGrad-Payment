@@ -153,8 +153,8 @@ V12 and V13  (switch: V11, V12, V13; or ?v=12a, ?v=12b, ?v=12c, ?v=13): copies o
              (Min, Mid, Full, Full 2) are V11's. (V13 to V15 with new pages were tried and dropped.)
              Both:
              1. The countdown stays quiet (the price's deadline, not the news), its digits rolling
-                into place; the coupon's own line stays for screen readers. V12: a small hold pill
-                at the top of the coupon, "We'll hold this price for 01:14:33" (GetYourGuide).
+                into place; the coupon's own line stays for screen readers. V12: one red line under
+                the button, "We'll hold this price for 01:14:33" (GetYourGuide's words).
                 V13: one small centred line over the button, "Offer ends in 01:14:33" (Tinder).
                 Both turn red in the last 10 minutes. On phones the strip's countdown rolls too.
              2. "You save ₹10,000" reads "Save ₹10,000", with a tick: it springs in as the coupon
