@@ -157,9 +157,10 @@ V15          "Seat pass + slide to lock", printed as V11's receipt. The coupon's
              the left and the "You save ₹10,000" pill on the right of the same line; below a dashed
              rule, centred, "Pay now to lock this price" over ₹5,000, large (the ₹ smaller, its top
              on the digits' top), and "Remaining ₹85,000 before your batch starts". Under the
-             slider (and under V11's button on the details page), in red: "Offer ends in
-             01:14:33". Around it, V11's receipt: it prints out of the printer, its corners near-square on the offer page, with the perforation and
-             notches over the slider and the scalloped bottom edge.
+             slider (and under V11's button on the details page), V13's countdown: "Offer ends in"
+             and three small bordered tiles, [01] : [14] : [33], in red. Around it, V11's receipt:
+             it prints out of the printer, its corners near-square on the offer page, with the
+             perforation and notches over the slider and the scalloped bottom edge.
              On the offer page the button is "Slide to lock ₹5,000" (Wealthfront's "Drag to
              confirm", Swiggy's "Slide to Pay"): a red handle with an open padlock on a soft grey
              track, three chevrons after the words. The fill follows the handle and the words turn
@@ -167,8 +168,9 @@ V15          "Seat pass + slide to lock", printed as V11's receipt. The coupon's
              shuts, the handle turns white, "✓ Offer locked", phones that can give a short
              vibration, and the flow goes on as the button would. A tap, Enter or Space plays the
              slide. Once the receipt has printed the handle nudges right twice, to show the
-             gesture. On the details page the button is V11's (it waits for the details). Nothing
-             moves on its own after the entrance.
+             gesture. On the details page the button is V11's (it waits for the details). After
+             the entrance nothing moves on its own but the countdown's digits, which roll on
+             desktop and change in place on phones, as V13's.
              With reduced motion, none of the motion.
 
 What V11 builds on (no longer in the switch):
