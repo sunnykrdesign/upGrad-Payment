@@ -1,4 +1,4 @@
-upGrad UPI checkout prototype, V11 (the final direction), with V12 and V13 (premium light looks)
+upGrad UPI checkout prototype, V11 (the final direction), with V13 (a new offer and details page), with V12 and V13 (premium light looks)
 
 index.html   V11, the final direction (described below): the offer link names no centre or
              batch; the learner picks the learning centre on the details page. Step 1 and 2 are
@@ -147,6 +147,33 @@ V13          Warm off-white, #F7F4EF (refs: Airbnb's Confirm and pay, Request to
              (Due now ₹5,000, with a red marker that grows in; Before your batch starts ₹85,000);
              the countdown on a soft note; a red gradient button with a light that follows the
              pointer. Paid: a calm card with the centre, batch and "₹5,000 (Payment 1 of 2)".
+
+V13 (switch: V11, V13; or ?v=13): V11 with a new offer page and details page, in a premium
+             light look. Only those two pages change: the OTP, the payment page and everything after
+             are V11's, as are the phone headers on the details page (Min, Mid, Full, Full 2). Once
+             the offer has ended, the coupon is V11's. (V12 was tried and dropped.)
+             References (Mobbin): GetYourGuide ("We'll hold your spot" timer, fields that tick),
+             Kiwi.com ("Lock price for $11.85"), Navan (flight hold), Airbnb (due now / later),
+             Booking.com (sticky price bar), Google Maps (place search).
+             Offer page: a hold pill ("Offer price held for you · 01:43:06", a live dot; red in the
+             last 10 minutes); "Lock your offer price" and "Pay ₹5,000 today and the course is yours
+             at ₹90,000. It counts toward the fee; it is not extra."; a course card (the course,
+             "4 months · In class at an upGrad learning centre", the fee ₹90,000 with ₹1,00,000
+             struck and "Save ₹10,000", then "How you'll pay": Today ₹5,000, "Locks ₹90,000 for
+             you", and Before your batch starts ₹85,000); three reasons to go on (the price is
+             locked once ₹5,000 is paid; the centre and batch come next; UPI, card or net banking);
+             "Lock offer for ₹5,000"; "Secure checkout by upGrad". On phones the button stays at
+             the foot of the screen on a frosted bar.
+             Details page: the form's fields are cleaner and draw a green tick once right (centre
+             picked, a name, a valid email, a 10-digit mobile); the centre list unfolds with a pin
+             by each centre. The course card becomes the summary: it adds the learning centre and
+             batch start as they are picked.
+             Motion: the page rises out of a soft blur, part by part; ₹1,00,000 is struck through
+             as you watch and "Save ₹10,000" springs in; the plan's line draws itself; the
+             countdown rolls like an odometer; the button's light follows the pointer, it gives
+             under a press and a sheen crosses it once; from the offer to the details (and back)
+             the course card glides into place (a view transition, where the browser has them).
+             With reduced motion, none of it.
 
 What V11 builds on (no longer in the switch):
 
