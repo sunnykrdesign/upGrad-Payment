@@ -3536,6 +3536,250 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__price > :not(
 html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display: inline; }
 .pm-strip__v10 { font-weight: 400; }
 .pm-strip__v10 strong { font-weight: 600; }
+
+/* ============================================================================================
+   V12 and V13: V11 (₹5,000 now, ₹85,000 later; the centre picked on the details page), in two
+   premium light looks. The flow, its checks, the phone headers (Min, Mid, Full, Full 2) and the
+   payment page's options are V11's (html[data-pv-skin="12"] or "13").
+   V12, Apple: the offer read as one plain sentence ("Lock your seat for ₹5,000."), white space,
+     hairline dividers, a quiet countdown and one button (Apple Store's bag and checkout review).
+   V13, Airbnb: a warm off-white page; the course on a rounded card, "When you'll pay" (due now,
+     before the batch starts), an offer note, and a gradient button with a light that follows the
+     pointer (Airbnb's Confirm and pay and Request to book). Paid: a calm card, "Payment 1 of 2".
+   Motion is quiet: things fade and rise a few pixels, amounts ease in; nothing with reduced motion.
+   ============================================================================================ */
+.sk-only, .sk12-only, .sk13-only { display: none !important; }
+html[data-pv-skin] .sk-only { display: revert !important; }
+html[data-pv-skin="12"] .sk12-only { display: revert !important; }
+html[data-pv-skin="13"] .sk13-only { display: revert !important; }
+html[data-pv-skin] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
+@media (max-width: 860px) { html[data-pv11] .pv-toggle [data-pv="11"] { display: inline-block; } }
+
+/* the coupon gives way to the skin's sheet while the offer is live (once it has ended, V11's) */
+html[data-pv-skin] :is(.pv-printer, .pv-printer-back, .pv-printer-shade, .pv-printer-cable) { display: none !important; }
+html[data-pv-skin] .ck-app[data-ck4-root] .ck-summary .cp-ticket { transform: none !important; }
+html[data-pv-skin] .cp-ticket:not(:has(.lk3-ends.is-ended)) > :is(.cp-head, .v10-offer, .ck-offer, .cp-tear) { display: none !important; }
+html[data-pv-skin] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v8-cta-timer { display: none !important; }
+html[data-pv-skin] .cp-ticket:has(.lk3-ends.is-ended) > .sk-sheet { display: none !important; }
+html[data-pv-skin] .ck-summary .cp-ticket { filter: none; }
+html[data-pv-skin] .ck-summary .cp-ticket > .cp-part { background: transparent; border-radius: 0; }
+html[data-pv-skin] .ck-summary .cp-stub { -webkit-mask: none !important; mask: none !important; padding: 0; background: transparent; }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="offer"] .ck-summary { width: 100%; max-width: 520px; margin-inline: auto; }
+
+.sk-sheet { gap: 0; padding: 0 !important; }
+html[data-pv-skin="12"] .sk12-sheet, html[data-pv-skin="13"] .sk13-sheet { display: grid !important; }
+html[data-pv-skin] .ck-app[data-ck4-root] { min-height: 100vh; }
+.sk-head { display: grid; gap: 10px; }
+.sk-h { margin: 0; font-weight: 600; letter-spacing: -0.02em; color: #1D1D1F; }
+.sk-sub { margin: 0; color: #6E6E73; }
+.sk-num { font-variant-numeric: normal !important; font-feature-settings: normal !important; }
+.sk-course { display: flex; align-items: center; gap: 14px; }
+.sk-course img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.sk-logo { flex: none; display: grid; place-items: center; width: 56px; height: 56px; padding: 8px; border-radius: 12px; background: #F5F5F7; }
+.sk-course__name { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.3; color: #1D1D1F; }
+.sk-course__meta { margin: 2px 0 0; font-size: 14px; color: #6E6E73; }
+.sk-rows { display: grid; margin: 0; }
+.sk-rows > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.sk-rows dt, .sk-rows dd { margin: 0; }
+.sk-rows s { color: #86868B; margin-left: 6px; font-weight: 400; }
+.sk-save { color: #1A7F37; font-size: 13px; font-weight: 500; }
+.sk-clock { font-variant-numeric: normal !important; font-feature-settings: normal !important; font-family: inherit; }
+.sk-ends { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 14px; color: #6E6E73; }
+.sk-ends svg { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+.sk-ends strong { color: #1D1D1F; font-weight: 600; }
+.sk-ends.is-urgent strong { color: #D70015; }
+.sk-trust { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 0; font-size: 12px; color: #86868B; }
+.sk-trust svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+/* the reveal: each block fades up in turn */
+@keyframes sk-in { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
+.sk-sheet.is-in > *, .cp-ticket.is-in > .cp-stub { animation: sk-in 0.6s cubic-bezier(0.22, 0.8, 0.24, 1) both; }
+.sk-sheet.is-in > :nth-child(2) { animation-delay: 0.06s; } .sk-sheet.is-in > :nth-child(3) { animation-delay: 0.12s; }
+.sk-sheet.is-in > :nth-child(4) { animation-delay: 0.18s; } .sk-sheet.is-in > :nth-child(5) { animation-delay: 0.24s; }
+.sk-sheet.is-in > :nth-child(6) { animation-delay: 0.3s; } .sk-sheet.is-in > :nth-child(n+7) { animation-delay: 0.36s; }
+.cp-ticket.is-in > .cp-stub { animation-delay: 0.4s; }
+
+/* ------------------------------------------- V12 ------------------------------------------- */
+html[data-pv-skin="12"] .ck-app[data-ck4-root] { background: #fff; }
+html[data-pv-skin="12"] .ck-app[data-ck4-root] { --ck-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "CircularXX TT", "Inter", system-ui, sans-serif; }
+html[data-pv-skin="12"] .sk12-sheet { gap: 28px; }
+html[data-pv-skin="12"] .sk12-sheet .sk-h { font-size: 40px; line-height: 1.1; }
+html[data-pv-skin="12"] .sk12-sheet .sk-sub { font-size: 19px; line-height: 1.4; }
+.sk12-sheet .sk-rows { border-top: 1px solid #D2D2D7; }
+.sk12-sheet .sk-rows > div { padding: 14px 0; border-bottom: 1px solid #D2D2D7; font-size: 15px; color: #1D1D1F; }
+.sk12-sheet .sk-rows dt { color: #6E6E73; }
+.sk12-sheet .sk-rows .sk-total { border-bottom: 0; padding-top: 18px; font-size: 21px; font-weight: 600; }
+.sk12-sheet .sk-rows .sk-total dt { color: #1D1D1F; }
+.sk12-sheet .sk-rows .sk-total small { display: block; margin-top: 2px; color: #6E6E73; font-size: 13px; font-weight: 400; text-align: right; }
+html[data-pv-skin="12"] .cp-stub { gap: 12px; padding-top: 24px !important; }
+html[data-pv-skin="12"] .cp-stub [data-ck-next] { height: 48px; border-radius: 12px; background: #0071E3; border: 0; color: #fff; font-size: 17px; font-weight: 500; letter-spacing: -0.01em; transition: background 0.2s ease, transform 0.12s ease; }
+html[data-pv-skin="12"] .cp-stub [data-ck-next]:hover { background: #0077ED; }
+html[data-pv-skin="12"] .cp-stub [data-ck-next]:active { transform: scale(0.985); }
+html[data-pv-skin="12"] .cp-stub [data-ck-next]:is([aria-disabled="true"], :disabled) { background: #7DB6F0; }
+html[data-pv-skin="12"] .cp-stub [data-ck-next] svg { display: none; }
+/* details: the sheet sits beside the form as Apple's order summary (smaller headline) */
+html[data-pv-skin="12"] .ck-app[data-ck4-root]:not([data-ck-view="offer"]) .sk12-sheet .sk-h { font-size: 24px; }
+html[data-pv-skin="12"] .ck-app[data-ck4-root]:not([data-ck-view="offer"]) .sk12-sheet .sk-sub { font-size: 15px; }
+html[data-pv-skin="12"] .ck-app[data-ck4-root]:not([data-ck-view="offer"]) .ck-summary .cp-ticket { padding: 28px; border-radius: 18px; background: #F5F5F7; }
+html[data-pv-skin="12"] .ck-app[data-ck4-root]:not([data-ck-view="offer"]) .ck-main .ck-card { box-shadow: none; border: 1px solid #D2D2D7; border-radius: 18px; }
+html[data-pv-skin="12"] .ck-app[data-ck4-root] .ck-display { letter-spacing: -0.02em; }
+/* the payment page: the course card goes flat, with hairlines */
+html[data-pv-skin="12"] .v8 .v8-course { box-shadow: none; border: 1px solid #D2D2D7; border-radius: 18px; background: #fff; }
+html[data-pv-skin="12"] [data-v8-proceed] { background: #0071E3 !important; border-radius: 12px !important; }
+
+/* ------------------------------------------- V13 ------------------------------------------- */
+html[data-pv-skin="13"] .ck-app[data-ck4-root] { background: #F7F4EF; }
+html[data-pv-skin="13"] .ck-app[data-ck4-root] { --ck-font: "CircularXX TT", "Inter", system-ui, -apple-system, sans-serif; }
+html[data-pv-skin="13"] .sk13-sheet { gap: 20px; }
+html[data-pv-skin="13"] .sk13-sheet .sk-h { font-size: 30px; line-height: 1.15; color: #222; }
+.sk13-card { display: grid; gap: 18px; padding: 24px; border-radius: 16px; background: #fff; border: 1px solid #EBE6DF; box-shadow: 0 6px 20px -8px rgba(60, 40, 20, 0.12); }
+.sk13-card .sk-course__name { color: #222; }
+.sk13-card .sk-logo { background: #F7F4EF; border-radius: 10px; }
+.sk13-card .sk-rows { gap: 16px; padding-top: 18px; border-top: 1px solid #EBE6DF; }
+.sk13-card .sk-rows > div { align-items: center; }
+.sk13-card .sk-rows dt { display: grid; gap: 2px; font-size: 15px; font-weight: 600; color: #222; }
+.sk13-card .sk-rows dt small { font-size: 14px; font-weight: 400; color: #6A6A6A; }
+.sk13-card .sk-rows dd { font-size: 15px; color: #222; }
+.sk13-chip { appearance: none; border: 0; padding: 8px 14px; border-radius: 8px; background: #F2EEE8; color: #222; font: 600 13px/1 var(--ck-font); cursor: default; }
+.sk13-title { margin: 8px 0 -8px; font-size: 20px; font-weight: 600; color: #222; letter-spacing: -0.01em; }
+.sk13-pay { display: grid; padding: 4px 0; border-radius: 16px; background: #fff; border: 1px solid #EBE6DF; }
+.sk13-pay > div { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; }
+.sk13-pay > div + div { border-top: 1px solid #EBE6DF; }
+.sk13-pay p { margin: 0; }
+.sk13-pay .sk13-when { display: grid; gap: 2px; font-size: 15px; color: #222; }
+.sk13-pay .sk13-when small { color: #6A6A6A; font-size: 14px; }
+.sk13-pay .sk13-amt { font-size: 15px; color: #6A6A6A; }
+.sk13-pay .is-now .sk13-when { font-weight: 600; }
+.sk13-pay .is-now .sk13-amt { font-size: 22px; font-weight: 700; color: #222; }
+.sk13-note { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 16px; border-radius: 12px; background: #EFEAE2; color: #3F3A33; font-size: 14px; }
+.sk13-note svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.sk13-note strong { font-variant-numeric: tabular-nums; }
+.sk13-note.is-urgent { background: #FDE8EA; color: #A31220; }
+html[data-pv-skin="13"] .cp-stub { gap: 12px; padding-top: 20px !important; }
+html[data-pv-skin="13"] .cp-stub [data-ck-next] {
+  position: relative; overflow: hidden; height: 52px; border: 0; border-radius: 10px; color: #fff; font-size: 16px; font-weight: 600;
+  background: radial-gradient(circle at var(--sk-x, 50%) var(--sk-y, 50%), #FF3D5A 0%, #EE2C3C 30%, #C8133A 75%, #B10F35 100%);
+  transition: transform 0.12s ease;
+}
+html[data-pv-skin="13"] .cp-stub [data-ck-next]:active { transform: scale(0.98); }
+html[data-pv-skin="13"] .cp-stub [data-ck-next]:is([aria-disabled="true"], :disabled) { filter: saturate(0.5) brightness(1.25); }
+html[data-pv-skin="13"] .cp-stub [data-ck-next] svg { display: none; }
+html[data-pv-skin="13"] .ck-app[data-ck4-root]:not([data-ck-view="offer"]) .sk13-sheet .sk-h { font-size: 22px; }
+html[data-pv-skin="13"] .ck-app[data-ck4-root]:not([data-ck-view="offer"]) .ck-main .ck-card { border: 1px solid #EBE6DF; box-shadow: 0 6px 20px -8px rgba(60, 40, 20, 0.12); }
+html[data-pv-skin="13"] .v8 .v8-course { border: 1px solid #EBE6DF; border-radius: 16px; box-shadow: 0 6px 20px -8px rgba(60, 40, 20, 0.12); }
+html[data-pv-skin="13"] .v8 { background: #F7F4EF; }
+html[data-pv-skin="13"] [data-v8-proceed] { background: linear-gradient(90deg, #EE2C3C, #C8133A) !important; border-radius: 10px !important; }
+
+
+/* premium motion: words come out of a blur, numbers roll, lines draw, light moves */
+.odo { display: inline-flex; height: 1lh; vertical-align: top; overflow: hidden; }
+.odo-c { display: inline-block; height: 1lh; }
+.odo-d { display: inline-block; height: 1lh; overflow: hidden; }
+.odo-s { display: flex; flex-direction: column; transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+.odo-s > span { display: block; height: 1lh; text-align: center; }
+.odo-d:nth-child(3) .odo-s { transition-delay: 0.04s; } .odo-d:nth-child(4) .odo-s { transition-delay: 0.08s; } .odo-d:nth-child(5) .odo-s { transition-delay: 0.12s; }
+[data-sk-clock].odo .odo-s { transition-duration: 0.55s; transition-delay: 0s; }
+@keyframes sk-word { from { opacity: 0; filter: blur(10px); translate: 0 0.3em; } to { opacity: 1; filter: blur(0); translate: 0 0; } }
+.sk-sheet.is-in .sk-w { display: inline-block; animation: sk-word 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.sk-sheet.is-in .sk-w:nth-child(2) { animation-delay: 0.06s; } .sk-sheet.is-in .sk-w:nth-child(3) { animation-delay: 0.12s; }
+.sk-sheet.is-in .sk-w:nth-child(4) { animation-delay: 0.18s; } .sk-sheet.is-in .sk-w:nth-child(5) { animation-delay: 0.24s; }
+.sk-sheet.is-in > .sk-h, .sk-sheet.is-in > .sk-head, .sk-sheet.is-in .sk-head > .sk-h { animation: none; }
+.sk-sheet.is-in .sk-head > .sk-sub { animation: sk-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+@keyframes sk-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.sk12-sheet .sk-rows > div { position: relative; border-bottom: 0 !important; }
+.sk12-sheet .sk-rows { border-top: 0 !important; }
+.sk12-sheet .sk-rows > div::after, .sk12-sheet .sk-rows::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: #D2D2D7; transform-origin: left; }
+.sk12-sheet .sk-rows { position: relative; }
+.sk12-sheet .sk-rows::before { top: 0; bottom: auto; }
+.sk12-sheet .sk-rows > .sk-total::after { display: none; }
+.sk12-sheet.is-in .sk-rows::before, .sk12-sheet.is-in .sk-rows > div::after { animation: sk-line 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.sk12-sheet.is-in .sk-rows > div:nth-child(1)::after { animation-delay: 0.35s; } .sk12-sheet.is-in .sk-rows > div:nth-child(2)::after { animation-delay: 0.45s; }
+.sk12-sheet.is-in .sk-rows > div:nth-child(3)::after { animation-delay: 0.55s; } .sk12-sheet.is-in .sk-rows::before { animation-delay: 0.25s; }
+.sk12-sheet.is-in .sk-rows > div { animation: sk-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.sk12-sheet.is-in .sk-rows > div:nth-child(1) { animation-delay: 0.35s; } .sk12-sheet.is-in .sk-rows > div:nth-child(2) { animation-delay: 0.42s; }
+.sk12-sheet.is-in .sk-rows > div:nth-child(3) { animation-delay: 0.49s; } .sk12-sheet.is-in .sk-rows > div:nth-child(4) { animation-delay: 0.56s; }
+/* V12: a soft light drifts behind the offer */
+html[data-pv-skin="12"] .ck-app[data-ck4-root][data-ck-view="offer"] { position: relative; isolation: isolate; overflow: hidden; }
+html[data-pv-skin="12"] .ck-app[data-ck4-root][data-ck-view="offer"]::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; top: 0; width: min(1100px, 160vw); height: 640px; margin-left: calc(min(1100px, 160vw) / -2); pointer-events: none; filter: blur(70px); opacity: 0.6;
+  background: radial-gradient(40% 50% at 30% 40%, #D9E7FF, transparent 70%), radial-gradient(35% 45% at 70% 35%, #FFE1E4, transparent 70%), radial-gradient(30% 40% at 50% 70%, #EDE4FF, transparent 70%);
+  animation: sk-drift 18s ease-in-out infinite alternate;
+}
+@keyframes sk-drift { from { transform: translate3d(-40px, -10px, 0) scale(1); } to { transform: translate3d(40px, 20px, 0) scale(1.08); } }
+html[data-pv-skin="12"] .cp-stub [data-ck-next]::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%) -150% 0 / 250% 100% no-repeat; transition: background-position 0.9s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
+html[data-pv-skin="12"] .cp-stub [data-ck-next]:hover::after { background-position: 150% 0; }
+html[data-pv-skin="12"] .cp-stub [data-ck-next] { position: relative; overflow: hidden; }
+/* V13: the card tilts toward the pointer, a sheen where the light falls */
+.sk13-card { position: relative; transform: perspective(900px) rotateX(var(--sk-rx, 0deg)) rotateY(var(--sk-ry, 0deg)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease; will-change: transform; }
+.sk13-card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; background: radial-gradient(400px circle at var(--sk-gx, 50%) var(--sk-gy, 50%), rgba(255, 255, 255, 0.7), transparent 45%); mix-blend-mode: soft-light; }
+.sk13-card.is-lit { box-shadow: 0 20px 40px -18px rgba(60, 40, 20, 0.25); }
+.sk13-card.is-lit::after { opacity: 1; }
+.sk13-sheet.is-in .sk13-card, .sk13-sheet.is-in .sk13-pay { animation: sk-lift 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.sk13-sheet.is-in .sk13-card { animation-delay: 0.15s; } .sk13-sheet.is-in .sk13-pay { animation-delay: 0.3s; }
+@keyframes sk-lift { from { opacity: 0; translate: 0 24px; scale: 0.97; filter: blur(6px); } to { opacity: 1; translate: 0 0; scale: 1; filter: blur(0); } }
+.sk13-pay .is-now { position: relative; }
+.sk13-pay .is-now::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 0 3px 3px 0; background: #EE2C3C; transform-origin: top; }
+.sk13-sheet.is-in .sk13-pay .is-now::before { animation: sk-grow 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both; }
+@keyframes sk-grow { from { transform: scaleY(0); } }
+.sk13-note.is-urgent svg { animation: sk-tick 1s steps(2) infinite; }
+@keyframes sk-tick { 50% { rotate: 12deg; } }
+/* the success: a spring, a ring of light dots */
+.sk-done__in { position: relative; }
+.sk-done__burst { position: absolute; left: 50%; top: 28px; width: 0; height: 0; pointer-events: none; }
+.sk-done__burst i { position: absolute; width: 6px; height: 6px; margin: -3px; border-radius: 50%; opacity: 0; animation: sk-dot 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both; }
+@keyframes sk-dot { 0% { opacity: 0; transform: rotate(var(--a)) translateX(10px) scale(0.4); } 30% { opacity: 1; } 100% { opacity: 0; transform: rotate(var(--a)) translateX(64px) scale(1); } }
+.sk-done__mark { animation: sk-spring 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both !important; }
+@keyframes sk-spring { from { opacity: 0; scale: 0.4; } to { opacity: 1; scale: 1; } }
+/* paid (both): Proceed to Pay goes on to the seat locked */
+html[data-pv-skin] [data-v8-proto] { display: none !important; }
+.sk-done { position: fixed; inset: 0; z-index: 2147481000; display: grid; place-items: center; padding: 24px 16px; overflow: auto; animation: sk-fade 0.4s ease both; }
+@keyframes sk-fade { from { opacity: 0; } }
+.sk-done__in { width: min(460px, 100%); display: grid; gap: 22px; text-align: center; }
+.sk-done__in > * { animation: sk-in 0.6s cubic-bezier(0.22, 0.8, 0.24, 1) both; }
+.sk-done__in > :nth-child(2) { animation-delay: 0.08s; } .sk-done__in > :nth-child(3) { animation-delay: 0.16s; }
+.sk-done__in > :nth-child(4) { animation-delay: 0.24s; } .sk-done__in > :nth-child(5) { animation-delay: 0.32s; }
+.sk-done h2 { margin: 0; outline: none; font-weight: 600; letter-spacing: -0.02em; }
+.sk-done__sub { margin: -10px 0 0; }
+.sk-done__mark { justify-self: center; width: 56px; height: 56px; }
+.sk-done__mark circle { fill: none; stroke-width: 2; stroke-dasharray: 151; stroke-dashoffset: 151; animation: sk-draw 0.7s ease-out 0.15s forwards; }
+.sk-done__mark path { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 30; stroke-dashoffset: 30; animation: sk-draw 0.4s ease-out 0.7s forwards; }
+@keyframes sk-draw { to { stroke-dashoffset: 0; } }
+.sk-done__actions { display: grid; gap: 10px; }
+.sk-done__actions button { appearance: none; border: 0; cursor: pointer; height: 50px; font: 600 16px/1 var(--ck-font, system-ui); }
+.sk-done .sk-rows { text-align: left; }
+.sk-done--12 { background: #fff; color: #1D1D1F; }
+.sk-done--12 .sk-done__mark { stroke: #1A7F37; }
+.sk-done--12 .sk-done__mark circle, .sk-done--12 .sk-done__mark path { stroke: #1A7F37; }
+.sk-done--12 h2 { font-size: 34px; line-height: 1.12; }
+.sk-done--12 .sk-done__sub { color: #6E6E73; font-size: 17px; }
+.sk-done--12 .sk-rows { border-top: 1px solid #D2D2D7; }
+.sk-done--12 .sk-rows > div { padding: 13px 0; border-bottom: 1px solid #D2D2D7; font-size: 15px; }
+.sk-done--12 .sk-rows dt { color: #6E6E73; }
+.sk-done--12 .sk-rows dd { text-align: right; font-weight: 500; }
+.sk-done--12 .sk-rows dd small { display: block; color: #6E6E73; font-weight: 400; font-size: 13px; }
+.sk-done--12 .sk-done__actions button { border-radius: 12px; }
+.sk-done--12 .sk-done__primary { background: #0071E3; color: #fff; }
+.sk-done--12 .sk-done__ghost { background: transparent; color: #0066CC; }
+.sk-done--13 { background: #F7F4EF; color: #222; }
+.sk-done--13 .sk-done__mark circle, .sk-done--13 .sk-done__mark path { stroke: #222; }
+.sk-done--13 h2 { font-size: 30px; line-height: 1.15; }
+.sk-done--13 .sk-done__sub { color: #484848; font-size: 16px; line-height: 1.45; }
+.sk-done--13 .sk13-card { text-align: left; }
+.sk-done--13 .sk-done__actions button { border-radius: 10px; }
+.sk-done--13 .sk-done__primary { background: #222; color: #fff; }
+.sk-done--13 .sk-done__ghost { background: transparent; color: #222; text-decoration: underline; }
+
+@media (max-width: 860px) {
+  html[data-pv-skin="12"] .sk12-sheet .sk-h { font-size: 32px; }
+  html[data-pv-skin="12"] .sk12-sheet .sk-sub { font-size: 17px; }
+  html[data-pv-skin="13"] .sk13-sheet .sk-h { font-size: 26px; }
+  .sk13-card { padding: 20px; }
+  html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="offer"] .ck-summary .cp-ticket { padding-inline: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-pv-skin] *, html[data-pv-skin] *::before, html[data-pv-skin] *::after, .sk-done * { animation: none !important; transition: none !important; }
+  .sk-done__mark :is(circle, path) { stroke-dashoffset: 0 !important; }
+}
 </style>
 <script>
 /* preview version before the first paint: ?v=11 in the link, else the last one picked, else V11 */
@@ -3544,7 +3788,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   // V11 only now: a V10 link keeps its coupon option (?v=10c opens 11c); V9's opens V11
   var legacy = function (x) { return /^10[abc]$/.test(x || '') ? '11' + x.slice(2) : x; };
   var v = legacy(params.get('v'));
-  var known = function (x) { return /^11[abc]?$/.test(x || ''); };
+  var known = function (x) { return /^(11[abc]?|12|13)$/.test(x || ''); };
   // ?test (user testing): no Scenario bar, version switch or prototype notes; V11 unless ?v= says
   // otherwise, and the last version picked is not used
   var test = new URLSearchParams(location.search).has('test');
@@ -3563,6 +3807,8 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   document.documentElement.dataset.pv11Pd = pdOk(pd) ? pd : 'full';
   // V10 is V9 with an option on its coupon (?v=10a, 10b, 10c); the page runs as V9 under it. V11 is
   // V10 with no centre in the link, the centre picked on the details page (?v=11a, 11b, 11c)
+  // V12 and V13: V11, option B, in their own look (html[data-pv-skin])
+  if (/^1[23]$/.test(v)) { document.documentElement.dataset.pvSkin = v; v = '11b'; }
   if (/^11/.test(v)) document.documentElement.dataset.pv11 = '';
   if (/^1[01]/.test(v)) { document.documentElement.dataset.pv10 = v.slice(2) || 'b'; v = '9'; }
   document.documentElement.dataset.previewV = v;
@@ -6528,6 +6774,8 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
      (₹10,000 at a Microsoft-style checkout; "Seat already reserved"; Pay balance) -->
 <div class="pv-toggle" role="group" aria-label="Preview version">
   <button type="button" data-pv="11">V11</button>
+  <button type="button" data-pv="12">V12</button>
+  <button type="button" data-pv="13">V13</button>
   <span class="pv-opts" role="group" aria-label="Coupon option">
     <button type="button" data-pv10-opt="a">A</button>
     <button type="button" data-pv10-opt="b">B</button>
@@ -6978,6 +7226,8 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   var opts = Array.prototype.slice.call(document.querySelectorAll('.pv-toggle [data-pv10-opt]'));
   var lastOpt = root.dataset.pv10 || 'b';
   function show(v) {
+    var skin = /^1[23]$/.test(v) ? v : '';
+    if (skin) { root.dataset.pvSkin = skin; v = '11b'; } else delete root.dataset.pvSkin;
     var ten = /^1[01][abc]$/.test(v);
     var major = ten ? v.slice(0, 2) : v;
     if (ten) root.dataset.pv10 = lastOpt = v.slice(2); else delete root.dataset.pv10;
@@ -6993,7 +7243,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     gateVerify();
     gateContinue();
     if (/^[4-9]$/.test(base)) printCoupon(); else stopPrint();
-    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.pv === major)); });
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.pv === (skin || major))); });
     opts.forEach(function (b) { b.setAttribute('aria-pressed', String(ten && b.dataset.pv10Opt === lastOpt)); });
   }
   function pick(v) {
@@ -7012,7 +7262,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   opts.forEach(function (b) {
     b.addEventListener('click', function () { pick((root.hasAttribute('data-pv11') ? '11' : '10') + b.dataset.pv10Opt); });
   });
-  show(root.dataset.pv10 ? (root.hasAttribute('data-pv11') ? '11' : '10') + root.dataset.pv10 : root.dataset.previewV || '9');
+  show(root.dataset.pvSkin || (root.dataset.pv10 ? (root.hasAttribute('data-pv11') ? '11' : '10') + root.dataset.pv10 : root.dataset.previewV || '9'));
 
   // V11 on phones: how much of the offer the details page's header shows (Minimal, Medium, Full)
   var pds = Array.prototype.slice.call(document.querySelectorAll('.pv-toggle [data-pv-pd]'));
@@ -7274,6 +7524,196 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     event.preventDefault();
     event.stopImmediatePropagation();
   }, true);
+})();
+</script>
+
+<script>
+/* V12 and V13 (html[data-pv-skin]): the skin's sheet in the coupon's place, its countdown and its motion */
+(function () {
+  var root = document.documentElement;
+  var app = document.querySelector('[data-ck4-root]');
+  if (!app) return;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var skin = function () { return root.dataset.pvSkin || ''; };
+  var ticket = app.querySelector('.ck-summary .cp-ticket');
+  var ends = app.querySelector('.ck-summary .lk3-ends');
+  var cdText = ends && ends.querySelector('[data-ck-countdown-text]');
+  var noteEl = ends && ends.querySelector('[data-ck-offer-note]');
+  var logo = (app.querySelector('.ck-summary .ck-course__logo img') || {}).src || '';
+  var clockSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2 2M10 2.75h4"/></svg>';
+  var lockSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  var course = '<div class="sk-course"><span class="sk-logo"><img src="' + logo + '" alt="upGrad"></span><div>' +
+    '<p class="sk-course__name">Advance Certificate in Digital Marketing</p><p class="sk-course__meta">upGrad · 4 months · Learning centre</p></div></div>';
+
+  if (ticket) {
+    ticket.insertAdjacentHTML('afterbegin',
+      // V12, Apple: one sentence, hairlines, one button
+      '<div class="cp-part sk-sheet sk12-sheet sk12-only">' +
+        '<div class="sk-head"><h2 class="sk-h" aria-label="Lock your seat for ₹5,000."><span class="sk-w">Lock</span> <span class="sk-w">your</span> <span class="sk-w">seat</span> <span class="sk-w">for</span> <span class="sk-w sk-num">₹<span data-sk-count>5,000</span>.</span></h2>' +
+        '<p class="sk-sub">Then ₹85,000 before your batch starts. The offer price of ₹90,000 is yours.</p></div>' +
+        course +
+        '<dl class="sk-rows sk-num">' +
+          '<div><dt>Course fee</dt><dd>₹90,000<s>₹1,00,000</s></dd></div>' +
+          '<div><dt>Offer</dt><dd class="sk-save">You save ₹10,000</dd></div>' +
+          '<div><dt>Before your batch starts</dt><dd>₹85,000</dd></div>' +
+          '<div class="sk-total"><dt>Due today</dt><dd>₹5,000<small>Locks the offer price</small></dd></div>' +
+        '</dl>' +
+        '<p class="sk-ends" data-sk-ends>' + clockSvg + '<span>Offer ends in <strong class="sk-clock" data-sk-clock>00:00:00</strong> · <span data-sk-at>9:00 PM today</span></span></p>' +
+      '</div>' +
+      // V13, Airbnb: a card, when you'll pay, a note, a gradient button
+      '<div class="cp-part sk-sheet sk13-sheet sk13-only">' +
+        '<h2 class="sk-h" aria-label="Lock your offer"><span class="sk-w">Lock</span> <span class="sk-w">your</span> <span class="sk-w">offer</span></h2>' +
+        '<div class="sk13-card" data-sk-tilt>' + course +
+          '<dl class="sk-rows sk-num">' +
+            '<div><dt>Course fee<small>₹90,000 · <s>₹1,00,000</s></small></dt><dd><span class="sk-save">₹10,000 off</span></dd></div>' +
+            '<div><dt>Batch<small>Pick your centre and batch next</small></dt><dd><span class="sk13-chip">Next step</span></dd></div>' +
+          '</dl>' +
+        '</div>' +
+        '<p class="sk13-title">When you’ll pay</p>' +
+        '<div class="sk13-pay sk-num">' +
+          '<div class="is-now"><p class="sk13-when">Due now<small>Locks the offer price</small></p><p class="sk13-amt">₹<span data-sk-count>5,000</span></p></div>' +
+          '<div><p class="sk13-when">Before your batch starts<small>The remaining amount</small></p><p class="sk13-amt">₹85,000</p></div>' +
+        '</div>' +
+        '<p class="sk13-note" data-sk-ends>' + clockSvg + '<span>Offer price ends in <strong class="sk-clock" data-sk-clock>00:00:00</strong></span></p>' +
+      '</div>');
+    var trust = '<p class="sk-trust sk-only">' + lockSvg + 'Secure payment by UPI, card or net banking · Receipt by email</p>';
+    var stub = ticket.querySelector('.cp-stub');
+    if (stub) stub.insertAdjacentHTML('beforeend', trust);
+  }
+
+  // odometer: digits roll into place on a column of 0 to 9
+  function odo(el, text, instant) {
+    if (el.dataset.odo === text) return;
+    var chars = text.split('');
+    if (el.dataset.odoShape !== chars.map(function (c) { return /\d/.test(c) ? 'd' : c; }).join('')) {
+      el.dataset.odoShape = chars.map(function (c) { return /\d/.test(c) ? 'd' : c; }).join('');
+      el.innerHTML = chars.map(function (c) {
+        return /\d/.test(c) ? '<span class="odo-d"><span class="odo-s">' + '0123456789'.split('').map(function (n) { return '<span>' + n + '</span>'; }).join('') + '</span></span>' : '<span class="odo-c">' + c + '</span>';
+      }).join('');
+      el.classList.add('odo');
+      instant = true;
+    }
+    el.dataset.odo = text;
+    var cols = el.querySelectorAll('.odo-s'), i = 0;
+    chars.forEach(function (c) {
+      if (!/\d/.test(c)) return;
+      var col = cols[i++];
+      if (instant || still) { col.style.transition = 'none'; col.style.transform = 'translateY(' + (-c * 10) + '%)'; void col.offsetWidth; col.style.transition = ''; }
+      else col.style.transform = 'translateY(' + (-c * 10) + '%)';
+    });
+  }
+  // V13: the card tilts toward the pointer, with a sheen where the light falls
+  app.addEventListener('pointermove', function (e) {
+    var card = e.target.closest && e.target.closest('[data-sk-tilt]');
+    if (!card || skin() !== '13' || still) return;
+    var r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    card.style.setProperty('--sk-rx', ((0.5 - y) * 5).toFixed(2) + 'deg');
+    card.style.setProperty('--sk-ry', ((x - 0.5) * 6).toFixed(2) + 'deg');
+    card.style.setProperty('--sk-gx', (x * 100).toFixed(1) + '%');
+    card.style.setProperty('--sk-gy', (y * 100).toFixed(1) + '%');
+    card.classList.add('is-lit');
+  });
+  app.addEventListener('pointerout', function (e) {
+    var card = e.target.closest && e.target.closest('[data-sk-tilt]');
+    if (card && !card.contains(e.relatedTarget)) { card.style.setProperty('--sk-rx', '0deg'); card.style.setProperty('--sk-ry', '0deg'); card.classList.remove('is-lit'); }
+  });
+
+  // the countdown, from the page's own
+  function tick() {
+    if (!cdText) return;
+    var m = /(\d{1,2}:\d{2}(?::\d{2})?)/.exec(cdText.textContent || '');
+    var urgent = !!(ends && ends.dataset.pvUrgency);
+    app.querySelectorAll('[data-sk-clock]').forEach(function (el) { if (m) odo(el, m[1]); });
+    app.querySelectorAll('[data-sk-at]').forEach(function (el) { if (noteEl && el.textContent !== noteEl.textContent) el.textContent = noteEl.textContent; });
+    app.querySelectorAll('[data-sk-ends]').forEach(function (el) { el.classList.toggle('is-urgent', urgent); });
+  }
+  if (cdText && window.MutationObserver) new MutationObserver(tick).observe(cdText, { childList: true, characterData: true, subtree: true });
+  setInterval(tick, 500);
+  tick();
+
+  // the reveal, and ₹5,000 easing in
+  function countUp() {
+    var els = app.querySelectorAll('.sk' + skin() + '-sheet [data-sk-count]');
+    els.forEach(function (el) {
+      odo(el, '0,000', true);
+      if (still) { odo(el, '5,000', true); return; }
+      setTimeout(function () { odo(el, '5,000'); }, 380);
+    });
+  }
+  function enter() {
+    if (!skin() || !ticket) return;
+    var sheet = ticket.querySelector('.sk' + skin() + '-sheet');
+    [ticket].concat(Array.prototype.slice.call(ticket.querySelectorAll('.sk-sheet'))).forEach(function (el) { el.classList.remove('is-in'); });
+    if (still || !sheet) return;
+    void ticket.offsetWidth;
+    sheet.classList.add('is-in'); ticket.classList.add('is-in');
+    countUp();
+  }
+
+  // V13: a light that follows the pointer across the button (as on Airbnb's)
+  app.addEventListener('pointermove', function (e) {
+    var btn = e.target.closest && e.target.closest('.cp-stub [data-ck-next]');
+    if (!btn || skin() !== '13') return;
+    var r = btn.getBoundingClientRect();
+    btn.style.setProperty('--sk-x', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+    btn.style.setProperty('--sk-y', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+  });
+
+  // paid: Proceed to Pay goes on to the seat locked
+  var proceed = document.querySelector('[data-v8-proceed]');
+  if (proceed) proceed.addEventListener('click', function () {
+    var k = skin();
+    if (!k) return;
+    var factsEl = Array.prototype.find.call(document.querySelectorAll('.v8-course__facts, .v8-course__facts *'), function (el) { return el.offsetParent && /Starts/.test(el.textContent) && !el.children.length; }) || document.querySelector('.v8-course__facts');
+    var facts = factsEl ? factsEl.textContent : '';
+    var centre = (/^\s*([^·]*–[^·]*)/.exec(facts) || [, 'Bangalore – Marathahalli'])[1].trim();
+    var starts = ((/Starts\s*([^·]+)/.exec(facts) || [, 'Nov 21, 2026'])[1]).trim();
+    var paying = (document.querySelector('[data-v8-r-amount]') || {}).textContent || '';
+    var full = /90,000/.test(paying);
+    var amt = full ? '₹90,000' : '₹5,000';
+    var mark = '<svg class="sk-done__mark" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="24"/><path d="m18 28.5 7 7 13-14"/></svg>';
+    var box = document.createElement('div');
+    box.className = 'sk-done sk-done--' + k;
+    box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-labelledby', 'sk-done-title');
+    var title = full ? 'You’re enrolled.' : 'Your seat is locked.';
+    var body = k === '12'
+      ? '<dl class="sk-rows sk-num">' +
+          '<div><dt>Paid today</dt><dd>' + amt + '<small>UPI</small></dd></div>' +
+          '<div><dt>Learning centre</dt><dd>' + centre + '<small>Batch starts ' + starts + '</small></dd></div>' +
+          (full ? '' : '<div><dt>Remaining</dt><dd>₹85,000<small>Due before ' + starts + '</small></dd></div>') +
+          '<div><dt>Order</dt><dd>UG-LC-48213</dd></div></dl>'
+      : '<div class="sk13-card">' + course.replace('upGrad · 4 months · Learning centre', centre + ' · Starts ' + starts) +
+          '<dl class="sk-rows sk-num"><div><dt>Paid today<small>UPI · Order UG-LC-48213</small></dt><dd>' + amt + (full ? '' : ' <small style="color:#6A6A6A">(Payment 1 of 2)</small>') + '</dd></div>' +
+          (full ? '' : '<div><dt>Remaining<small>Before ' + starts + '</small></dt><dd>₹85,000</dd></div>') + '</dl></div>';
+    var sub = full ? 'Welcome to upGrad. Your receipt is on its way to your email.'
+      : 'Your course fee is held at ₹90,000. Pay the remaining ₹85,000 before ' + starts + ' to start with your batch.';
+    var dots = ''; for (var d = 0; d < 12; d++) dots += '<i style="--a:' + (d * 30) + 'deg;background:' + (k === '12' ? (d % 2 ? '#0071E3' : '#34C759') : (d % 2 ? '#EE2C3C' : '#C9A27A')) + '"></i>';
+    box.innerHTML = '<div class="sk-done__in"><span class="sk-done__burst" aria-hidden="true">' + dots + '</span>' + mark + '<h2 id="sk-done-title" tabindex="-1">' + title + '</h2><p class="sk-done__sub">' + sub + '</p>' + body +
+      '<div class="sk-done__actions"><button type="button" class="sk-done__primary" data-sk-close>' + (full ? 'Go to your dashboard' : 'Pay the remaining ₹85,000') + '</button>' +
+      '<button type="button" class="sk-done__ghost" data-sk-close>Download receipt</button></div></div>';
+    document.body.appendChild(box);
+    var t = box.querySelector('h2'); if (t) t.focus({ preventScroll: true });
+    box.addEventListener('click', function (e) { if (e.target.closest('[data-sk-close]')) box.remove(); });
+    document.addEventListener('keydown', function esc(e) { if (e.key === 'Escape') { box.remove(); document.removeEventListener('keydown', esc); } });
+  });
+
+  // when to play: the offer page opens, the version is picked, Replay
+  var lastView = app.dataset.ckView, lastSkin = skin();
+  if (window.MutationObserver) {
+    new MutationObserver(function () {
+      if (app.dataset.ckView === lastView) return;
+      lastView = app.dataset.ckView;
+      if (lastView === 'offer') enter();
+    }).observe(app, { attributes: true, attributeFilter: ['data-ck-view'] });
+    new MutationObserver(function () {
+      if (skin() === lastSkin) return;
+      lastSkin = skin();
+      enter();
+    }).observe(root, { attributes: true, attributeFilter: ['data-pv-skin'] });
+  }
+  var replay = document.querySelector('[data-pv-replay]');
+  if (replay) replay.addEventListener('click', function () { setTimeout(enter, 0); });
+  enter();
 })();
 </script>
 </body>
