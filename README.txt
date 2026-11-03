@@ -155,9 +155,10 @@ V15          "Seat pass + slide to lock", printed as V11's receipt. The coupon's
              pass" and the course; centred, "Lock this offer with" over ₹5,000, large, the ₹
              smaller with its top on the digits' top (V13's words: the slider's "Slide to lock"
              keeps their promise); then, itemised as on a receipt below a dashed rule, labels on
-             the left edge and amounts on the right edge: "Course fee ₹1,00,000 (struck) ₹90,000"
-             with "✓ Save ₹10,000" in small green under the price it comes from (not under
-             ₹5,000, where it read as if ₹5,000 saved it), and "Remaining, later ₹85,000". Under the slider (and
+             the left edge and amounts on the right edge: "Course fee [✓ Save ₹10,000] ₹1,00,000
+             (struck) ₹90,000", the saving as V11's green pill beside the struck price it comes
+             from (not under ₹5,000, where it read as if ₹5,000 saved it), and "Remaining, later
+             ₹85,000". On phones that row is a size smaller so it stays on one line down to 360px. Under the slider (and
              under V11's button on the details page), in red: "Offer ends in 01:14:33". Around it, V11's receipt: it prints out
              of the printer, its corners near-square on the offer page, with the perforation and
              notches over the slider and the scalloped bottom edge.
