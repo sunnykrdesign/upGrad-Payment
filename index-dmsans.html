@@ -3531,12 +3531,12 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
    html[data-pv13]) to try new things in without touching V11. The coupon, the printer, the flow
    and the phone headers (Min, Mid, Full, Full 2) are V11's.
    Both:
-   1. The countdown stays quiet (it is the price's deadline, not the news), its digits rolling into
-      place. V12: a small hold pill at the top of the coupon, "We'll hold this price for 01:14:33"
-      (GetYourGuide). V13: one small centred line over the button, "Offer ends in 01:14:33"
-      (Tinder). On phones the strip's countdown rolls its digits too.
-   2. "You save ₹10,000" reads "Save ₹10,000": it springs in as the coupon lands, the amount counts
-      up from ₹0, and a few sparks leave it once.
+   1. The countdown stays quiet, red and close to the button. V12: one line under the button,
+      "Offer ends in 01h 14m 33s" (Codecademy's sale clock). V13: "Offer ends in" and three small
+      bordered tiles under the button (Uxcel's offer timer). Digits roll on desktop and change in
+      place on phones (rolling repainted the coupon's shadow, which phones showed as flicker).
+   2. "You save ₹10,000" reads "Save ₹10,000": as the coupon lands it wipes in from its left edge
+      and its tick draws itself (it keeps its width, so nothing around it moves).
    3. The button gives under a press and its arrow nudges forward on hover.
    4. From the offer page to the details page (and back) the coupon glides to its new place (a
       view transition, where the browser has them).
@@ -3578,13 +3578,14 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-tiles { display: fl
 .vx-odo .odo-s { display: flex; flex-direction: column; transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1); }
 .vx-odo .odo-s > span { display: block; height: 1lh; text-align: center; }
 /* 2. Save ₹10,000 */
-.vx-save { position: relative; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.vx-save { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .vx-save svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.vx-save.is-in { animation: vx-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-@keyframes vx-pop { from { opacity: 0; scale: 0.5; } }
-.vx-spark { position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px; border-radius: 50%; background: #1E9E5A; pointer-events: none; opacity: 0; }
-.vx-save.is-in .vx-spark { animation: vx-spark 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both; }
-@keyframes vx-spark { 0% { opacity: 1; transform: rotate(var(--a)) translateX(14px); } 100% { opacity: 0; transform: rotate(var(--a)) translateX(34px) scale(0.4); } }
+.vx-save svg path { stroke-dasharray: 20; stroke-dashoffset: 0; }
+/* as the coupon lands: the chip wipes in from its left edge, then its tick draws itself */
+.vx-chip-in { animation: vx-wipe 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.vx-chip-in .vx-save svg path { animation: vx-tick 0.35s cubic-bezier(0.65, 0, 0.35, 1) 0.4s both; }
+@keyframes vx-wipe { from { opacity: 0; clip-path: inset(0 100% 0 0 round 999px); } 40% { opacity: 1; } to { opacity: 1; clip-path: inset(0 0 0 0 round 999px); } }
+@keyframes vx-tick { from { stroke-dashoffset: 20; } to { stroke-dashoffset: 0; } }
 /* 3. the button */
 html[data-pvx] :is(.cp-stub, .ck-mobilebar) [data-ck-next] { transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease; }
 html[data-pvx] :is(.cp-stub, .ck-mobilebar) [data-ck-next]:active { transform: scale(0.97); transition-duration: 0.12s; }
@@ -3629,84 +3630,121 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
 }
 
 /* ============================================================================================
-   Preview V14: "Seat pass + slide to lock" (html[data-pv14], with html[data-pvx] so it shares V12's
-   and V13's Save ₹10,000, field ticks and coupon glide). Only the offer page and the details page
-   change; after them it is V11. While the offer is live the printer and coupon give way to:
-   - A pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with the
-     course; ₹5,000 as the one large number, "locks ₹90,000" (₹1,00,000 struck, Save ₹10,000); one
-     line for what is left and one for the time.
+   Previews V14 and V15: "Seat pass + slide to lock" (html[data-pv14]; V15 adds html[data-pv15]).
+   Both have html[data-pvx], so they share V12's Save ₹10,000, field ticks and coupon glide. Only the
+   offer page and the details page change; after them it is V11. While the offer is live the
+   coupon's content gives way to:
+   - A pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
+     pass" and the course; "Pay now" over ₹5,000, large (the ₹ smaller, its top on the digits'
+     top); "to lock ₹90,000" (₹1,00,000 struck, Save ₹10,000); one line, "Remaining ₹85,000 later"
+     and "Ends in 01:14:33" in red.
    - On the offer page, "Slide to lock ₹5,000" in place of the button (Wealthfront's "Drag to
-     confirm", Swiggy's "Slide to Pay"): the handle's padlock closes as it reaches the end, then
-     the flow goes on as the button would. A tap, Enter or Space plays the slide for you. On the
-     details page the button is V11's (it waits for the details).
-   Motion: the pass rises in with a slight tilt; the slide follows the finger and springs back if
-   let go early; the padlock closes; the fill grows behind the handle. With reduced motion, none.
+     confirm", Swiggy's "Slide to Pay"). The red handle carries an open padlock; the fill follows
+     it and the label turns white where the fill has reached; let go early and it springs back; at
+     the end the padlock shuts, the handle turns white, "Offer locked", and the flow goes on as the
+     button would (phones that can, give a short tap of vibration). A tap, Enter or Space plays the
+     slide. Once the pass lands, the handle nudges right twice to show the gesture. On the details
+     page the button is V11's (it waits for the details).
+   V14: the pass stands alone, rounded, on a soft shadow; it rises in with a slight tilt.
+   V15: the pass is V11's receipt: it prints out of the printer, its corners near-square on the
+     offer page, a perforation with notches over the slider, and the scalloped bottom edge.
+   No motion runs on its own after the entrance (nothing makes the coupon redraw while idle). With
+   reduced motion, none of it.
    ============================================================================================ */
 .v14-pass, .v14-slide { display: none; }
 html[data-pv14] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
-html[data-pv14] .ck-app[data-ck4-root] :is(.pv-printer, .pv-printer-back, .pv-printer-shade, .pv-printer-cable) { display: none !important; }
-html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) { transform: none !important; filter: drop-shadow(0 1px 1px rgba(18, 18, 20, 0.05)) drop-shadow(0 18px 32px rgba(18, 18, 20, 0.12)); }
 html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) > :is(.cp-head, .v10-offer, .ck-offer, .cp-tear, .v13-hero) { display: none !important; }
 html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v14-pass { display: grid; }
-html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { -webkit-mask: none !important; mask: none !important; border-radius: 0 0 24px 24px !important; background: #fff; padding-top: 4px; }
 html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) :is(.v8-cta-timer, .lk3-action__hint) { display: none !important; }
 html[data-pv14] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-slide { display: block; }
 html[data-pv14] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-ticket:not(:has(.lk3-ends.is-ended)) .cp-stub [data-ck-next] { display: none !important; }
-html[data-pv14] .ck-app[data-ck4-root][data-ck-view="offer"] .ck-summary { width: 100%; max-width: 420px; margin-inline: auto; }
+html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { background: #fff; }
+/* V14: no printer; the pass on a soft shadow (a box shadow: unlike a filter, nothing inside makes it redraw) */
+html[data-pv14]:not([data-pv15]) .ck-app[data-ck4-root] :is(.pv-printer, .pv-printer-back, .pv-printer-shade, .pv-printer-cable) { display: none !important; }
+html[data-pv14]:not([data-pv15]) .cp-ticket:not(:has(.lk3-ends.is-ended)) {
+  transform: none !important; filter: none; border-radius: 24px; background: #fff;
+  box-shadow: 0 0 0 1px rgba(18, 18, 20, 0.04), 0 2px 4px rgba(18, 18, 20, 0.04), 0 24px 48px -20px rgba(18, 18, 20, 0.28);
+}
+html[data-pv14]:not([data-pv15]) .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { -webkit-mask: none !important; mask: none !important; border-radius: 0 0 24px 24px !important; padding: 0 20px 20px !important; }
+html[data-pv14]:not([data-pv15]) .ck-app[data-ck4-root][data-ck-view="offer"] .ck-summary { width: 100%; max-width: 400px; margin-inline: auto; }
+/* V15: V11's receipt: the printer, the perforation over the slider, the scalloped edge */
+html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-tear.cp-tear--stub { display: block !important; }
+html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-tear.cp-tear--stub { background: #fff !important; } /* white on both sides of the perforation, as the pass is */
+html[data-pv15] .ck-app[data-ck4-root][data-ck-view="offer"] .v14-pass { border-radius: 4px 4px 0 0; }
+/* the slider on the same 20px side margins as the pass above it (the receipt's stub is wider set) */
+html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-left: 20px !important; padding-right: 20px !important; }
 
 /* the pass */
 .v14-pass { gap: 0; padding: 0 !important; background: transparent !important; overflow: hidden; border-radius: 24px 24px 0 0; }
-.v14-band { position: relative; display: grid; gap: 14px; padding: 18px 20px 20px; color: #fff; overflow: hidden;
+.v14-band { position: relative; display: grid; gap: 12px; padding: 16px 20px 20px; color: #fff; overflow: hidden;
   background: radial-gradient(120% 140% at 100% 0%, #FF5A68 0%, transparent 55%), linear-gradient(135deg, #EE2C3C 0%, #C8162B 100%); }
-.v14-band::before { content: ""; position: absolute; inset: 0; opacity: 0.18; pointer-events: none;
-  background: repeating-linear-gradient(-18deg, transparent 0 9px, rgba(255, 255, 255, 0.9) 9px 10px); -webkit-mask: linear-gradient(90deg, transparent 20%, #000 75%); mask: linear-gradient(90deg, transparent 20%, #000 75%); }
-.v14-band__top { position: relative; display: flex; align-items: center; justify-content: space-between; }
-.v14-logo { display: grid; place-items: center; height: 28px; padding: 0 8px; border-radius: 8px; background: #fff; }
-.v14-logo img { display: block; height: 18px; width: auto; }
-.v14-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.85; }
-.v14-course { position: relative; margin: 0; font-size: 17px; line-height: 23px; font-weight: 600; letter-spacing: -0.01em; }
-.v14-body { display: grid; justify-items: center; gap: 2px; padding: 22px 20px 6px; background: #fff; text-align: center; }
-.v14-k { margin: 0; font-size: 13px; color: var(--ck-text-2); }
-.v14-amt { margin: 0; display: flex; align-items: flex-start; gap: 2px; font-size: 56px; line-height: 60px; font-weight: 700; letter-spacing: -0.035em; color: var(--ck-text); font-variant-numeric: normal; font-feature-settings: normal; }
-.v14-amt small { font-size: 24px; line-height: 36px; font-weight: 600; color: var(--ck-text-2); letter-spacing: 0; }
-.v14-locks { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 8px; margin: 4px 0 0; font-size: 14px; color: var(--ck-text-2); }
-.v14-locks strong { color: var(--ck-text); }
+.v14-band::before { content: ""; position: absolute; inset: 0; opacity: 0.16; pointer-events: none;
+  background: repeating-linear-gradient(-18deg, transparent 0 9px, rgba(255, 255, 255, 0.9) 9px 10px); -webkit-mask: linear-gradient(90deg, transparent 25%, #000 80%); mask: linear-gradient(90deg, transparent 25%, #000 80%); }
+.v14-band__top { position: relative; display: flex; align-items: center; justify-content: space-between; height: 26px; }
+.v14-logo { display: inline-flex; align-items: center; height: 26px; padding: 0 8px; border-radius: 7px; background: #fff; }
+.v14-logo img { display: block; height: 16px; width: auto; }
+.v14-tag { font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.88); }
+.v14-course { position: relative; margin: 0; font-size: 17px; line-height: 24px; font-weight: 600; letter-spacing: -0.01em; }
+.v14-body { display: grid; justify-items: center; padding: 24px 20px 0; background: #fff; text-align: center; }
+.v14-k { margin: 0 0 8px; font-size: 13px; line-height: 16px; font-weight: 500; color: var(--ck-text-2); }
+.v14-amt { margin: 0; font-size: 56px; line-height: 56px; font-weight: 700; letter-spacing: -0.03em; color: var(--ck-text); font-variant-numeric: normal; font-feature-settings: normal; white-space: nowrap; }
+.v14-cur { display: inline-block; margin-right: 3px; font-size: 26px; line-height: 1; font-weight: 600; letter-spacing: 0; color: var(--ck-text-2); vertical-align: 0.7em; }
+.v14-locks { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 8px; margin: 12px 0 0; font-size: 14px; line-height: 20px; color: var(--ck-text-2); }
+.v14-locks strong { color: var(--ck-text); font-weight: 600; }
 .v14-locks s { color: var(--ck-text-3); }
-.v14-rows { display: flex; justify-content: space-between; gap: 12px; margin: 16px 0 0; padding: 12px 0 0; width: 100%; border-top: 1.5px dashed #E6E6EA; font-size: 13px; color: var(--ck-text-2); }
+.v14-rows { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin: 20px 0 0; padding: 14px 0 16px; border-top: 1.5px dashed #E6E6EA; font-size: 13px; line-height: 18px; color: var(--ck-text-2); }
+html[data-pv15] .v14-rows { border-top: 0; margin-top: 18px; padding: 0 0 2px; }
 .v14-rows strong { color: var(--ck-text); font-weight: 600; }
-.v14-rows .v14-time { color: #C21F2E; font-weight: 500; }
-.v14-rows .v14-time b { font-weight: 700; font-variant-numeric: tabular-nums; }
-.v14-rows .v14-time.is-urgent { color: #EE2C3C; }
+.v14-time { color: #C21F2E; font-weight: 500; white-space: nowrap; }
+.v14-time b { font-weight: 700; font-variant-numeric: tabular-nums; }
+.v14-time.is-urgent { color: #EE2C3C; }
 
 /* slide to lock */
-.v14-slide { position: relative; height: 60px; border-radius: 999px; background: #FDECEE; box-shadow: inset 0 0 0 1px #F8D3D7; overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: pointer; outline: none; }
-.v14-slide:focus-visible { box-shadow: inset 0 0 0 1px #F8D3D7, 0 0 0 3px rgba(238, 44, 60, 0.35); }
-.v14-fill { position: absolute; inset: 0 auto 0 0; width: calc(var(--x, 0px) + 60px); border-radius: 999px; background: linear-gradient(90deg, #F2404F, #EE2C3C); }
-.v14-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-left: 40px; font-size: 16px; font-weight: 600; color: #C21F2E; letter-spacing: -0.01em; transition: opacity 0.2s ease; opacity: calc(1 - var(--p, 0) * 1.6); }
-.v14-label i { font-style: normal; display: inline-block; margin-left: 6px; animation: v14-nudge 1.6s ease-in-out infinite; }
-@keyframes v14-nudge { 0%, 60%, 100% { transform: translateX(0); } 30% { transform: translateX(4px); } }
-.v14-done { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-right: 40px; font-size: 16px; font-weight: 600; color: #fff; opacity: 0; transition: opacity 0.2s ease; }
+.v14-slide { position: relative; height: 60px; border-radius: 999px; background: #F2F2F4; box-shadow: inset 0 1px 2px rgba(18, 18, 20, 0.07), inset 0 0 0 1px rgba(18, 18, 20, 0.04); overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; cursor: grab; outline: none; }
+.v14-slide.is-held { cursor: grabbing; }
+.v14-slide:focus-visible { box-shadow: inset 0 1px 2px rgba(18, 18, 20, 0.07), 0 0 0 3px rgba(238, 44, 60, 0.3); }
+.v14-fill { position: absolute; inset: 0 auto 0 0; width: calc(var(--x, 0px) + 60px); border-radius: 999px; background: linear-gradient(90deg, #F04757, #E0283A); }
+.v14-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; padding-left: 52px; font-size: 16px; line-height: 20px; font-weight: 600; letter-spacing: -0.01em; color: #26262B; pointer-events: none; }
+.v14-label--on { color: #fff; clip-path: inset(0 calc(100% - var(--x, 0px) - 30px) 0 0); }
+.v14-chev { display: inline-flex; color: #EE2C3C; }
+.v14-label--on .v14-chev { color: #fff; }
+.v14-chev svg { width: 9px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.v14-chev svg:nth-child(1) { opacity: 0.3; } .v14-chev svg:nth-child(2) { opacity: 0.6; margin-left: -2px; } .v14-chev svg:nth-child(3) { margin-left: -2px; }
+.v14-done { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 8px; padding-right: 52px; font-size: 16px; line-height: 20px; font-weight: 600; color: #fff; opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
+.v14-done svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .v14-slide.is-locked .v14-done { opacity: 1; }
-.v14-handle { position: absolute; top: 4px; left: 4px; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #fff; color: #EE2C3C; box-shadow: 0 2px 6px rgba(200, 22, 43, 0.25), 0 8px 18px -6px rgba(200, 22, 43, 0.35); transform: translateX(var(--x, 0px)); }
-.v14-slide.is-back .v14-handle, .v14-slide.is-back .v14-fill { transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
-.v14-slide.is-auto .v14-handle, .v14-slide.is-auto .v14-fill { transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1), width 0.55s cubic-bezier(0.65, 0, 0.35, 1); }
-.v14-handle svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
-.v14-shackle { transform-origin: 16px 11px; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); transform: translate(5px, -2px) rotate(28deg); }
+.v14-slide.is-locked .v14-label { opacity: 0; }
+.v14-handle { position: absolute; top: 4px; left: 4px; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; color: #fff;
+  --lb: #fff; --lk: #E0283A;
+  background: radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.28), transparent 55%), linear-gradient(160deg, #F2404F, #D21C2F);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 2px rgba(150, 10, 25, 0.3), 0 8px 18px -6px rgba(200, 22, 43, 0.6);
+  transform: translateX(var(--x, 0px)); transition: scale 0.2s ease, background 0.25s ease, color 0.25s ease; }
+.v14-slide.is-held .v14-handle { scale: 1.05; }
+.v14-slide.is-locked .v14-handle { background: #fff; color: #E0283A; --lb: #E0283A; --lk: #fff; box-shadow: 0 1px 2px rgba(150, 10, 25, 0.3), 0 6px 14px -6px rgba(120, 8, 20, 0.5); }
+.v14-handle svg { width: 26px; height: 26px; overflow: visible; }
+.v14-handle .v14-body-lock { fill: var(--lb); transition: fill 0.25s ease; }
+.v14-handle .v14-keyhole { fill: var(--lk); transition: fill 0.25s ease; }
+.v14-shackle { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; transform-origin: 15.5px 11px; transform: translateY(-2.5px) rotate(-26deg); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .v14-slide.is-locked .v14-shackle { transform: none; }
-.v14-slide.is-locked .v14-handle { animation: v14-pulse 0.5s ease-out; }
-@keyframes v14-pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8); } 100% { box-shadow: 0 0 0 14px rgba(255, 255, 255, 0); } }
+.v14-slide.is-locked .v14-handle { animation: v14-bump 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes v14-bump { 50% { scale: 1.12; } }
+.v14-slide.is-back .v14-handle, .v14-slide.is-back .v14-fill, .v14-slide.is-back .v14-label--on { transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), clip-path 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), scale 0.2s ease; }
+.v14-slide.is-auto .v14-handle, .v14-slide.is-auto .v14-fill, .v14-slide.is-auto .v14-label--on { transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1), width 0.6s cubic-bezier(0.65, 0, 0.35, 1), clip-path 0.6s cubic-bezier(0.65, 0, 0.35, 1), scale 0.2s ease; }
+/* once the pass lands: the handle nudges right twice, to show the gesture */
+.v14-slide.is-hint .v14-handle { animation: v14-hint 1.3s cubic-bezier(0.45, 0, 0.25, 1); }
+@keyframes v14-hint { 0%, 100% { translate: 0 0; } 22% { translate: 16px 0; } 44% { translate: 0 0; } 64% { translate: 9px 0; } 82% { translate: 0 0; } }
 
-/* the pass rises in */
+/* V14: the pass rises in */
 @keyframes v14-rise { from { opacity: 0; transform: perspective(900px) translateY(26px) rotateX(10deg); } to { opacity: 1; transform: none; } }
-html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .v14-pass { animation: v14-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
-html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { animation: v14-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
+html[data-pv14]:not([data-pv15]) .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .v14-pass { animation: v14-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+html[data-pv14]:not([data-pv15]) .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { animation: v14-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
 @media (max-width: 860px) {
-  .v14-amt { font-size: 50px; line-height: 54px; }
+  .v14-amt { font-size: 50px; line-height: 50px; }
+  .v14-cur { font-size: 23px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .v14-label i, .v14-slide.is-locked .v14-handle { animation: none; }
   html[data-pv14] .ck-app .cp-ticket.v14-in > * { animation: none !important; }
-  .v14-shackle, .v14-handle, .v14-fill { transition: none !important; }
+  .v14-slide *, .v14-slide.is-locked .v14-handle, .v14-slide.is-hint .v14-handle { animation: none !important; transition: none !important; }
 }
 </style>
 <script>
@@ -3716,7 +3754,7 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   // V11 only now: a V10 link keeps its coupon option (?v=10c opens 11c); V9's opens V11
   var legacy = function (x) { return /^10[abc]$/.test(x || '') ? '11' + x.slice(2) : x; };
   var v = legacy(params.get('v'));
-  var known = function (x) { return /^(1[12][abc]?|13|14)$/.test(x || ''); };
+  var known = function (x) { return /^(1[12][abc]?|13|14|15)$/.test(x || ''); };
   // ?test (user testing): no Scenario bar, version switch or prototype notes; V11 unless ?v= says
   // otherwise, and the last version picked is not used
   var test = new URLSearchParams(location.search).has('test');
@@ -3737,7 +3775,7 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   // V10 with no centre in the link, the centre picked on the details page (?v=11a, 11b, 11c)
   // V12 and V13: copies of V11 (html[data-pvx] and data-pv12 or data-pv13 on V11's page) to try
   // new things in (?v=12a, 12b, 12c; ?v=13)
-  if (/^1[234]/.test(v)) { document.documentElement.dataset.pvx = ''; document.documentElement.dataset['pv' + v.slice(0, 2)] = ''; v = '11' + (v.slice(2) || 'b'); }
+  if (/^1[2345]/.test(v)) { document.documentElement.dataset.pvx = ''; document.documentElement.dataset['pv' + v.slice(0, 2)] = ''; if (/^15/.test(v)) document.documentElement.dataset.pv14 = ''; v = '11' + (v.slice(2) || 'b'); }
   if (/^11/.test(v)) document.documentElement.dataset.pv11 = '';
   if (/^1[01]/.test(v)) { document.documentElement.dataset.pv10 = v.slice(2) || 'b'; v = '9'; }
   document.documentElement.dataset.previewV = v;
@@ -6706,6 +6744,7 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   <button type="button" data-pv="12">V12</button>
   <button type="button" data-pv="13">V13</button>
   <button type="button" data-pv="14">V14</button>
+  <button type="button" data-pv="15">V15</button>
   <span class="pv-opts" role="group" aria-label="Coupon option">
     <button type="button" data-pv10-opt="a">A</button>
     <button type="button" data-pv10-opt="b">B</button>
@@ -7157,11 +7196,12 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   var lastOpt = root.dataset.pv10 || 'b';
   function show(v) {
     // V12 and V13: V11 under html[data-pvx] (V13 is always on option B underneath)
-    var copyOf = /^1[234]/.test(v) ? v.slice(0, 2) : '';
+    var copyOf = /^1[2345]/.test(v) ? v.slice(0, 2) : '';
     if (copyOf) { root.dataset.pvx = ''; v = '11' + (copyOf !== '12' ? 'b' : (v.slice(2) || lastOpt)); } else delete root.dataset.pvx;
     if (copyOf === '12') root.dataset.pv12 = ''; else delete root.dataset.pv12;
     if (copyOf === '13') root.dataset.pv13 = ''; else delete root.dataset.pv13;
-    if (copyOf === '14') root.dataset.pv14 = ''; else delete root.dataset.pv14;
+    if (copyOf === '14' || copyOf === '15') root.dataset.pv14 = ''; else delete root.dataset.pv14;
+    if (copyOf === '15') root.dataset.pv15 = ''; else delete root.dataset.pv15;
     var ten = /^1[01][abc]$/.test(v);
     var major = ten ? v.slice(0, 2) : v;
     if (ten) root.dataset.pv10 = lastOpt = v.slice(2); else delete root.dataset.pv10;
@@ -7196,7 +7236,7 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   opts.forEach(function (b) {
     b.addEventListener('click', function () { pick((root.hasAttribute('data-pv12') ? '12' : root.hasAttribute('data-pv11') ? '11' : '10') + b.dataset.pv10Opt); });
   });
-  show(root.hasAttribute('data-pv14') ? '14' : root.hasAttribute('data-pv13') ? '13' : root.dataset.pv10 ? (root.hasAttribute('data-pv12') ? '12' : root.hasAttribute('data-pv11') ? '11' : '10') + root.dataset.pv10 : root.dataset.previewV || '9');
+  show(root.hasAttribute('data-pv15') ? '15' : root.hasAttribute('data-pv14') ? '14' : root.hasAttribute('data-pv13') ? '13' : root.dataset.pv10 ? (root.hasAttribute('data-pv12') ? '12' : root.hasAttribute('data-pv11') ? '11' : '10') + root.dataset.pv10 : root.dataset.previewV || '9');
 
   // V11 on phones: how much of the offer the details page's header shows (Minimal, Medium, Full)
   var pds = Array.prototype.slice.call(document.querySelectorAll('.pv-toggle [data-pv-pd]'));
@@ -7466,7 +7506,7 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
 
 
 <script>
-/* Preview V14 (html[data-pv14]): the seat pass, and slide to lock on the offer page */
+/* Previews V14 and V15 (html[data-pv14]): the seat pass, and slide to lock on the offer page */
 (function () {
   var root = document.documentElement;
   var app = document.querySelector('[data-ck4-root]');
@@ -7484,42 +7524,49 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   pass.innerHTML =
     '<div class="v14-band"><div class="v14-band__top"><span class="v14-logo"><img src="' + logo + '" alt="upGrad"></span><span class="v14-tag">Seat pass</span></div>' +
       '<p class="v14-course">Advance Certificate in Digital Marketing</p></div>' +
-    '<div class="v14-body"><p class="v14-k">Pay now</p><p class="v14-amt"><small>₹</small>5,000</p>' +
+    '<div class="v14-body"><p class="v14-k">Pay now</p><p class="v14-amt"><span class="v14-cur">₹</span>5,000</p>' +
       '<p class="v14-locks">to lock <strong>₹90,000</strong><s><span class="ck-sr">instead of </span>₹1,00,000</s><span class="cp-save" data-vx-save>Save ₹10,000</span></p>' +
       '<p class="v14-rows"><span>Remaining <strong>₹85,000</strong> later</span><span class="v14-time" aria-hidden="true">Ends in <b data-v14-clock>00:00:00</b></span></p></div>';
   ticket.insertBefore(pass, optA || ticket.firstChild);
 
   // slide to lock, in place of the offer page's button
   var btn = ticket.querySelector('.cp-stub [data-ck-next]');
+  var chev = '<span class="v14-chev" aria-hidden="true">' + [1, 2, 3].map(function () { return '<svg viewBox="0 0 9 14"><path d="m2 2 5 5-5 5"/></svg>'; }).join('') + '</span>';
   var slide = document.createElement('div');
   slide.className = 'v14-slide';
   slide.setAttribute('role', 'button');
   slide.setAttribute('tabindex', '0');
   slide.setAttribute('aria-label', 'Slide to lock the offer for ₹5,000');
-  slide.innerHTML = '<span class="v14-fill"></span><span class="v14-label">Slide to lock ₹5,000<i aria-hidden="true">›</i></span><span class="v14-done" aria-hidden="true">Offer locked</span>' +
-    '<span class="v14-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path class="v14-shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>';
+  slide.innerHTML = '<span class="v14-fill"></span>' +
+    '<span class="v14-label" aria-hidden="true">Slide to lock ₹5,000' + chev + '</span>' +
+    '<span class="v14-label v14-label--on" aria-hidden="true">Slide to lock ₹5,000' + chev + '</span>' +
+    '<span class="v14-done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Offer locked</span>' +
+    '<span class="v14-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="v14-shackle" d="M8.5 11V8.3a3.5 3.5 0 0 1 7 0V11"/>' +
+      '<rect class="v14-body-lock" x="5.5" y="10.5" width="13" height="10" rx="2.6"/><circle class="v14-keyhole" cx="12" cy="15.3" r="1.5"/></svg></span>';
   if (btn) btn.parentNode.insertBefore(slide, btn);
-  var max = function () { return slide.clientWidth - 60; };
-  function set(x) { var m = max(); x = Math.max(0, Math.min(m, x)); slide.style.setProperty('--x', x + 'px'); slide.style.setProperty('--p', m ? (x / m).toFixed(3) : 0); return x; }
-  function reset() { slide.classList.remove('is-locked', 'is-auto'); set(0); }
+  var max = function () { return Math.max(0, slide.clientWidth - 60); };
+  function set(x) { var m = max(); x = Math.max(0, Math.min(m, x)); slide.style.setProperty('--x', x + 'px'); return x; }
+  function reset() { slide.classList.remove('is-locked', 'is-auto', 'is-back', 'is-held', 'is-hint'); set(0); }
   function lock() {
     set(max());
     slide.classList.add('is-locked');
-    setTimeout(function () { if (btn) btn.click(); setTimeout(reset, 400); }, still ? 0 : 420);
+    try { if (navigator.vibrate) navigator.vibrate(12); } catch (e) {}
+    setTimeout(function () { if (btn) btn.click(); setTimeout(reset, 450); }, still ? 0 : 480);
   }
   function auto() {
     if (slide.classList.contains('is-locked')) return;
+    slide.classList.remove('is-hint');
     slide.classList.add('is-auto');
     requestAnimationFrame(function () { set(max()); });
-    setTimeout(function () { slide.classList.remove('is-auto'); lock(); }, still ? 0 : 560);
+    setTimeout(function () { slide.classList.remove('is-auto'); lock(); }, still ? 0 : 620);
   }
   var drag = null;
   slide.addEventListener('pointerdown', function (e) {
     if (slide.classList.contains('is-locked')) return;
-    var r = slide.getBoundingClientRect();
-    drag = { x0: e.clientX, start: 0, moved: false, left: r.left };
-    slide.classList.remove('is-back', 'is-auto');
-    slide.setPointerCapture(e.pointerId);
+    drag = { x0: e.clientX, moved: false };
+    slide.classList.remove('is-back', 'is-auto', 'is-hint');
+    slide.classList.add('is-held');
+    try { slide.setPointerCapture(e.pointerId); } catch (err) {}
   });
   slide.addEventListener('pointermove', function (e) {
     if (!drag) return;
@@ -7531,15 +7578,16 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
     if (!drag) return;
     var moved = drag.moved, x = parseFloat(slide.style.getPropertyValue('--x')) || 0;
     drag = null;
+    slide.classList.remove('is-held');
     if (!moved) { auto(); return; }
-    if (x >= max() * 0.85) lock();
-    else { slide.classList.add('is-back'); set(0); setTimeout(function () { slide.classList.remove('is-back'); }, 460); }
+    if (x >= max() * 0.82) lock();
+    else { slide.classList.add('is-back'); set(0); setTimeout(function () { slide.classList.remove('is-back'); }, 520); }
   }
   slide.addEventListener('pointerup', end);
   slide.addEventListener('pointercancel', end);
   slide.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); auto(); } });
 
-  // the time, from the coupon's own countdown
+  // the time, from the coupon's own countdown (once a second, plain text)
   var clock = pass.querySelector('[data-v14-clock]'), time = pass.querySelector('.v14-time');
   function tick() {
     if (!on() || !cdText) return;
@@ -7552,13 +7600,21 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   setInterval(tick, 500);
   tick();
 
+  // the entrance: V14's pass rises in; V15's prints (V11's printer); then the handle nudges twice
+  var hintTimer;
   function enter() {
     reset();
+    clearTimeout(hintTimer);
     ticket.classList.remove('v14-in');
     if (!on() || still) return;
-    void ticket.offsetWidth;
-    ticket.classList.add('v14-in');
+    var receipt = root.hasAttribute('data-pv15');
+    if (!receipt) { void ticket.offsetWidth; ticket.classList.add('v14-in'); }
+    hintTimer = setTimeout(function () {
+      if (!on() || app.dataset.ckView !== 'offer' || slide.classList.contains('is-locked')) return;
+      slide.classList.remove('is-hint'); void slide.offsetWidth; slide.classList.add('is-hint');
+    }, receipt ? 2300 : 1100);
   }
+  slide.addEventListener('animationend', function (e) { if (e.animationName === 'v14-hint') slide.classList.remove('is-hint'); });
   if (window.MutationObserver) {
     var last = app.dataset.ckView;
     new MutationObserver(function () {
@@ -7566,7 +7622,7 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
       var from = last; last = app.dataset.ckView;
       if (last === 'offer') { reset(); if (from !== 'details') enter(); }
     }).observe(app, { attributes: true, attributeFilter: ['data-ck-view'] });
-    new MutationObserver(enter).observe(root, { attributes: true, attributeFilter: ['data-pv14'] });
+    new MutationObserver(enter).observe(root, { attributes: true, attributeFilter: ['data-pv14', 'data-pv15'] });
   }
   document.addEventListener('ck:scenario', function () { setTimeout(enter, 30); });
   var replay = document.querySelector('[data-pv-replay]');
@@ -7574,6 +7630,7 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   enter();
 })();
 </script>
+
 
 <script>
 /* Previews V12 and V13 (html[data-pvx]): V11 with a timer of its own, Save ₹10,000, a livelier
@@ -7592,7 +7649,6 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   var cdText = ends && ends.querySelector('[data-ck-countdown-text]');
   var noteEl = ends && ends.querySelector('[data-ck-offer-note]');
   var check = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
-  var sparks = [0, 60, 120, 180, 240, 300].map(function (a) { return '<i class="vx-spark" style="--a:' + a + 'deg"></i>'; }).join('');
 
   function odo(el, text) {
     if (el.dataset.odo === text) return;
@@ -7680,19 +7736,18 @@ html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { ani
   chips.forEach(function (el) { el.dataset.vxAsBuilt = el.textContent; });
   function dress(el) {
     if (on()) {
-      if (!el.querySelector('.vx-save')) el.innerHTML = '<span class="vx-save">' + check + '<span>Save ₹<span data-vx-n>10,000</span></span>' + sparks + '</span>';
+      if (!el.querySelector('.vx-save')) el.innerHTML = '<span class="vx-save">' + check + '<span>Save ₹10,000</span></span>';
     } else if (el.querySelector('.vx-save')) el.textContent = el.dataset.vxAsBuilt;
   }
   function chipsIn(delay) {
     chips.forEach(dress);
+    chips.forEach(function (el) { el.classList.remove('vx-chip-in'); });
     if (!on() || still) return;
     setTimeout(function () {
       chips.forEach(function (el) {
-        var s = el.querySelector('.vx-save'), n = el.querySelector('[data-vx-n]');
-        if (!s || !el.offsetParent) return;
-        s.classList.remove('is-in'); void s.offsetWidth; s.classList.add('is-in');
-        var t0 = performance.now();
-        (function step(t) { var p = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - p, 3); n.textContent = (Math.round(10000 * e / 100) * 100).toLocaleString('en-IN'); if (p < 1) requestAnimationFrame(step); })(t0);
+        if (!el.offsetParent) return;
+        void el.offsetWidth;
+        el.classList.add('vx-chip-in');
       });
     }, delay);
   }

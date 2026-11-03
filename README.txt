@@ -1,4 +1,4 @@
-upGrad UPI checkout prototype, V11 (the final direction), with V12 to V14 (copies of V11 to try new things in), with V12 and V13 (premium light looks)
+upGrad UPI checkout prototype, V11 (the final direction), with V12 to V15 (copies of V11 to try new things in), with V12 and V13 (premium light looks)
 
 index.html   V11, the final direction (described below): the offer link names no centre or
              batch; the learner picks the learning centre on the details page. Step 1 and 2 are
@@ -158,8 +158,8 @@ V12 and V13  (switch: V11, V12, V13; or ?v=12a, ?v=12b, ?v=12c, ?v=13): copies o
                 in" and three small bordered tiles, [01] : [14] : [33], under the button (Uxcel's
                 offer timer). Both brighten in the last 10 minutes. On phones the digits change
                 in place, as in V11 (rolling them made the coupon's shadow flicker).
-             2. "You save ₹10,000" reads "Save ₹10,000", with a tick: it springs in as the coupon
-                lands, the amount counts up from ₹0, and a few sparks leave it once.
+             2. "You save ₹10,000" reads "Save ₹10,000", with a tick: as the coupon lands it wipes
+                in from its left edge and the tick draws itself.
              3. The button gives under a press; its arrow nudges forward on hover.
              4. From the offer page to the details page (and back) the coupon glides to its new
                 place (a view transition, where the browser has them).
@@ -172,16 +172,29 @@ V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,
              Givingli's "Your price … That's just $4.99 / mo".) No A, B, C.
              With reduced motion, none of the motion.
 
-V14          (switch: V14; or ?v=14) "Seat pass + slide to lock": only the offer page and the details
-             page change; after them it is V11. While the offer is live the printer and coupon give
-             way to a pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band
-             with "Seat pass" and the course; "Pay now" over ₹5,000, large; "to lock ₹90,000"
-             (₹1,00,000 struck, Save ₹10,000); one line, "Remaining ₹85,000 later" and "Ends in
-             01:14:33" in red. On the offer page the button is "Slide to lock ₹5,000" (Wealthfront's
-             "Drag to confirm", Swiggy's "Slide to Pay"): the handle follows the finger, springs back
-             if let go early, and at the end its padlock closes ("Offer locked") and the flow goes on
-             as the button would. A tap, Enter or Space plays the slide. On the details page the
-             button is V11's. It shares V12's Save ₹10,000, field ticks and coupon glide.
+V14 and V15  (switch: V14, V15; or ?v=14, ?v=15) "Seat pass + slide to lock": only the offer page
+             and the details page change; after them it is V11. They share V12's Save ₹10,000,
+             field ticks and coupon glide. While the offer is live the coupon's content is a pass,
+             as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
+             pass" and the course; "Pay now" over ₹5,000, large, the ₹ smaller with its top on the
+             digits' top; "to lock ₹90,000" (₹1,00,000 struck, Save ₹10,000); one line, "Remaining
+             ₹85,000 later" and "Ends in 01:14:33" in red.
+             On the offer page the button is "Slide to lock ₹5,000" (Wealthfront's "Drag to
+             confirm", Swiggy's "Slide to Pay"): a red handle with an open padlock on a soft grey
+             track, three chevrons after the words. The fill follows the handle and the words turn
+             white where it has reached; let go early and it springs back; at the end the padlock
+             shuts, the handle turns white, "✓ Offer locked", phones that can give a short
+             vibration, and the flow goes on as the button would. A tap, Enter or Space plays the
+             slide. Once the pass lands the handle nudges right twice, to show the gesture. On the
+             details page the button is V11's (it waits for the details). Nothing moves on its own
+             after the entrance.
+V14          The pass stands alone, rounded, on a soft shadow, and rises in with a slight tilt.
+V15          The pass is V11's receipt: it prints out of the printer, its corners near-square on
+             the offer page, with the perforation and notches over the slider and the scalloped
+             bottom edge.
+             Save ₹10,000 (V12 to V15): as the coupon lands the chip wipes in from its left edge and
+             its tick draws itself; it keeps its width, so nothing around it moves (it no longer
+             counts up from ₹0 or throws sparks).
 
 What V11 builds on (no longer in the switch):
 
