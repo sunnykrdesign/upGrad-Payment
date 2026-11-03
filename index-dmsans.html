@@ -3556,13 +3556,13 @@ html[data-pv13] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
 html:is([data-pv13], [data-pv15]) .pv-toggle :is([data-pv-pd="medium"], [data-pv-pd="full"]) { display: none !important; }
 /* 1. the countdown, quiet and close to the button, in red (the coupon's own line stays for screen
    readers and once the offer ends). V12: one line under the button, "Offer ends in 01h 14m 33s"
-   (Codecademy's sale clock). V13: "Offer ends in" and three small bordered tiles, [01] : [14] : [33],
-   under the button (Uxcel's offer timer) */
+   (Codecademy's sale clock). V13 and V15: "Offer ends in" and three small bordered tiles,
+   [01] : [14] : [33], under the button (Uxcel's offer timer); in V15 under the slider */
 html[data-pvx] .vx-hide { display: none !important; }
 html[data-pvx] .cp-ticket .lk3-ends:not(.is-ended) { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 html[data-pvx] .cp-ticket .ck-offer:has(.lk3-ends:not(.is-ended)) { padding-top: 0 !important; padding-bottom: 0 !important; }
 .vx-tiles { display: none; }
-html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-tiles { display: flex; }
+html:is([data-pv13], [data-pv15]) .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-tiles { display: flex; }
 .vx-tiles { align-items: center; justify-content: center; gap: 8px; margin: 4px 0 0; color: #C21F2E; font-size: 13px; line-height: 18px; font-weight: 500; }
 .vx-tiles__t { display: inline-flex; align-items: center; gap: 4px; }
 .vx-tiles__t b { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 24px; padding: 0 4px; border-radius: 6px; box-shadow: inset 0 0 0 1px #F4C7CC; font-size: 13px; line-height: 24px; font-weight: 700; font-variant-numeric: tabular-nums; overflow: hidden; }
@@ -3637,8 +3637,8 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
      keep it after: as V11's coupon, "Course fee ₹90,000 ₹1,00,000 (struck)" on the left and the
      "You save ₹10,000" pill on the right of the same line; below a dashed rule, centred, "Pay now
      to lock this price" over ₹5,000, large (the ₹ smaller, its top on the digits' top), and
-     "Remaining ₹85,000 before your batch starts". Under the action, in red: "Offer ends in
-     01:14:33".
+     "Remaining ₹85,000 before your batch starts". Under the action, V13's countdown: "Offer ends
+     in" and three small bordered tiles, [01] : [14] : [33], in red.
    - V11's receipt around it: it prints out of the printer, its corners near-square on the offer
      page, a perforation with notches over the slider, and the scalloped bottom edge.
    - On the offer page, "Slide to lock ₹5,000" in place of the button (Wealthfront's "Drag to
@@ -3648,8 +3648,8 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
      button would (phones that can, give a short tap of vibration). A tap, Enter or Space plays the
      slide. Once the receipt has printed, the handle nudges right twice to show the gesture. On the
      details page the button is V11's (it waits for the details).
-   No motion runs on its own after the entrance (nothing makes the coupon redraw while idle). With
-   reduced motion, none of it.
+   After the entrance nothing moves on its own but the countdown's digits, which roll on desktop
+   and change in place on phones, as V13's. With reduced motion, none of it.
    ============================================================================================ */
 .v14-pass, .v14-slide { display: none; }
 html[data-pv-pass] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
@@ -3693,11 +3693,6 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
 .v14-lock { display: grid; justify-items: center; width: 100%; margin: 18px 0 0; padding: 18px 0 16px; border-top: 1.5px dashed #E6E6EA; }
 .v14-later { margin: 10px 0 0; font-size: 13px; line-height: 18px; color: var(--ck-text-2); }
 .v14-later strong { color: var(--ck-text); font-weight: 600; }
-/* the time, under the action, in red (the coupon's own line stays for screen readers) */
-.v14-time { display: none; margin: 10px 0 0; text-align: center; font-size: 13px; line-height: 18px; font-weight: 500; color: #C21F2E; }
-html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-time { display: block; }
-.v14-time b { font-weight: 700; font-variant-numeric: tabular-nums; }
-.v14-time.is-urgent { color: #EE2C3C; }
 
 /* slide to lock */
 .v14-slide { position: relative; height: 60px; border-radius: 999px; background: #F2F2F4; box-shadow: inset 0 1px 2px rgba(18, 18, 20, 0.07), inset 0 0 0 1px rgba(18, 18, 20, 0.04); overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; cursor: grab; outline: none; }
@@ -7518,8 +7513,6 @@ html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-time { display:
   var on = function () { return root.hasAttribute('data-pv-pass'); };
   var ticket = app.querySelector('.ck-summary .cp-ticket');
   if (!ticket) return;
-  var ends = ticket.querySelector('.lk3-ends');
-  var cdText = ends && ends.querySelector('[data-ck-countdown-text]');
   var logo = (ticket.querySelector('.ck-course__logo img') || {}).src || '';
   var optA = ticket.querySelector('.v10-offer--a');
   var pass = document.createElement('div');
@@ -7548,8 +7541,6 @@ html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-time { display:
     '<span class="v14-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="v14-shackle" d="M8.5 11V8.3a3.5 3.5 0 0 1 7 0V11"/>' +
       '<rect class="v14-body-lock" x="5.5" y="10.5" width="13" height="10" rx="2.6"/><circle class="v14-keyhole" cx="12" cy="15.3" r="1.5"/></svg></span>';
   if (btn) btn.parentNode.insertBefore(slide, btn);
-  // the time, under the action (the slider here, V11's button on the details page)
-  if (btn) btn.insertAdjacentHTML('afterend', '<p class="v14-time" aria-hidden="true">Offer ends in <b data-v14-clock>00:00:00</b></p>');
   var max = function () { return Math.max(0, slide.clientWidth - 60); };
   function set(x) { var m = max(); x = Math.max(0, Math.min(m, x)); slide.style.setProperty('--x', x + 'px'); return x; }
   function reset() { slide.classList.remove('is-locked', 'is-auto', 'is-back', 'is-held', 'is-hint'); set(0); }
@@ -7592,19 +7583,6 @@ html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-time { display:
   slide.addEventListener('pointerup', end);
   slide.addEventListener('pointercancel', end);
   slide.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); auto(); } });
-
-  // the time, from the coupon's own countdown (once a second, plain text)
-  var clock = ticket.querySelector('[data-v14-clock]'), time = ticket.querySelector('.v14-time');
-  function tick() {
-    if (!on() || !cdText) return;
-    var m = /(\d{1,2}:\d{2}:\d{2})/.exec(cdText.textContent || '');
-    if (m && clock.textContent !== m[1]) clock.textContent = m[1];
-    var urgent = !!(ends && ends.dataset.pvUrgency);
-    if (time.classList.contains('is-urgent') !== urgent) time.classList.toggle('is-urgent', urgent);
-  }
-  if (cdText && window.MutationObserver) new MutationObserver(tick).observe(cdText, { childList: true, characterData: true, subtree: true });
-  setInterval(tick, 500);
-  tick();
 
   // the entrance: the receipt prints (V11's printer), then the handle nudges twice
   var hintTimer;
