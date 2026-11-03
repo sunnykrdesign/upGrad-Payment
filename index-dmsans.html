@@ -3395,8 +3395,8 @@ html[data-pv11] :is(.ck-app[data-ck4-root] .ck-progress__fill, .v8 .ug-progress,
   html[data-pv11] .v8 .ug-header::after { top: 0; background: rgba(18, 18, 20, 0.08); }
 }
 
-/* V11 on phones, the details page's header: how much of the offer it shows, in three versions (the
-   switch's Min, Mid and Full; Full unless another is picked). All of it is pinned at the top,
+/* V11 on phones, the details page's header: how much of the offer it shows, in four versions (the
+   switch's Min, Mid, Full and Full 2; Full unless another is picked). All of it is pinned at the top,
    the course's name included, in all three, and the countdown stays right under the course.
    Minimal: as before, the course, then the strip (the countdown, "Lock for ₹5,000"); 106px.
    Medium: the course a little tighter, and the strip gets a second line, so the ₹5,000 reads as
@@ -3407,7 +3407,7 @@ html[data-pv11] :is(.ck-app[data-ck4-root] .ck-progress__fill, .v8 .ug-progress,
    then the strip at the foot (the countdown and when the offer ends, "9:00 PM today"); 184px. The
    course fee line folds away once the page is scrolled (about 156px), and is back at the top. Once the
    offer has ended, the extra lines go */
-.pm-strip__more, .pm-strip__now, .pm-strip__at, .pm-offer, .pm-course__back { display: none; }
+.pm-strip__more, .pm-strip__now, .pm-strip__at, .pm-offer, .pm-course__back, .ck-mobilebar__rest { display: none; }
 .pv-toggle .pv-pd { display: none !important; }
 @media (max-width: 860px) {
   html[data-pv11] .pv-toggle .pv-pd { display: inline-flex !important; }
@@ -3427,10 +3427,10 @@ html[data-pv11] :is(.ck-app[data-ck4-root] .ck-progress__fill, .v8 .ug-progress,
   .pm-course__back:focus-visible { outline: 2px solid var(--co-focus); outline-offset: -2px; }
   html[data-pv11]:has(.ck-app[data-ck4-root][data-ck-view="details"]:not([hidden])) { scroll-padding-top: 118px; }
   /* Medium and Full: the course on one line, a smaller tile */
-  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"]) .ck-app[data-ck4-root][data-ck-view="details"] .pm-head--flow .pm-course { gap: 10px; padding-top: 8px; padding-bottom: 8px; }
-  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"]) .pm-head--flow .pm-course__logo { width: 36px; height: 36px; border-radius: 9px; }
-  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"]) .pm-head--flow .pm-course__logo img { width: 31px; height: 11px; }
-  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"]) .pm-head--flow .pm-course__name { font-size: 14px; line-height: 20px; }
+  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"], [data-pv11-pd="full2"]) .ck-app[data-ck4-root][data-ck-view="details"] .pm-head--flow .pm-course { gap: 10px; padding-top: 8px; padding-bottom: 8px; }
+  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"], [data-pv11-pd="full2"]) .pm-head--flow .pm-course__logo { width: 36px; height: 36px; border-radius: 9px; }
+  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"], [data-pv11-pd="full2"]) .pm-head--flow .pm-course__logo img { width: 31px; height: 11px; }
+  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"], [data-pv11-pd="full2"]) .pm-head--flow .pm-course__name { font-size: 14px; line-height: 20px; }
   /* Medium */
   html[data-pv11][data-pv11-pd="medium"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__price > .pm-strip__v10 { display: none; }
   html[data-pv11][data-pv11-pd="medium"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__price > .pm-strip__now { display: inline; font-weight: 400; }
@@ -3479,6 +3479,24 @@ html[data-pv11] :is(.ck-app[data-ck4-root] .ck-progress__fill, .v8 .ug-progress,
   /* what remains, quiet: grey, regular, smaller; the ₹5,000 is the one to see */
   .pm-offer__split > div:not(.pm-offer__now) dd { color: var(--co-text-muted); font-size: 13px; font-weight: 400; }
   html[data-pv11][data-pv11-pd="full"]:has(.ck-app[data-ck4-root][data-ck-view="details"]:not([hidden])) { scroll-padding-top: 168px; }
+  /* Full 2: the top keeps the offer (the course fee line, never folding, and the strip with the
+     countdown and when it ends); the ₹5,000 is in Continue's own words, and what remains goes
+     under the button, so the payment's two parts sit where it is made */
+  html[data-pv11][data-pv11-pd="full2"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__price > .pm-strip__v10 { display: none; }
+  html[data-pv11][data-pv11-pd="full2"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__price > .pm-strip__at {
+    display: inline; color: var(--co-text-muted); font-size: 13px; font-weight: 400;
+  }
+  html[data-pv11][data-pv11-pd="full2"] .pm-head--flow:not(:has(.pm-strip.is-ended)) .pm-offer {
+    display: grid; margin: 0 -20px; padding: 2px 20px 10px; background: var(--uG-white, #FFFFFF);
+  }
+  html[data-pv11][data-pv11-pd="full2"] .pm-head--flow .pm-offer__split { display: none; }
+  html[data-pv11][data-pv11-pd="full2"] .pm-head--flow .pm-offer__fee { padding-bottom: 0; }
+  html[data-pv11][data-pv11-pd="full2"] .pm-head--flow.is-folded .pm-offer__fold { grid-template-rows: 1fr; opacity: 1; }
+  html[data-pv11][data-pv11-pd="full2"] .ck-app[data-ck4-root][data-ck-view="details"] .ck-mobilebar__rest:not([hidden]) {
+    display: block; margin: 0 0 2px; color: var(--ck-text-2); font-size: 13px; line-height: 18px; text-align: center;
+  }
+  html[data-pv11][data-pv11-pd="full2"] .ck-app[data-ck4-root][data-ck-view="details"] .ck-shell { padding-bottom: 152px; }
+  html[data-pv11][data-pv11-pd="full2"]:has(.ck-app[data-ck4-root][data-ck-view="details"]:not([hidden])) { scroll-padding-top: 144px; scroll-padding-bottom: 130px; }
   /* no line under Continue in the bar (V11) */
   html[data-pv11] .ck-mobilebar__hint:empty { display: none; }
 }
@@ -3521,9 +3539,9 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   if (params.has('v') && params.get('v') !== v) {
     try { params.set('v', v); history.replaceState(history.state, '', location.pathname + '?' + params + location.hash); } catch (e) {}
   }
-  // V11 on phones: how much of the offer the details page's header shows (?pd=minimal, medium or
-  // full; else the last one picked; else full)
-  var pdOk = function (x) { return /^(minimal|medium|full)$/.test(x || ''); };
+  // V11 on phones: how much of the offer the details page's header shows (?pd=minimal, medium, full
+  // or full2; else the last one picked; else full)
+  var pdOk = function (x) { return /^(minimal|medium|full|full2)$/.test(x || ''); };
   var pd = params.get('pd');
   if (!pdOk(pd) && !test) { try { pd = localStorage.getItem('upi-v11-pd'); } catch (e) {} }
   document.documentElement.dataset.pv11Pd = pdOk(pd) ? pd : 'full';
@@ -4017,8 +4035,10 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
        where the coupon and its two buttons are the page) -->
   <div class="ck-mobilebar ck-mobilebar--lock" data-ck-mobilebar>
     <div class="v8-cta-timer"><p class="v8-band__timer" role="group" data-ck-band hidden></p></div>
-    <button class="ck-btn ck-btn--dark ck-btn--block" type="button" data-ck-next>Continue</button>
+    <button class="ck-btn ck-btn--dark ck-btn--block" type="button" data-ck-next aria-describedby="ck9-rest">Continue</button>
     <p class="ck-mobilebar__hint" data-ck-hint></p>
+    <!-- V11 on phones, Full 2: what remains after the ₹5,000, under the button -->
+    <p class="ck-mobilebar__rest v11-only" id="ck9-rest" data-ck-rest>Remaining ₹85,000, pay later</p>
   </div>
 </div>
 
@@ -4891,6 +4911,12 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     }[state.view];
     $$('[data-ck-next]').forEach((el) => { el.innerHTML = (cta || '') + ARROW; });
     $$('[data-ck-hint]').forEach((el) => { el.textContent = hint || ''; });
+    // V11 on phones, Full 2: under Continue, what remains after the block (while the offer is live)
+    $$('[data-ck-rest]').forEach((el) => {
+      el.hidden = !live();
+      const rest = 'Remaining ' + inr(OFFER_PRICE - block()) + ', pay later';
+      if (el.textContent !== rest) el.textContent = rest;
+    });
     const full = $('[data-ck-full]');
     full.hidden = PLANS || state.view !== 'offer' || !blockOk;
     full.textContent = 'Pay ' + inr(b.fee) + ' in full';
@@ -6496,6 +6522,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     <button type="button" data-pv-pd="minimal" aria-label="Minimal">Min</button>
     <button type="button" data-pv-pd="medium" aria-label="Medium">Mid</button>
     <button type="button" data-pv-pd="full" aria-label="Full">Full</button>
+    <button type="button" data-pv-pd="full2" aria-label="Full 2: what remains under Continue">Full 2</button>
   </span>
   <button type="button" class="pv-replay" data-pv-replay>Replay</button>
   <button type="button" class="pv-restart" data-pv-restart>Restart</button>
