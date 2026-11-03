@@ -1,4 +1,4 @@
-upGrad UPI checkout prototype, V11 (the final direction), with V12 and V13 (copies of V11 to try new things in), with V12 and V13 (premium light looks)
+upGrad UPI checkout prototype, V11 (the final direction), with V12 to V14 (copies of V11 to try new things in), with V12 and V13 (premium light looks)
 
 index.html   V11, the final direction (described below): the offer link names no centre or
              batch; the learner picks the learning centre on the details page. Step 1 and 2 are
@@ -171,6 +171,17 @@ V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,
              course fee (₹90,000, ₹1,00,000 struck, Save ₹10,000), smaller, on a grey row. (Ref:
              Givingli's "Your price … That's just $4.99 / mo".) No A, B, C.
              With reduced motion, none of the motion.
+
+V14          (switch: V14; or ?v=14) "Seat pass + slide to lock": only the offer page and the details
+             page change; after them it is V11. While the offer is live the printer and coupon give
+             way to a pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band
+             with "Seat pass" and the course; "Pay now" over ₹5,000, large; "to lock ₹90,000"
+             (₹1,00,000 struck, Save ₹10,000); one line, "Remaining ₹85,000 later" and "Ends in
+             01:14:33" in red. On the offer page the button is "Slide to lock ₹5,000" (Wealthfront's
+             "Drag to confirm", Swiggy's "Slide to Pay"): the handle follows the finger, springs back
+             if let go early, and at the end its padlock closes ("Offer locked") and the flow goes on
+             as the button would. A tap, Enter or Space plays the slide. On the details page the
+             button is V11's. It shares V12's Save ₹10,000, field ticks and coupon glide.
 
 What V11 builds on (no longer in the switch):
 

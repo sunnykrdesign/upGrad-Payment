@@ -3627,6 +3627,87 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
   html[data-pvx] *, html[data-pvx] *::before, html[data-pvx] *::after { animation: none !important; transition: none !important; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
+
+/* ============================================================================================
+   Preview V14: "Seat pass + slide to lock" (html[data-pv14], with html[data-pvx] so it shares V12's
+   and V13's Save ₹10,000, field ticks and coupon glide). Only the offer page and the details page
+   change; after them it is V11. While the offer is live the printer and coupon give way to:
+   - A pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with the
+     course; ₹5,000 as the one large number, "locks ₹90,000" (₹1,00,000 struck, Save ₹10,000); one
+     line for what is left and one for the time.
+   - On the offer page, "Slide to lock ₹5,000" in place of the button (Wealthfront's "Drag to
+     confirm", Swiggy's "Slide to Pay"): the handle's padlock closes as it reaches the end, then
+     the flow goes on as the button would. A tap, Enter or Space plays the slide for you. On the
+     details page the button is V11's (it waits for the details).
+   Motion: the pass rises in with a slight tilt; the slide follows the finger and springs back if
+   let go early; the padlock closes; the fill grows behind the handle. With reduced motion, none.
+   ============================================================================================ */
+.v14-pass, .v14-slide { display: none; }
+html[data-pv14] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
+html[data-pv14] .ck-app[data-ck4-root] :is(.pv-printer, .pv-printer-back, .pv-printer-shade, .pv-printer-cable) { display: none !important; }
+html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) { transform: none !important; filter: drop-shadow(0 1px 1px rgba(18, 18, 20, 0.05)) drop-shadow(0 18px 32px rgba(18, 18, 20, 0.12)); }
+html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) > :is(.cp-head, .v10-offer, .ck-offer, .cp-tear, .v13-hero) { display: none !important; }
+html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v14-pass { display: grid; }
+html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { -webkit-mask: none !important; mask: none !important; border-radius: 0 0 24px 24px !important; background: #fff; padding-top: 4px; }
+html[data-pv14] .cp-ticket:not(:has(.lk3-ends.is-ended)) :is(.v8-cta-timer, .lk3-action__hint) { display: none !important; }
+html[data-pv14] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-slide { display: block; }
+html[data-pv14] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-ticket:not(:has(.lk3-ends.is-ended)) .cp-stub [data-ck-next] { display: none !important; }
+html[data-pv14] .ck-app[data-ck4-root][data-ck-view="offer"] .ck-summary { width: 100%; max-width: 420px; margin-inline: auto; }
+
+/* the pass */
+.v14-pass { gap: 0; padding: 0 !important; background: transparent !important; overflow: hidden; border-radius: 24px 24px 0 0; }
+.v14-band { position: relative; display: grid; gap: 14px; padding: 18px 20px 20px; color: #fff; overflow: hidden;
+  background: radial-gradient(120% 140% at 100% 0%, #FF5A68 0%, transparent 55%), linear-gradient(135deg, #EE2C3C 0%, #C8162B 100%); }
+.v14-band::before { content: ""; position: absolute; inset: 0; opacity: 0.18; pointer-events: none;
+  background: repeating-linear-gradient(-18deg, transparent 0 9px, rgba(255, 255, 255, 0.9) 9px 10px); -webkit-mask: linear-gradient(90deg, transparent 20%, #000 75%); mask: linear-gradient(90deg, transparent 20%, #000 75%); }
+.v14-band__top { position: relative; display: flex; align-items: center; justify-content: space-between; }
+.v14-logo { display: grid; place-items: center; height: 28px; padding: 0 8px; border-radius: 8px; background: #fff; }
+.v14-logo img { display: block; height: 18px; width: auto; }
+.v14-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.85; }
+.v14-course { position: relative; margin: 0; font-size: 17px; line-height: 23px; font-weight: 600; letter-spacing: -0.01em; }
+.v14-body { display: grid; justify-items: center; gap: 2px; padding: 22px 20px 6px; background: #fff; text-align: center; }
+.v14-k { margin: 0; font-size: 13px; color: var(--ck-text-2); }
+.v14-amt { margin: 0; display: flex; align-items: flex-start; gap: 2px; font-size: 56px; line-height: 60px; font-weight: 700; letter-spacing: -0.035em; color: var(--ck-text); font-variant-numeric: normal; font-feature-settings: normal; }
+.v14-amt small { font-size: 24px; line-height: 36px; font-weight: 600; color: var(--ck-text-2); letter-spacing: 0; }
+.v14-locks { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 8px; margin: 4px 0 0; font-size: 14px; color: var(--ck-text-2); }
+.v14-locks strong { color: var(--ck-text); }
+.v14-locks s { color: var(--ck-text-3); }
+.v14-rows { display: flex; justify-content: space-between; gap: 12px; margin: 16px 0 0; padding: 12px 0 0; width: 100%; border-top: 1.5px dashed #E6E6EA; font-size: 13px; color: var(--ck-text-2); }
+.v14-rows strong { color: var(--ck-text); font-weight: 600; }
+.v14-rows .v14-time { color: #C21F2E; font-weight: 500; }
+.v14-rows .v14-time b { font-weight: 700; font-variant-numeric: tabular-nums; }
+.v14-rows .v14-time.is-urgent { color: #EE2C3C; }
+
+/* slide to lock */
+.v14-slide { position: relative; height: 60px; border-radius: 999px; background: #FDECEE; box-shadow: inset 0 0 0 1px #F8D3D7; overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: pointer; outline: none; }
+.v14-slide:focus-visible { box-shadow: inset 0 0 0 1px #F8D3D7, 0 0 0 3px rgba(238, 44, 60, 0.35); }
+.v14-fill { position: absolute; inset: 0 auto 0 0; width: calc(var(--x, 0px) + 60px); border-radius: 999px; background: linear-gradient(90deg, #F2404F, #EE2C3C); }
+.v14-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-left: 40px; font-size: 16px; font-weight: 600; color: #C21F2E; letter-spacing: -0.01em; transition: opacity 0.2s ease; opacity: calc(1 - var(--p, 0) * 1.6); }
+.v14-label i { font-style: normal; display: inline-block; margin-left: 6px; animation: v14-nudge 1.6s ease-in-out infinite; }
+@keyframes v14-nudge { 0%, 60%, 100% { transform: translateX(0); } 30% { transform: translateX(4px); } }
+.v14-done { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-right: 40px; font-size: 16px; font-weight: 600; color: #fff; opacity: 0; transition: opacity 0.2s ease; }
+.v14-slide.is-locked .v14-done { opacity: 1; }
+.v14-handle { position: absolute; top: 4px; left: 4px; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #fff; color: #EE2C3C; box-shadow: 0 2px 6px rgba(200, 22, 43, 0.25), 0 8px 18px -6px rgba(200, 22, 43, 0.35); transform: translateX(var(--x, 0px)); }
+.v14-slide.is-back .v14-handle, .v14-slide.is-back .v14-fill { transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.v14-slide.is-auto .v14-handle, .v14-slide.is-auto .v14-fill { transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1), width 0.55s cubic-bezier(0.65, 0, 0.35, 1); }
+.v14-handle svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.v14-shackle { transform-origin: 16px 11px; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); transform: translate(5px, -2px) rotate(28deg); }
+.v14-slide.is-locked .v14-shackle { transform: none; }
+.v14-slide.is-locked .v14-handle { animation: v14-pulse 0.5s ease-out; }
+@keyframes v14-pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8); } 100% { box-shadow: 0 0 0 14px rgba(255, 255, 255, 0); } }
+
+/* the pass rises in */
+@keyframes v14-rise { from { opacity: 0; transform: perspective(900px) translateY(26px) rotateX(10deg); } to { opacity: 1; transform: none; } }
+html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .v14-pass { animation: v14-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+html[data-pv14] .ck-app[data-ck-view="offer"] .cp-ticket.v14-in > .cp-stub { animation: v14-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
+@media (max-width: 860px) {
+  .v14-amt { font-size: 50px; line-height: 54px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v14-label i, .v14-slide.is-locked .v14-handle { animation: none; }
+  html[data-pv14] .ck-app .cp-ticket.v14-in > * { animation: none !important; }
+  .v14-shackle, .v14-handle, .v14-fill { transition: none !important; }
+}
 </style>
 <script>
 /* preview version before the first paint: ?v=11 in the link, else the last one picked, else V11 */
@@ -3635,7 +3716,7 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
   // V11 only now: a V10 link keeps its coupon option (?v=10c opens 11c); V9's opens V11
   var legacy = function (x) { return /^10[abc]$/.test(x || '') ? '11' + x.slice(2) : x; };
   var v = legacy(params.get('v'));
-  var known = function (x) { return /^(1[12][abc]?|13)$/.test(x || ''); };
+  var known = function (x) { return /^(1[12][abc]?|13|14)$/.test(x || ''); };
   // ?test (user testing): no Scenario bar, version switch or prototype notes; V11 unless ?v= says
   // otherwise, and the last version picked is not used
   var test = new URLSearchParams(location.search).has('test');
@@ -3656,7 +3737,7 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
   // V10 with no centre in the link, the centre picked on the details page (?v=11a, 11b, 11c)
   // V12 and V13: copies of V11 (html[data-pvx] and data-pv12 or data-pv13 on V11's page) to try
   // new things in (?v=12a, 12b, 12c; ?v=13)
-  if (/^1[23]/.test(v)) { document.documentElement.dataset.pvx = ''; document.documentElement.dataset['pv' + v.slice(0, 2)] = ''; v = '11' + (v.slice(2) || 'b'); }
+  if (/^1[234]/.test(v)) { document.documentElement.dataset.pvx = ''; document.documentElement.dataset['pv' + v.slice(0, 2)] = ''; v = '11' + (v.slice(2) || 'b'); }
   if (/^11/.test(v)) document.documentElement.dataset.pv11 = '';
   if (/^1[01]/.test(v)) { document.documentElement.dataset.pv10 = v.slice(2) || 'b'; v = '9'; }
   document.documentElement.dataset.previewV = v;
@@ -6624,6 +6705,7 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
   <button type="button" data-pv="11">V11</button>
   <button type="button" data-pv="12">V12</button>
   <button type="button" data-pv="13">V13</button>
+  <button type="button" data-pv="14">V14</button>
   <span class="pv-opts" role="group" aria-label="Coupon option">
     <button type="button" data-pv10-opt="a">A</button>
     <button type="button" data-pv10-opt="b">B</button>
@@ -7075,10 +7157,11 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
   var lastOpt = root.dataset.pv10 || 'b';
   function show(v) {
     // V12 and V13: V11 under html[data-pvx] (V13 is always on option B underneath)
-    var copyOf = /^1[23]/.test(v) ? v.slice(0, 2) : '';
-    if (copyOf) { root.dataset.pvx = ''; v = '11' + (copyOf === '13' ? 'b' : (v.slice(2) || lastOpt)); } else delete root.dataset.pvx;
+    var copyOf = /^1[234]/.test(v) ? v.slice(0, 2) : '';
+    if (copyOf) { root.dataset.pvx = ''; v = '11' + (copyOf !== '12' ? 'b' : (v.slice(2) || lastOpt)); } else delete root.dataset.pvx;
     if (copyOf === '12') root.dataset.pv12 = ''; else delete root.dataset.pv12;
     if (copyOf === '13') root.dataset.pv13 = ''; else delete root.dataset.pv13;
+    if (copyOf === '14') root.dataset.pv14 = ''; else delete root.dataset.pv14;
     var ten = /^1[01][abc]$/.test(v);
     var major = ten ? v.slice(0, 2) : v;
     if (ten) root.dataset.pv10 = lastOpt = v.slice(2); else delete root.dataset.pv10;
@@ -7113,7 +7196,7 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
   opts.forEach(function (b) {
     b.addEventListener('click', function () { pick((root.hasAttribute('data-pv12') ? '12' : root.hasAttribute('data-pv11') ? '11' : '10') + b.dataset.pv10Opt); });
   });
-  show(root.hasAttribute('data-pv13') ? '13' : root.dataset.pv10 ? (root.hasAttribute('data-pv12') ? '12' : root.hasAttribute('data-pv11') ? '11' : '10') + root.dataset.pv10 : root.dataset.previewV || '9');
+  show(root.hasAttribute('data-pv14') ? '14' : root.hasAttribute('data-pv13') ? '13' : root.dataset.pv10 ? (root.hasAttribute('data-pv12') ? '12' : root.hasAttribute('data-pv11') ? '11' : '10') + root.dataset.pv10 : root.dataset.previewV || '9');
 
   // V11 on phones: how much of the offer the details page's header shows (Minimal, Medium, Full)
   var pds = Array.prototype.slice.call(document.querySelectorAll('.pv-toggle [data-pv-pd]'));
@@ -7381,6 +7464,116 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
 
 
 
+
+<script>
+/* Preview V14 (html[data-pv14]): the seat pass, and slide to lock on the offer page */
+(function () {
+  var root = document.documentElement;
+  var app = document.querySelector('[data-ck4-root]');
+  if (!app) return;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var on = function () { return root.hasAttribute('data-pv14'); };
+  var ticket = app.querySelector('.ck-summary .cp-ticket');
+  if (!ticket) return;
+  var ends = ticket.querySelector('.lk3-ends');
+  var cdText = ends && ends.querySelector('[data-ck-countdown-text]');
+  var logo = (ticket.querySelector('.ck-course__logo img') || {}).src || '';
+  var optA = ticket.querySelector('.v10-offer--a');
+  var pass = document.createElement('div');
+  pass.className = 'cp-part v14-pass';
+  pass.innerHTML =
+    '<div class="v14-band"><div class="v14-band__top"><span class="v14-logo"><img src="' + logo + '" alt="upGrad"></span><span class="v14-tag">Seat pass</span></div>' +
+      '<p class="v14-course">Advance Certificate in Digital Marketing</p></div>' +
+    '<div class="v14-body"><p class="v14-k">Pay now</p><p class="v14-amt"><small>₹</small>5,000</p>' +
+      '<p class="v14-locks">to lock <strong>₹90,000</strong><s><span class="ck-sr">instead of </span>₹1,00,000</s><span class="cp-save" data-vx-save>Save ₹10,000</span></p>' +
+      '<p class="v14-rows"><span>Remaining <strong>₹85,000</strong> later</span><span class="v14-time" aria-hidden="true">Ends in <b data-v14-clock>00:00:00</b></span></p></div>';
+  ticket.insertBefore(pass, optA || ticket.firstChild);
+
+  // slide to lock, in place of the offer page's button
+  var btn = ticket.querySelector('.cp-stub [data-ck-next]');
+  var slide = document.createElement('div');
+  slide.className = 'v14-slide';
+  slide.setAttribute('role', 'button');
+  slide.setAttribute('tabindex', '0');
+  slide.setAttribute('aria-label', 'Slide to lock the offer for ₹5,000');
+  slide.innerHTML = '<span class="v14-fill"></span><span class="v14-label">Slide to lock ₹5,000<i aria-hidden="true">›</i></span><span class="v14-done" aria-hidden="true">Offer locked</span>' +
+    '<span class="v14-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path class="v14-shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>';
+  if (btn) btn.parentNode.insertBefore(slide, btn);
+  var max = function () { return slide.clientWidth - 60; };
+  function set(x) { var m = max(); x = Math.max(0, Math.min(m, x)); slide.style.setProperty('--x', x + 'px'); slide.style.setProperty('--p', m ? (x / m).toFixed(3) : 0); return x; }
+  function reset() { slide.classList.remove('is-locked', 'is-auto'); set(0); }
+  function lock() {
+    set(max());
+    slide.classList.add('is-locked');
+    setTimeout(function () { if (btn) btn.click(); setTimeout(reset, 400); }, still ? 0 : 420);
+  }
+  function auto() {
+    if (slide.classList.contains('is-locked')) return;
+    slide.classList.add('is-auto');
+    requestAnimationFrame(function () { set(max()); });
+    setTimeout(function () { slide.classList.remove('is-auto'); lock(); }, still ? 0 : 560);
+  }
+  var drag = null;
+  slide.addEventListener('pointerdown', function (e) {
+    if (slide.classList.contains('is-locked')) return;
+    var r = slide.getBoundingClientRect();
+    drag = { x0: e.clientX, start: 0, moved: false, left: r.left };
+    slide.classList.remove('is-back', 'is-auto');
+    slide.setPointerCapture(e.pointerId);
+  });
+  slide.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x0;
+    if (Math.abs(dx) > 4) drag.moved = true;
+    set(dx);
+  });
+  function end() {
+    if (!drag) return;
+    var moved = drag.moved, x = parseFloat(slide.style.getPropertyValue('--x')) || 0;
+    drag = null;
+    if (!moved) { auto(); return; }
+    if (x >= max() * 0.85) lock();
+    else { slide.classList.add('is-back'); set(0); setTimeout(function () { slide.classList.remove('is-back'); }, 460); }
+  }
+  slide.addEventListener('pointerup', end);
+  slide.addEventListener('pointercancel', end);
+  slide.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); auto(); } });
+
+  // the time, from the coupon's own countdown
+  var clock = pass.querySelector('[data-v14-clock]'), time = pass.querySelector('.v14-time');
+  function tick() {
+    if (!on() || !cdText) return;
+    var m = /(\d{1,2}:\d{2}:\d{2})/.exec(cdText.textContent || '');
+    if (m && clock.textContent !== m[1]) clock.textContent = m[1];
+    var urgent = !!(ends && ends.dataset.pvUrgency);
+    if (time.classList.contains('is-urgent') !== urgent) time.classList.toggle('is-urgent', urgent);
+  }
+  if (cdText && window.MutationObserver) new MutationObserver(tick).observe(cdText, { childList: true, characterData: true, subtree: true });
+  setInterval(tick, 500);
+  tick();
+
+  function enter() {
+    reset();
+    ticket.classList.remove('v14-in');
+    if (!on() || still) return;
+    void ticket.offsetWidth;
+    ticket.classList.add('v14-in');
+  }
+  if (window.MutationObserver) {
+    var last = app.dataset.ckView;
+    new MutationObserver(function () {
+      if (app.dataset.ckView === last) return;
+      var from = last; last = app.dataset.ckView;
+      if (last === 'offer') { reset(); if (from !== 'details') enter(); }
+    }).observe(app, { attributes: true, attributeFilter: ['data-ck-view'] });
+    new MutationObserver(enter).observe(root, { attributes: true, attributeFilter: ['data-pv14'] });
+  }
+  document.addEventListener('ck:scenario', function () { setTimeout(enter, 30); });
+  var replay = document.querySelector('[data-pv-replay]');
+  if (replay) replay.addEventListener('click', function () { setTimeout(enter, 0); });
+  enter();
+})();
+</script>
 
 <script>
 /* Previews V12 and V13 (html[data-pvx]): V11 with a timer of its own, Save ₹10,000, a livelier
