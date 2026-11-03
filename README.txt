@@ -153,8 +153,8 @@ V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,
 V15          "Seat pass + slide to lock", printed as V11's receipt. The coupon's content is a pass,
              as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
              pass" and the course; then, in V11's order, the price and the saving first and what
-             to pay to keep it after: "Course fee ₹1,00,000 (struck) ₹90,000" (label on the left
-             edge, price on the right) with the Save ₹10,000 pill under the price; below a dashed
+             to pay to keep it after: as V11's coupon, "Course fee ₹90,000 ₹1,00,000 (struck)" on
+             the left and the "You save ₹10,000" pill on the right of the same line; below a dashed
              rule, centred, "Pay now to lock this price" over ₹5,000, large (the ₹ smaller, its top
              on the digits' top), and "Remaining ₹85,000 before your batch starts". Under the
              slider (and under V11's button on the details page), in red: "Offer ends in

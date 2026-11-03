@@ -3650,8 +3650,8 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
    gives way to:
    - A pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
      pass" and the course; then, in V11's order, the price and the saving first and what to pay to
-     keep it after: "Course fee  ₹1,00,000 (struck)  ₹90,000" (label on the left edge, price on
-     the right) with the Save ₹10,000 pill under the price; below a dashed rule, centred, "Pay now
+     keep it after: as V11's coupon, "Course fee ₹90,000 ₹1,00,000 (struck)" on the left and the
+     "You save ₹10,000" pill on the right of the same line; below a dashed rule, centred, "Pay now
      to lock this price" over ₹5,000, large (the ₹ smaller, its top on the digits' top), and
      "Remaining ₹85,000 before your batch starts". Under the action, in red: "Offer ends in
      01:14:33".
@@ -3698,12 +3698,14 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
 .v14-amt { margin: 0; font-size: 56px; line-height: 56px; font-weight: 700; letter-spacing: -0.03em; color: var(--ck-text); font-variant-numeric: normal; font-feature-settings: normal; white-space: nowrap; }
 .v14-cur { display: inline-block; margin-right: 3px; font-size: 26px; line-height: 1; font-weight: 600; letter-spacing: 0; color: var(--ck-text-2); vertical-align: 0.7em; }
 /* V11's order: the price and the saving first, then what to pay to keep it */
-.v14-fee { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; width: 100%; }
-.v14-fee__l { font-size: 14px; line-height: 20px; color: var(--ck-text-2); white-space: nowrap; }
-.v14-fee__r { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
-.v14-fee__r s { font-size: 13px; color: var(--ck-text-3); }
-.v14-fee__r strong { font-size: 18px; line-height: 24px; font-weight: 700; color: var(--ck-text); letter-spacing: -0.01em; }
-.v14-saverow { justify-self: end; margin: 6px 0 0; }
+.v14-fee { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; text-align: left; }
+/* as V11's coupon (option B): "Course fee ₹90,000 ₹1,00,000" and the You save pill on one line */
+.v14-fee__l { font-size: 14px; line-height: 20px; color: var(--ck-text-2); }
+.v14-fee__l strong { font-weight: 700; color: var(--ck-text); }
+.v14-fee__l s { color: var(--ck-text-3); }
+.v14-fee__v { white-space: nowrap; }
+/* phones, as V11: "Course fee" over the two prices, the pill beside them */
+@media (max-width: 420px) { .v14-fee__k { display: block; } }
 .v14-lock { display: grid; justify-items: center; width: 100%; margin: 18px 0 0; padding: 18px 0 16px; border-top: 1.5px dashed #E6E6EA; }
 .v14-later { margin: 10px 0 0; font-size: 13px; line-height: 18px; color: var(--ck-text-2); }
 .v14-later strong { color: var(--ck-text); font-weight: 600; }
@@ -7542,8 +7544,7 @@ html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-time { display:
     '<div class="v14-band"><div class="v14-band__top"><span class="v14-logo"><img src="' + logo + '" alt="upGrad"></span><span class="v14-tag">Seat pass</span></div>' +
       '<p class="v14-course">Advance Certificate in Digital Marketing</p></div>' +
     '<div class="v14-body">' +
-      '<div class="v14-fee"><span class="v14-fee__l">Course fee</span><span class="v14-fee__r"><s><span class="ck-sr">instead of </span>₹1,00,000</s><strong>₹90,000</strong></span></div>' +
-      '<p class="v14-saverow"><span class="cp-save v14-save" data-vx-save>Save ₹10,000</span></p>' +
+      '<div class="v14-fee"><span class="v14-fee__l"><span class="v14-fee__k">Course fee</span> <span class="v14-fee__v"><strong>₹90,000</strong> <s><span class="ck-sr">instead of </span>₹1,00,000</s></span></span><span class="cp-save">You save ₹10,000</span></div>' +
       '<div class="v14-lock"><p class="v14-k">Pay now to lock this price</p><p class="v14-amt"><span class="v14-cur">₹</span>5,000</p>' +
         '<p class="v14-later">Remaining <strong>₹85,000</strong> before your batch starts</p></div></div>';
   ticket.insertBefore(pass, optA || ticket.firstChild);
