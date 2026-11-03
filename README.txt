@@ -1,4 +1,4 @@
-upGrad UPI checkout prototype, V11 (the final direction), with V13 (a new offer and details page), with V12 and V13 (premium light looks)
+upGrad UPI checkout prototype, V11 (the final direction), and V12 (V11's copy, to try new things in), with V12 and V13 (premium light looks)
 
 index.html   V11, the final direction (described below): the offer link names no centre or
              batch; the learner picks the learning centre on the details page. Step 1 and 2 are
@@ -148,28 +148,20 @@ V13          Warm off-white, #F7F4EF (refs: Airbnb's Confirm and pay, Request to
              the countdown on a soft note; a red gradient button with a light that follows the
              pointer. Paid: a calm card with the centre, batch and "₹5,000 (Payment 1 of 2)".
 
-V13 to V15 (switch: V11, V13, V14, V15; or ?v=13, ?v=14, ?v=15): V11 with a new offer page
-             and details page, kept short (V11's density) and light. Only those two pages change:
-             the OTP, the payment page and everything after are V11's, as are the phone headers on
-             the details page (Min, Mid, Full, Full 2). Once the offer has ended, the coupon is
-             V11's. The details page's summary adds the centre and batch start once picked; fields
-             draw a green tick once right; the centre list unfolds.
-V13          Card: a hold pill ("Offer price held for you · 01:32:08"), "Lock your offer price",
-             one card: the course; Course fee ₹90,000 (₹1,00,000 struck), Save ₹10,000; Pay now
-             ₹5,000; Before your batch starts ₹85,000. Refs: GetYourGuide's hold timer, Airbnb's
-             due now / later.
-V14          Pass: one ticket: the course; ₹5,000 large, "Pay now to lock ₹90,000", ₹1,00,000
-             struck and Save ₹10,000; a tear; "Remaining, before your batch starts ₹85,000". The
-             countdown sits inside the button ("Offer ends in 01:31:55"). Refs: Meetup's and
-             Eventbrite's tickets, Temu's "Pay now · ends in 59:17".
-V15          Split: "Ends in 01:31:52", ₹90,000 large (₹1,00,000 struck), the course, Save
-             ₹10,000; a bar split into Pay now ₹5,000 and Before your batch starts ₹85,000. Refs:
-             Chime's "Expires in" pill, Kiwi.com's "Lock price".
-             Motion (all): parts rise out of a soft blur in turn; the list price is struck as you
-             watch and the saving springs in; the countdown rolls like an odometer; V14's amount
-             springs in, V15's bar fills; the button's light follows the pointer and it gives
-             under a press; offer to details (and back), the card glides into the summary (a
-             view transition, where the browser has them). With reduced motion, none of it.
+V12          (switch: V11, V12; or ?v=12a, ?v=12b, ?v=12c): a copy of V11, options A, B and C and
+             the phone headers (Min, Mid, Full, Full 2) included, to try new things in without
+             touching V11. It looks the same as V11 at rest; only how it moves and responds
+             changes. (V13 to V15, new offer and details pages, were tried and dropped.)
+             1. The countdowns (the coupon's, the phone strip's) roll their digits into place,
+                like an odometer.
+             2. The button gives under a press, its arrow nudges forward on hover, and a sheen
+                crosses it once as the coupon lands.
+             3. From the offer page to the details page (and back) the coupon glides to its new
+                place (a view transition, where the browser has them).
+             4. On the details page, a field draws a green tick once it is right (a centre picked,
+                a name, a valid email, a 10-digit mobile).
+             5. The centre list unfolds from the search box.
+             With reduced motion, none of it.
 
 What V11 builds on (no longer in the switch):
 
