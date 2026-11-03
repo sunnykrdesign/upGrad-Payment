@@ -3531,11 +3531,10 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
    html[data-pv13]) to try new things in without touching V11. The coupon, the printer, the flow
    and the phone headers (Min, Mid, Full, Full 2) are V11's.
    Both:
-   1. The countdown is a timer of its own: "Offer ends in" and "9:00 PM today" over three cells,
-      hours, minutes and seconds, each with its unit under it; the digits roll into place and a
-      hairline under the seconds drains every second, so the time reads as exact. In the last 10
-      minutes the cells turn red. (Refs: Best Buy's and Swiggy's deal timers.) On phones the strip's
-      countdown rolls its digits too.
+   1. The countdown stays quiet (it is the price's deadline, not the news), its digits rolling into
+      place. V12: a small hold pill at the top of the coupon, "We'll hold this price for 01:14:33"
+      (GetYourGuide). V13: one small centred line over the button, "Offer ends in 01:14:33"
+      (Tinder). On phones the strip's countdown rolls its digits too.
    2. "You save ₹10,000" reads "Save ₹10,000": it springs in as the coupon lands, the amount counts
       up from ₹0, and a few sparks leave it once.
    3. The button gives under a press and its arrow nudges forward on hover.
@@ -3549,28 +3548,26 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
       … That's just $4.99 / mo".) No A, B, C.
    With reduced motion, none of the motion.
    ============================================================================================ */
-.vx-timer, .vx-clock, .vx-tick, .v13-hero { display: none; }
+.vx-clock, .vx-tick, .v13-hero { display: none; }
 html[data-pvx] .vx-clock { display: inline; }
-html[data-pvx] .vx-hide { display: none !important; }
 html[data-pvx] .vx-tick { display: block; }
 html[data-pv13] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
-/* 1. the timer, in the coupon in place of its countdown line, while the offer is live */
+/* 1. the countdown, quiet (the coupon's own line stays for screen readers and once the offer ends).
+   V12: a small hold pill at the top of the coupon, "We'll hold this price for 01:14:33" (GetYourGuide).
+   V13: one small centred line over the button, "Offer ends in 01:14:33" (Tinder) */
+html[data-pvx] .vx-hide { display: none !important; }
 html[data-pvx] .cp-ticket .lk3-ends:not(.is-ended) { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-html[data-pvx] .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-timer { display: grid; }
-.vx-timer { gap: 8px; justify-self: stretch; }
-.vx-timer__top { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--ck-text-2); }
-.vx-timer__top b { color: #D92D3A; font-weight: 600; }
-.vx-cells { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 6px; }
-.vx-cell { position: relative; display: grid; justify-items: center; gap: 2px; padding: 9px 0 8px; border-radius: 12px; background: #F6F6F8; box-shadow: inset 0 0 0 1px #ECECF0; overflow: hidden; transition: background 0.4s ease, box-shadow 0.4s ease; }
-.vx-cell b { font-size: 24px; line-height: 28px; font-weight: 700; letter-spacing: -0.01em; color: var(--ck-text); font-variant-numeric: tabular-nums; }
-.vx-cell i { font-style: normal; font-size: 10px; line-height: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ck-text-3); }
-.vx-cell em { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #EE2C3C; transform-origin: left; transform: scaleX(1); }
-.vx-cell em.is-run { animation: vx-drain 1s linear forwards; }
-@keyframes vx-drain { from { transform: scaleX(1); } to { transform: scaleX(0); } }
-.vx-colon { font-size: 20px; font-weight: 700; color: var(--ck-text-3); animation: vx-blink 1s steps(1) infinite; }
-@keyframes vx-blink { 50% { opacity: 0.3; } }
-.vx-timer.is-urgent .vx-cell { background: #FFF1F2; box-shadow: inset 0 0 0 1px #FBD3D7; }
-.vx-timer.is-urgent .vx-cell b { color: #D92D3A; }
+html[data-pvx] .cp-ticket .ck-offer:has(.lk3-ends:not(.is-ended)) { padding-top: 0 !important; padding-bottom: 0 !important; }
+.vx-hold, .vx-line { display: none; }
+html[data-pv12] .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-hold { display: inline-flex; }
+html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-line { display: block; }
+.vx-hold { align-items: center; gap: 6px; justify-self: start; margin: 0 0 14px; padding: 5px 11px 5px 9px; border-radius: 999px; background: #FFF0F1; color: #B3121F; font-size: 12px; line-height: 16px; font-weight: 500; }
+.vx-hold svg { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.vx-hold strong { font-weight: 700; font-variant-numeric: tabular-nums; }
+.vx-hold.is-urgent { background: #EE2C3C; color: #fff; }
+.vx-line { margin: 0 0 2px; text-align: center; font-size: 13px; line-height: 18px; color: var(--ck-text-2); }
+.vx-line strong { font-weight: 600; color: #C21F2E; font-variant-numeric: tabular-nums; }
+.vx-line.is-urgent strong { color: #EE2C3C; }
 /* rolling digits */
 .vx-odo { display: inline; }
 .vx-odo .odo-c { display: inline; }
@@ -3621,7 +3618,6 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
 @media (max-width: 860px) {
   .v13-amt { font-size: 52px; line-height: 56px; }
   .v13-fee { font-size: 13px; padding: 12px; }
-  .vx-cell b { font-size: 22px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html[data-pvx] *, html[data-pvx] *::before, html[data-pvx] *::after { animation: none !important; transition: none !important; }
@@ -7426,17 +7422,17 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
     '<p class="v13-later"><strong>₹85,000</strong> later, before your batch starts</p>' +
     '<p class="v13-fee"><span>Course fee <strong>₹90,000</strong><s><span class="ck-sr">instead of </span>₹1,00,000</s></span><span class="cp-save" data-vx-save>Save ₹10,000</span></p></div>');
 
-  // 1. the timer, after the countdown line (which stays for screen readers and once the offer ends)
-  var timer;
-  if (ends) {
-    timer = document.createElement('div');
-    timer.className = 'vx-timer';
-    timer.setAttribute('aria-hidden', 'true');
-    timer.innerHTML = '<div class="vx-timer__top"><span>Offer ends in</span><b data-vx-at>9:00 PM today</b></div>' +
-      '<div class="vx-cells"><span class="vx-cell"><b data-vx-h>00</b><i>hrs</i></span><span class="vx-colon">:</span>' +
-      '<span class="vx-cell"><b data-vx-m>00</b><i>min</i></span><span class="vx-colon">:</span>' +
-      '<span class="vx-cell"><b data-vx-s>00</b><i>sec</i><em></em></span></div>';
-    ends.parentNode.insertBefore(timer, ends.nextSibling);
+  // 1. the countdown: V12's hold pill at the top of the coupon; V13's line over the button
+  var hold, line;
+  var head = ticket && ticket.querySelector('.cp-head');
+  if (head) {
+    head.insertAdjacentHTML('afterbegin', '<p class="vx-hold" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2 2M10 2.75h4"/></svg>We’ll hold this price for <strong>00:00:00</strong></p>');
+    hold = head.querySelector('.vx-hold');
+  }
+  var stubBtn = ticket && ticket.querySelector('.cp-stub [data-ck-next]');
+  if (stubBtn) {
+    stubBtn.insertAdjacentHTML('beforebegin', '<p class="vx-line" aria-hidden="true">Offer ends in <strong>00:00:00</strong></p>');
+    line = ticket.querySelector('.vx-line');
   }
   // phones: the strip's countdown rolls its digits (a copy beside it; the page's own for screen readers)
   var strips = Array.prototype.slice.call(document.querySelectorAll('[data-pm-strip-ends]')).map(function (src) {
@@ -7447,24 +7443,14 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
     src.parentNode.insertBefore(copy, src.nextSibling);
     return { src: src, copy: copy };
   });
-  var lastSec = '';
   function tick() {
-    if (cdText && timer) {
-      var m = /(\d{1,2}):(\d{2}):(\d{2})/.exec(cdText.textContent || '');
-      if (m) {
-        odo(timer.querySelector('[data-vx-h]'), m[1].length < 2 ? '0' + m[1] : m[1]);
-        odo(timer.querySelector('[data-vx-m]'), m[2]);
-        odo(timer.querySelector('[data-vx-s]'), m[3]);
-        if (m[3] !== lastSec) {
-          lastSec = m[3];
-          var bar = timer.querySelector('.vx-cell em');
-          bar.classList.remove('is-run'); void bar.offsetWidth; if (!still) bar.classList.add('is-run');
-        }
-      }
-      var at = timer.querySelector('[data-vx-at]');
-      if (noteEl && at.textContent !== noteEl.textContent) at.textContent = noteEl.textContent;
-      timer.classList.toggle('is-urgent', !!(ends && ends.dataset.pvUrgency));
-    }
+    var m = cdText && /(\d{1,2}:\d{2}:\d{2})/.exec(cdText.textContent || '');
+    var urgent = !!(ends && ends.dataset.pvUrgency);
+    [hold, line].forEach(function (el) {
+      if (!el) return;
+      if (m) odo(el.querySelector('strong'), m[1]);
+      el.classList.toggle('is-urgent', urgent);
+    });
     strips.forEach(function (c) {
       var t = c.src.textContent || '', m = /(\d{1,2}:\d{2}:\d{2})/.exec(t);
       c.src.classList.toggle('vx-hide', !!m);

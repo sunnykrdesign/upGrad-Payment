@@ -152,11 +152,11 @@ V12 and V13  (switch: V11, V12, V13; or ?v=12a, ?v=12b, ?v=12c, ?v=13): copies o
              things in without touching V11: the coupon, the printer, the flow and the phone headers
              (Min, Mid, Full, Full 2) are V11's. (V13 to V15 with new pages were tried and dropped.)
              Both:
-             1. The countdown is a timer of its own: "Offer ends in" and "9:00 PM today" over three
-                cells, hours, minutes and seconds, each with its unit under it; the digits roll
-                into place and a hairline under the seconds drains every second. In the last 10
-                minutes the cells turn red. On phones the strip's countdown rolls too. (Refs:
-                Best Buy's and Swiggy's deal timers.)
+             1. The countdown stays quiet (the price's deadline, not the news), its digits rolling
+                into place; the coupon's own line stays for screen readers. V12: a small hold pill
+                at the top of the coupon, "We'll hold this price for 01:14:33" (GetYourGuide).
+                V13: one small centred line over the button, "Offer ends in 01:14:33" (Tinder).
+                Both turn red in the last 10 minutes. On phones the strip's countdown rolls too.
              2. "You save ₹10,000" reads "Save ₹10,000", with a tick: it springs in as the coupon
                 lands, the amount counts up from ₹0, and a few sparks leave it once.
              3. The button gives under a press; its arrow nudges forward on hover.
