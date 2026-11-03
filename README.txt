@@ -152,11 +152,12 @@ V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,
              ends in" and three small bordered tiles, [01] : [14] : [33] (Uxcel's offer timer).
 V15          "Seat pass + slide to lock", printed as V11's receipt. The coupon's content is a pass,
              as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
-             pass" and the course; "Lock this offer with" over ₹5,000, large, the ₹ smaller with
-             its top on the digits' top (V13's words: the slider's "Slide to lock" keeps their
-             promise); "Course fee ₹90,000" (₹1,00,000 struck, Save ₹10,000), so ₹5,000 and the
-             remaining ₹85,000 add up to the fee in view; one line, "Remaining ₹85,000 later" and
-             "Ends in 01:14:33" in red. Around it, V11's receipt: it prints out
+             pass" and the course; centred, "Lock this offer with" over ₹5,000, large, the ₹
+             smaller with its top on the digits' top (V13's words: the slider's "Slide to lock"
+             keeps their promise), and Save ₹10,000 under it; then, itemised as on a receipt below
+             a dashed rule, labels on the left edge and amounts on the right edge: "Course fee
+             ₹1,00,000 (struck) ₹90,000" and "Remaining, later ₹85,000". Under the slider (and
+             under V11's button on the details page), in red: "Offer ends in 01:14:33". Around it, V11's receipt: it prints out
              of the printer, its corners near-square on the offer page, with the perforation and
              notches over the slider and the scalloped bottom edge.
              On the offer page the button is "Slide to lock ₹5,000" (Wealthfront's "Drag to

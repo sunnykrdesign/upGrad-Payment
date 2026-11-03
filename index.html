@@ -3649,10 +3649,11 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
    standing alone, without the receipt; it is dropped.) While the offer is live the coupon's content
    gives way to:
    - A pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
-     pass" and the course; "Lock this offer with" over ₹5,000, large (the ₹ smaller, its top on the
-     digits' top; the words as V13's, so the slider's "Slide to lock" keeps their promise); "Course
-     fee ₹90,000" (₹1,00,000 struck, Save ₹10,000), so ₹5,000 + ₹85,000 adds up to the fee in view;
-     one line, "Remaining ₹85,000 later" and "Ends in 01:14:33" in red.
+     pass" and the course; centred, "Lock this offer with" over ₹5,000, large (the ₹ smaller, its
+     top on the digits' top; the words as V13's, so the slider's "Slide to lock" keeps their
+     promise), and Save ₹10,000 under it; then, itemised as on a receipt below a dashed rule, labels
+     on the left edge and amounts on the right: "Course fee  ₹1,00,000 (struck)  ₹90,000" and
+     "Remaining, later  ₹85,000". Under the action, in red: "Offer ends in 01:14:33".
    - V11's receipt around it: it prints out of the printer, its corners near-square on the offer
      page, a perforation with notches over the slider, and the scalloped bottom edge.
    - On the offer page, "Slide to lock ₹5,000" in place of the button (Wealthfront's "Drag to
@@ -3695,13 +3696,17 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
 .v14-k { margin: 0 0 8px; font-size: 13px; line-height: 16px; font-weight: 500; color: var(--ck-text-2); }
 .v14-amt { margin: 0; font-size: 56px; line-height: 56px; font-weight: 700; letter-spacing: -0.03em; color: var(--ck-text); font-variant-numeric: normal; font-feature-settings: normal; white-space: nowrap; }
 .v14-cur { display: inline-block; margin-right: 3px; font-size: 26px; line-height: 1; font-weight: 600; letter-spacing: 0; color: var(--ck-text-2); vertical-align: 0.7em; }
-.v14-locks { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 8px; margin: 12px 0 0; font-size: 14px; line-height: 20px; color: var(--ck-text-2); }
-.v14-locks strong { color: var(--ck-text); font-weight: 600; }
-.v14-locks s { color: var(--ck-text-3); }
-.v14-rows { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin: 20px 0 0; padding: 14px 0 16px; border-top: 1.5px dashed #E6E6EA; font-size: 13px; line-height: 18px; color: var(--ck-text-2); }
-html[data-pv15] .v14-rows { border-top: 0; margin-top: 18px; padding: 0 0 2px; }
-.v14-rows strong { color: var(--ck-text); font-weight: 600; }
-.v14-time { color: #C21F2E; font-weight: 500; white-space: nowrap; }
+.v14-saveline { margin: 12px 0 0; }
+/* the breakdown, itemised as on a receipt: labels on the left edge, amounts on the right edge */
+.v14-items { display: grid; gap: 10px; width: 100%; margin: 20px 0 0; padding: 16px 0; border-top: 1.5px dashed #E6E6EA; }
+.v14-items > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.v14-items dt { margin: 0; font-size: 14px; line-height: 20px; color: var(--ck-text-2); }
+.v14-items dd { margin: 0; display: flex; align-items: baseline; gap: 8px; font-size: 14px; line-height: 20px; white-space: nowrap; }
+.v14-items dd strong { font-weight: 600; color: var(--ck-text); }
+.v14-items dd s { font-size: 13px; color: var(--ck-text-3); }
+/* the time, under the action, in red (the coupon's own line stays for screen readers) */
+.v14-time { display: none; margin: 10px 0 0; text-align: center; font-size: 13px; line-height: 18px; font-weight: 500; color: #C21F2E; }
+html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-time { display: block; }
 .v14-time b { font-weight: 700; font-variant-numeric: tabular-nums; }
 .v14-time.is-urgent { color: #EE2C3C; }
 
@@ -3741,13 +3746,7 @@ html[data-pv15] .v14-rows { border-top: 0; margin-top: 18px; padding: 0 0 2px; }
 @keyframes v14-hint { 0%, 100% { translate: 0 0; } 22% { translate: 16px 0; } 44% { translate: 0 0; } 64% { translate: 9px 0; } 82% { translate: 0 0; } }
 
 @media (max-width: 860px) {
-  /* "Course fee ₹90,000 ₹1,00,000" and the chip on one row, down to 360px wide */
-  .v14-locks { gap: 4px 6px; font-size: 13px; letter-spacing: -0.005em; }
-  .v14-locks .cp-save { padding-left: 8px; padding-right: 8px; }
   .v14-amt { font-size: 50px; line-height: 50px; }
-}
-@media (max-width: 374px) {
-  .v14-locks { gap: 4px; font-size: 12.5px; }
   .v14-cur { font-size: 23px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -7539,8 +7538,9 @@ html[data-pv15] .v14-rows { border-top: 0; margin-top: 18px; padding: 0 0 2px; }
     '<div class="v14-band"><div class="v14-band__top"><span class="v14-logo"><img src="' + logo + '" alt="upGrad"></span><span class="v14-tag">Seat pass</span></div>' +
       '<p class="v14-course">Advance Certificate in Digital Marketing</p></div>' +
     '<div class="v14-body"><p class="v14-k">Lock this offer with</p><p class="v14-amt"><span class="v14-cur">₹</span>5,000</p>' +
-      '<p class="v14-locks">Course fee <strong>₹90,000</strong><s><span class="ck-sr">instead of </span>₹1,00,000</s><span class="cp-save" data-vx-save>Save ₹10,000</span></p>' +
-      '<p class="v14-rows"><span>Remaining <strong>₹85,000</strong> later</span><span class="v14-time" aria-hidden="true">Ends in <b data-v14-clock>00:00:00</b></span></p></div>';
+      '<p class="v14-saveline"><span class="cp-save" data-vx-save>Save ₹10,000</span></p>' +
+      '<dl class="v14-items"><div><dt>Course fee</dt><dd><s><span class="ck-sr">instead of </span>₹1,00,000</s><strong>₹90,000</strong></dd></div>' +
+        '<div><dt>Remaining, later</dt><dd><strong>₹85,000</strong></dd></div></dl></div>';
   ticket.insertBefore(pass, optA || ticket.firstChild);
 
   // slide to lock, in place of the offer page's button
@@ -7558,6 +7558,8 @@ html[data-pv15] .v14-rows { border-top: 0; margin-top: 18px; padding: 0 0 2px; }
     '<span class="v14-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="v14-shackle" d="M8.5 11V8.3a3.5 3.5 0 0 1 7 0V11"/>' +
       '<rect class="v14-body-lock" x="5.5" y="10.5" width="13" height="10" rx="2.6"/><circle class="v14-keyhole" cx="12" cy="15.3" r="1.5"/></svg></span>';
   if (btn) btn.parentNode.insertBefore(slide, btn);
+  // the time, under the action (the slider here, V11's button on the details page)
+  if (btn) btn.insertAdjacentHTML('afterend', '<p class="v14-time" aria-hidden="true">Offer ends in <b data-v14-clock>00:00:00</b></p>');
   var max = function () { return Math.max(0, slide.clientWidth - 60); };
   function set(x) { var m = max(); x = Math.max(0, Math.min(m, x)); slide.style.setProperty('--x', x + 'px'); return x; }
   function reset() { slide.classList.remove('is-locked', 'is-auto', 'is-back', 'is-held', 'is-hint'); set(0); }
@@ -7602,7 +7604,7 @@ html[data-pv15] .v14-rows { border-top: 0; margin-top: 18px; padding: 0 0 2px; }
   slide.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); auto(); } });
 
   // the time, from the coupon's own countdown (once a second, plain text)
-  var clock = pass.querySelector('[data-v14-clock]'), time = pass.querySelector('.v14-time');
+  var clock = ticket.querySelector('[data-v14-clock]'), time = ticket.querySelector('.v14-time');
   function tick() {
     if (!on() || !cdText) return;
     var m = /(\d{1,2}:\d{2}:\d{2})/.exec(cdText.textContent || '');
