@@ -4163,7 +4163,7 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
     <button class="ck-btn ck-btn--dark ck-btn--block" type="button" data-ck-next aria-describedby="ck9-rest">Continue</button>
     <p class="ck-mobilebar__hint" data-ck-hint></p>
     <!-- V11 on phones, Full 2: what remains after the ₹5,000, under the button -->
-    <p class="ck-mobilebar__rest v11-only" id="ck9-rest" data-ck-rest>Remaining ₹85,000, pay later</p>
+    <p class="ck-mobilebar__rest v11-only" id="ck9-rest" data-ck-rest>Remaining ₹85,000 later</p>
   </div>
 </div>
 
@@ -5039,7 +5039,7 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
     // V11 on phones, Full 2: under Continue, what remains after the block (while the offer is live)
     $$('[data-ck-rest]').forEach((el) => {
       el.hidden = !live();
-      const rest = 'Remaining ' + inr(OFFER_PRICE - block()) + ', pay later';
+      const rest = 'Remaining ' + inr(OFFER_PRICE - block()) + ' later';
       if (el.textContent !== rest) el.textContent = rest;
     });
     const full = $('[data-ck-full]');
