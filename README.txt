@@ -1,4 +1,4 @@
-upGrad UPI checkout prototype, V11 (the final direction)
+upGrad UPI checkout prototype, V11 (the final direction), with V13 and V15 (copies of V11 to try new things in)
 
 index.html   V11, the final direction (described below): the offer link names no centre or
              batch; the learner picks the learning centre on the details page. Step 1 and 2 are
@@ -126,6 +126,50 @@ V11          V10, the final direction: the link names no centre or batch, and th
              11. Every centre has the course's 4 months. Opened straight from the Scenario menu,
              the payment page shows Bangalore – Marathahalli. Paying the balance
              of a reserved seat asks for no centre.
+
+V13 and V15  (switch: V11, V13, V15; or ?v=13, ?v=15): copies of V11 to try new things in without
+             touching V11. Only the offer page and the details page change; the OTP, the payment
+             page and everything after are V11's. On phones the details page's header keeps two of
+             V11's four, Min and Full 2 (Full 2 unless Min is picked; back on V11, the one last
+             picked there returns). (V12, V11's coupon with the changes below, and V14, V15's pass
+             without the receipt, were tried and dropped: an old ?v=12b link opens 11b, ?v=14 opens
+             V15. V13 to V15 with whole new pages were tried and dropped before that.)
+             Both:
+             - "You save ₹10,000" reads "Save ₹10,000", with a tick: as the coupon lands it wipes
+               in from its left edge and the tick draws itself (it keeps its width, so nothing
+               around it moves).
+             - The button gives under a press; its arrow nudges forward on hover.
+             - From the offer page to the details page (and back) the coupon glides to its new
+               place (a view transition, where the browser has them).
+             - On the details page a field draws a green tick once it is right (a centre picked,
+               a name, a valid email, a 10-digit mobile); the centre list unfolds.
+             - On phones the countdowns change in place, as in V11 (rolling digits repainted the
+               coupon's shadow, which phones showed as flicker).
+V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,000, large, which rolls
+             up from ₹0 as the coupon lands; "₹85,000 later, before your batch starts"; then the
+             course fee (₹90,000, ₹1,00,000 struck, Save ₹10,000), smaller, on a grey row. (Ref:
+             Givingli's "Your price … That's just $4.99 / mo".) Under the button, in red, "Offer
+             ends in" and three small bordered tiles, [01] : [14] : [33] (Uxcel's offer timer).
+V15          "Seat pass + slide to lock", printed as V11's receipt. The coupon's content is a pass,
+             as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
+             pass" and the course; then, in V11's order, the price and the saving first and what
+             to pay to keep it after: as V11's coupon, "Course fee ₹90,000 ₹1,00,000 (struck)" on
+             the left and the "You save ₹10,000" pill on the right of the same line; below a dashed
+             rule, centred, "Pay now to lock this price" over ₹5,000, large (the ₹ smaller, its top
+             on the digits' top), and "Remaining ₹85,000 before your batch starts". Under the
+             slider (and under V11's button on the details page), in red: "Offer ends in
+             01:14:33". Around it, V11's receipt: it prints out of the printer, its corners near-square on the offer page, with the perforation and
+             notches over the slider and the scalloped bottom edge.
+             On the offer page the button is "Slide to lock ₹5,000" (Wealthfront's "Drag to
+             confirm", Swiggy's "Slide to Pay"): a red handle with an open padlock on a soft grey
+             track, three chevrons after the words. The fill follows the handle and the words turn
+             white where it has reached; let go early and it springs back; at the end the padlock
+             shuts, the handle turns white, "✓ Offer locked", phones that can give a short
+             vibration, and the flow goes on as the button would. A tap, Enter or Space plays the
+             slide. Once the receipt has printed the handle nudges right twice, to show the
+             gesture. On the details page the button is V11's (it waits for the details). Nothing
+             moves on its own after the entrance.
+             With reduced motion, none of the motion.
 
 What V11 builds on (no longer in the switch):
 
