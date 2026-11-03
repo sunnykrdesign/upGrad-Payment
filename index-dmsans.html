@@ -139,8 +139,8 @@
   --ck-shadow-float: 0 2px 6px rgba(18, 18, 20, 0.06), 0 18px 40px -12px rgba(18, 18, 20, 0.28);
   --ck-shadow-dark:  0 24px 48px -20px rgba(18, 18, 20, 0.55);
   /* type */
-  --ck-font: "DM Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; /* Circular; Inter only for ₹ */
-  --ck-mono: "DM Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; /* codes and timers: Circular too; the live timers use its tabular figures */
+  --ck-font: "DM Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; /* DM Sans; Inter only for ₹ */
+  --ck-mono: "DM Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; /* codes and timers: DM Sans too; the live timers use its tabular figures */
 
   margin: 0;
   min-width: 0;
@@ -733,7 +733,7 @@
 .ck-app--coupon .lk3-ends .ck-i { align-self: center; width: 16px; height: 16px; }
 /* the time: the card's sans-serif at the line's size; tabular figures so the digits don't jitter */
 .ck-app--coupon .lk3-ends strong { font-family: var(--ck-font); font-size: inherit; font-weight: 600; letter-spacing: 0; font-variant-numeric: tabular-nums; }
-/* "8h 14m" changes once a minute, so it keeps Circular's proportional figures and spaces;
+/* "8h 14m" changes once a minute, so it keeps DM Sans's proportional figures and spaces;
    the ticking 00:09:45 stays tabular so the digits don't jitter */
 .ck-app--coupon .lk3-ends.is-calm strong { font-variant-numeric: normal; }
 .ck-app--coupon .lk3-ends strong,
@@ -1778,7 +1778,7 @@
   --co-shadow-raised: 0 0 2px rgba(51, 54, 68, 0.05), 0 2px 3px rgba(51, 54, 68, 0.1);
   --co-shadow-selected: 0 6px 5px rgba(51, 54, 68, 0.05), 0 10px 8px rgba(51, 54, 68, 0.15);
 
-  --co-font: "DM Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; /* Circular; Inter only for ₹ */
+  --co-font: "DM Sans", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif; /* DM Sans; Inter only for ₹ */
   --co-container: 1120px;
 }
 
@@ -2206,7 +2206,7 @@ button { font: inherit; }
 }
 .v8-cta-timer .v8-band__timer:not([hidden]) { gap: 6px; font-size: 14px; line-height: 20px; }
 .v8-band__timer strong { font-weight: 500; color: inherit; }
-/* only the ticking 00:45:00 uses tabular figures (Circular's widen spaces in "5h 15m") */
+/* only the ticking 00:45:00 uses tabular figures (DM Sans's widen spaces in "5h 15m") */
 [data-ck-band]:not(.is-calm):not(.is-ended) strong,
 .v8 .v8-band__timer.is-ticking strong { font-variant-numeric: tabular-nums; }
 .v8-band__timer .ck-i { width: 16px; height: 16px; color: inherit; }
@@ -3180,7 +3180,7 @@ html[data-pv10] .ck-app--coupon .cp-ticket:not(:has(.lk3-ends.is-ended)) > .ck-o
 /* A: the course fee first (B's line), then what is paid now, large, and what remains */
 .v10-offer--a > .v10-lead { margin-top: 10px; }
 .v10-lead { color: var(--ck-text-2); font-size: 15px; line-height: 20px; }
-/* the amounts in proportional figures: Circular's tabular figures give the comma a digit's width,
+/* the amounts in proportional figures: DM Sans's tabular figures give the comma a digit's width,
    which opens a gap in "5,000" (these amounts never tick, so they do not need even widths) */
 .v10-offer :is(.v10-amount, .v10-plan dd, .v10-step__amt) { font-variant-numeric: normal; }
 .v10-amount { font-size: 44px; font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; }

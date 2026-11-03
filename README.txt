@@ -1,4 +1,4 @@
-upGrad UPI checkout prototype, V11 (the final direction), with V13 and V15 (copies of V11 to try new things in), with V12 and V13 (premium light looks)
+upGrad UPI checkout prototype, V11 (the final direction), with V13 and V15 (copies of V11 to try new things in)
 
 index.html   V11, the final direction (described below): the offer link names no centre or
              batch; the learner picks the learning centre on the details page. Step 1 and 2 are
