@@ -3651,9 +3651,10 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
    - A pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
      pass" and the course; centred, "Lock this offer with" over ₹5,000, large (the ₹ smaller, its
      top on the digits' top; the words as V13's, so the slider's "Slide to lock" keeps their
-     promise), and Save ₹10,000 under it; then, itemised as on a receipt below a dashed rule, labels
-     on the left edge and amounts on the right: "Course fee  ₹1,00,000 (struck)  ₹90,000" and
-     "Remaining, later  ₹85,000". Under the action, in red: "Offer ends in 01:14:33".
+     promise); then, itemised as on a receipt below a dashed rule, labels on the left edge and
+     amounts on the right: "Course fee  ₹1,00,000 (struck)  ₹90,000" with "✓ Save ₹10,000" in small
+     green under the price it comes from, and "Remaining, later  ₹85,000". Under the action, in
+     red: "Offer ends in 01:14:33".
    - V11's receipt around it: it prints out of the printer, its corners near-square on the offer
      page, a perforation with notches over the slider, and the scalloped bottom edge.
    - On the offer page, "Slide to lock ₹5,000" in place of the button (Wealthfront's "Drag to
@@ -3696,12 +3697,14 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
 .v14-k { margin: 0 0 8px; font-size: 13px; line-height: 16px; font-weight: 500; color: var(--ck-text-2); }
 .v14-amt { margin: 0; font-size: 56px; line-height: 56px; font-weight: 700; letter-spacing: -0.03em; color: var(--ck-text); font-variant-numeric: normal; font-feature-settings: normal; white-space: nowrap; }
 .v14-cur { display: inline-block; margin-right: 3px; font-size: 26px; line-height: 1; font-weight: 600; letter-spacing: 0; color: var(--ck-text-2); vertical-align: 0.7em; }
-.v14-saveline { margin: 12px 0 0; }
 /* the breakdown, itemised as on a receipt: labels on the left edge, amounts on the right edge */
 .v14-items { display: grid; gap: 10px; width: 100%; margin: 20px 0 0; padding: 16px 0; border-top: 1.5px dashed #E6E6EA; }
 .v14-items > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .v14-items dt { margin: 0; font-size: 14px; line-height: 20px; color: var(--ck-text-2); }
-.v14-items dd { margin: 0; display: flex; align-items: baseline; gap: 8px; font-size: 14px; line-height: 20px; white-space: nowrap; }
+.v14-items dd { margin: 0; display: grid; justify-items: end; gap: 2px; font-size: 14px; line-height: 20px; white-space: nowrap; }
+.v14-price { display: flex; align-items: baseline; gap: 8px; }
+/* the saving sits under the price it comes from: a small green line, no pill */
+.v14-items .v14-save { margin: 0; padding: 0; border-radius: 0; background: none; color: #13784A; font-size: 12px; line-height: 16px; font-weight: 600; }
 .v14-items dd strong { font-weight: 600; color: var(--ck-text); }
 .v14-items dd s { font-size: 13px; color: var(--ck-text-3); }
 /* the time, under the action, in red (the coupon's own line stays for screen readers) */
@@ -7538,8 +7541,8 @@ html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-time { display:
     '<div class="v14-band"><div class="v14-band__top"><span class="v14-logo"><img src="' + logo + '" alt="upGrad"></span><span class="v14-tag">Seat pass</span></div>' +
       '<p class="v14-course">Advance Certificate in Digital Marketing</p></div>' +
     '<div class="v14-body"><p class="v14-k">Lock this offer with</p><p class="v14-amt"><span class="v14-cur">₹</span>5,000</p>' +
-      '<p class="v14-saveline"><span class="cp-save" data-vx-save>Save ₹10,000</span></p>' +
-      '<dl class="v14-items"><div><dt>Course fee</dt><dd><s><span class="ck-sr">instead of </span>₹1,00,000</s><strong>₹90,000</strong></dd></div>' +
+      '<dl class="v14-items"><div><dt>Course fee</dt><dd><span class="v14-price"><s><span class="ck-sr">instead of </span>₹1,00,000</s><strong>₹90,000</strong></span>' +
+        '<span class="cp-save v14-save" data-vx-save>Save ₹10,000</span></dd></div>' +
         '<div><dt>Remaining, later</dt><dd><strong>₹85,000</strong></dd></div></dl></div>';
   ticket.insertBefore(pass, optA || ticket.firstChild);
 
