@@ -3538,198 +3538,188 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
 .pm-strip__v10 strong { font-weight: 600; }
 
 
+
 /* ============================================================================================
-   V13: V11 (₹5,000 now, ₹85,000 later; the centre picked on the details page) with a new offer
-   page and details page in a premium light look (html[data-pv-skin="13"]). Only those two pages
-   change: the OTP, the payment page and everything after it are V11's, as are the phone headers
-   on the details page (Min, Mid, Full, Full 2). Once the offer has ended, the coupon is V11's.
-   References (Mobbin): GetYourGuide's "We'll hold your spot" timer and checked fields, Kiwi.com's
-   "Lock price for $11.85", Navan's flight hold, Airbnb's due now / charged later, Booking.com's
-   sticky price bar, Google Maps' place search.
-   Motion: the page rises out of a soft blur in turn; the list price is struck through as you
-   watch and the saving springs in; the plan's line draws itself; the countdown rolls like an
-   odometer; the button carries a light that follows the pointer and gives under a press; going to
-   the details, the course card glides into the summary (a shared-element transition); fields
-   draw a tick once they are right; the centre list unfolds. With reduced motion, none of it.
+   V13, V14, V15: V11 (₹5,000 now, ₹85,000 later; the centre picked on the details page) with a
+   new offer page and details page, short (V11's density), light (html[data-pv-skin="13|14|15"]).
+   Only those two pages change: the OTP, the payment page and everything after are V11's, as are
+   the phone headers on the details page (Min, Mid, Full, Full 2). Once the offer has ended, the
+   coupon is V11's.
+   V13 Card: a hold pill, "Lock your offer price", one card (course; fee and saving; today and
+     later). Refs: GetYourGuide's hold timer, Airbnb's due now / later.
+   V14 Pass: one ticket: the course, ₹5,000 large ("to lock ₹90,000"), the fee and saving, a tear,
+     and the countdown inside the button. Refs: Meetup's and Eventbrite's tickets, Temu's
+     "Pay now · ends in 59:17".
+   V15 Split: ₹90,000 large with an "Ends in" pill, and the fee as one bar split into ₹5,000 today
+     and ₹85,000 later. Refs: Chime's "Expires in" pill, Kiwi.com's "Lock price".
+   Motion (all): parts rise out of a soft blur in turn; the list price is struck as you watch and
+   the saving springs in; the countdown rolls like an odometer; the button's light follows the
+   pointer and it gives under a press; offer to details, the card glides into the summary (a view
+   transition); fields tick themselves once right; the centre list unfolds. V15's bar fills.
    ============================================================================================ */
-.sk-only { display: none !important; }
-html[data-pv-skin="13"] .sk-only { display: revert !important; }
+.sk-sheet, .sk-tick, .sk-btime { display: none !important; }
+html[data-pv-skin="13"] .sk-s13, html[data-pv-skin="14"] .sk-s14, html[data-pv-skin="15"] .sk-s15 { display: grid !important; }
+html[data-pv-skin] .sk-tick { display: block !important; }
+html[data-pv-skin="14"] .ck-app[data-ck4-root][data-ck-view="offer"] .sk-btime { display: block !important; }
 html[data-pv-skin] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
 @media (max-width: 860px) { html[data-pv11] .pv-toggle [data-pv="11"] { display: inline-block; } }
+@media (max-width: 860px) { .pv-toggle { max-width: calc(100vw - 32px); overflow-x: auto; scrollbar-width: none; } .pv-toggle button { white-space: nowrap; } }
 
-html[data-pv-skin="13"] .ck-app[data-ck4-root] {
+html[data-pv-skin] .ck-app[data-ck4-root] {
   --sk-bg: #FAF8F5; --sk-surface: #fff; --sk-line: #ECE9E4; --sk-line-2: #E2DED7;
   --sk-text: #17171A; --sk-text-2: #66656C; --sk-text-3: #9A9893;
   --sk-red: #EE2C3C; --sk-red-2: #C8162B; --sk-green: #13784A; --sk-green-bg: #E8F5EE;
   --sk-ease: cubic-bezier(0.16, 1, 0.3, 1); --sk-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-html[data-pv-skin="13"] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) { background: var(--sk-bg); min-height: 100vh; }
+html[data-pv-skin] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) { background: var(--sk-bg); min-height: 100vh; }
 
-/* the coupon gives way to the sheet while the offer is live, on the offer and details pages */
-html[data-pv-skin="13"] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) :is(.pv-printer, .pv-printer-back, .pv-printer-shade, .pv-printer-cable) { display: none !important; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .ck-summary .cp-ticket:not(:has(.lk3-ends.is-ended)) {
-  transform: none !important; filter: none; display: grid; gap: 16px;
-}
-html[data-pv-skin="13"] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .cp-ticket:not(:has(.lk3-ends.is-ended)) > :is(.cp-head, .v10-offer, .ck-offer, .cp-tear) { display: none !important; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub {
-  -webkit-mask: none !important; mask: none !important; padding: 0; background: transparent; border-radius: 0; gap: 10px;
-}
-html[data-pv-skin="13"] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .cp-ticket:not(:has(.lk3-ends.is-ended)) .v8-cta-timer { display: none !important; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root]:not(:is([data-ck-view="offer"], [data-ck-view="details"])) .sk-sheet,
-html[data-pv-skin="13"] .cp-ticket:has(.lk3-ends.is-ended) .sk-sheet { display: none !important; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="offer"] .ck-summary { width: 100%; max-width: 500px; margin-inline: auto; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="offer"] .ck-pagehead { display: none; }
+/* the coupon gives way to the sheet while the offer is live */
+html[data-pv-skin] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) :is(.pv-printer, .pv-printer-back, .pv-printer-shade, .pv-printer-cable) { display: none !important; }
+html[data-pv-skin] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .ck-summary .cp-ticket:not(:has(.lk3-ends.is-ended)) { transform: none !important; filter: none; display: grid; gap: 16px; }
+html[data-pv-skin] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .cp-ticket:not(:has(.lk3-ends.is-ended)) > :is(.cp-head, .v10-offer, .ck-offer, .cp-tear) { display: none !important; }
+html[data-pv-skin] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { -webkit-mask: none !important; mask: none !important; padding: 0; background: transparent; border-radius: 0; gap: 10px; }
+html[data-pv-skin] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .cp-ticket:not(:has(.lk3-ends.is-ended)) :is(.v8-cta-timer, .lk3-action__hint) { display: none !important; }
+html[data-pv-skin] .ck-app[data-ck4-root]:not(:is([data-ck-view="offer"], [data-ck-view="details"])) .sk-sheet,
+html[data-pv-skin] .cp-ticket:has(.lk3-ends.is-ended) .sk-sheet { display: none !important; }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="offer"] .ck-summary { width: 100%; max-width: 440px; margin-inline: auto; }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="offer"] .ck-pagehead { display: none; }
 
-html[data-pv-skin="13"] .sk-sheet.sk-only { display: grid !important; }
-.sk-sheet { display: grid; gap: 18px; padding: 0 !important; background: transparent !important; color: var(--sk-text); }
+.sk-sheet { gap: 16px; padding: 0 !important; background: transparent !important; color: var(--sk-text); }
 .sk-num { font-variant-numeric: normal !important; font-feature-settings: normal !important; }
-
-/* the hold: a live dot and the time it is held for (GetYourGuide, Navan) */
-.sk-hold { justify-self: center; display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 7px 14px 7px 12px; border-radius: 999px; background: #FFF0F1; color: #B3121F; font-size: 13px; font-weight: 500; }
-.sk-hold b { font-weight: 700; color: #8F0E19; }
-.sk-live { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--sk-red); }
-.sk-live::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--sk-red); animation: sk-ping 1.8s var(--sk-ease) infinite; }
-@keyframes sk-ping { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(3); opacity: 0; } }
-.sk-hold.is-urgent { background: var(--sk-red); color: #fff; }
-.sk-hold.is-urgent b { color: #fff; }
-.sk-hold.is-urgent .sk-live, .sk-hold.is-urgent .sk-live::after { background: #fff; }
-
-.sk-head { display: grid; gap: 8px; text-align: center; margin: 6px 0 4px; }
-.sk-h { margin: 0; font-size: 38px; line-height: 1.08; font-weight: 600; letter-spacing: -0.025em; color: var(--sk-text); }
-.sk-sub { margin: 0 auto; max-width: 400px; font-size: 16px; line-height: 1.5; color: var(--sk-text-2); }
-.sk-sub strong { color: var(--sk-text); font-weight: 600; }
-
-/* the course card: on the offer page, then the details page's summary (it glides between them) */
-.sk-card { display: grid; gap: 0; border-radius: 20px; background: var(--sk-surface); border: 1px solid var(--sk-line); box-shadow: 0 1px 2px rgba(23, 23, 26, 0.04), 0 12px 32px -16px rgba(23, 23, 26, 0.14); }
-.sk-course { view-transition-name: sk-course; }
-.sk-card > .sk-sec { padding: 20px 22px; }
-.sk-card > .sk-sec + .sk-sec { border-top: 1px solid var(--sk-line); }
-.sk-cr { display: flex; align-items: center; gap: 14px; }
-.sk-logo { flex: none; display: grid; place-items: center; width: 52px; height: 52px; padding: 7px; border-radius: 14px; background: #F6F3EF; }
+.sk-card { display: grid; border-radius: 20px; background: var(--sk-surface); border: 1px solid var(--sk-line); box-shadow: 0 1px 2px rgba(23, 23, 26, 0.04), 0 12px 32px -16px rgba(23, 23, 26, 0.14); view-transition-name: sk-card; }
+.sk-sec { padding: 18px 20px; }
+.sk-sec + .sk-sec { border-top: 1px solid var(--sk-line); }
+.sk-cr { display: flex; align-items: center; gap: 12px; }
+.sk-logo { flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 6px; border-radius: 12px; background: #F6F3EF; }
 .sk-logo img { display: block; width: 100%; height: auto; }
-.sk-cr__name { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3; color: var(--sk-text); }
-.sk-cr__meta { margin: 3px 0 0; font-size: 13px; color: var(--sk-text-2); }
-.sk-price { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.sk-price__l { display: grid; gap: 2px; }
-.sk-price__label { margin: 0; font-size: 13px; color: var(--sk-text-2); }
-.sk-price__amt { margin: 0; display: flex; align-items: baseline; gap: 8px; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--sk-text); }
-.sk-was { position: relative; display: inline-block; line-height: 1.2; font-size: 15px; font-weight: 400; color: var(--sk-text-3); letter-spacing: 0; }
+.sk-cr__name { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.3; color: var(--sk-text); }
+.sk-was { position: relative; display: inline-block; line-height: 1.2; font-size: 14px; font-weight: 400; color: var(--sk-text-3); letter-spacing: 0; }
 .sk-was::after { content: ""; position: absolute; left: -2px; right: -2px; top: 50%; margin-top: -0.75px; height: 1.5px; background: currentColor; transform-origin: left; }
-.sk-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; background: var(--sk-green-bg); color: var(--sk-green); font-size: 13px; font-weight: 600; white-space: nowrap; }
-.sk-chip svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-/* the details page's summary: what is picked so far */
-.sk-picks { display: none; margin: 0; gap: 10px; }
+.sk-chip { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 999px; background: var(--sk-green-bg); color: var(--sk-green); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.sk-pill { justify-self: center; display: inline-flex; align-items: center; gap: 8px; margin: 0; padding: 7px 14px 7px 12px; border-radius: 999px; background: #FFF0F1; color: #B3121F; font-size: 13px; font-weight: 500; }
+.sk-pill b { font-weight: 700; color: #8F0E19; }
+.sk-pill.is-urgent { background: var(--sk-red); color: #fff; }
+.sk-pill.is-urgent b { color: #fff; }
+.sk-live { position: relative; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.sk-live::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: currentColor; animation: sk-ping 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+@keyframes sk-ping { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(3); opacity: 0; } }
+.sk-h { margin: 0; text-align: center; font-size: 32px; line-height: 1.1; font-weight: 600; letter-spacing: -0.025em; color: var(--sk-text); }
+/* the details page's summary: what is picked (empty until then) */
+.sk-picks { display: none; margin: 0; gap: 8px; }
 .sk-picks > div { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; }
 .sk-picks dt { color: var(--sk-text-2); }
-.sk-picks dd { margin: 0; text-align: right; color: var(--sk-text); font-weight: 500; }
-.sk-picks dd.is-empty { color: var(--sk-text-3); font-weight: 400; }
-.sk-picks dd.is-new { animation: sk-swap 0.5s var(--sk-ease); }
+.sk-picks dd { margin: 0; text-align: right; font-weight: 500; color: var(--sk-text); }
+.sk-picks dd.is-new { animation: sk-swap 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes sk-swap { from { opacity: 0; translate: 0 6px; filter: blur(3px); } }
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="details"] .sk-picks { display: grid; }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="details"] .sk-card:has(.sk-picks.is-set) .sk-picks { display: grid; }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="details"] :is(.sk-h, .sk-s13 > .sk-pill) { display: none; }
 
-/* how you'll pay (Airbnb's due now / later), as two stops on a line */
-.sk-plan__title { margin: 0 0 14px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--sk-text-3); }
-.sk-stops { position: relative; display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
-.sk-stops::before { content: ""; position: absolute; left: 7px; top: 12px; bottom: 12px; width: 2px; border-radius: 2px; background: linear-gradient(var(--sk-red), var(--sk-line-2) 60%); transform-origin: top; }
-.sk-stops li { position: relative; display: grid; grid-template-columns: 16px 1fr auto; align-items: center; column-gap: 14px; }
-.sk-dot { position: relative; z-index: 1; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--sk-line-2); background: var(--sk-surface); }
-.sk-stops li.is-now .sk-dot { border-color: var(--sk-red); background: var(--sk-red); box-shadow: 0 0 0 4px #FFE3E6; }
-.sk-when { display: grid; gap: 1px; }
-.sk-when b { font-size: 15px; font-weight: 600; color: var(--sk-text); }
-.sk-when span { font-size: 13px; color: var(--sk-text-2); }
-.sk-amt { font-size: 16px; font-weight: 600; color: var(--sk-text-2); }
-.sk-stops li.is-now .sk-amt { font-size: 22px; font-weight: 700; color: var(--sk-text); letter-spacing: -0.02em; }
+/* V13: card */
+.sk-s13 .sk-fee { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sk-s13 .sk-fee p { margin: 0; display: flex; align-items: baseline; gap: 8px; white-space: nowrap; font-size: 15px; color: var(--sk-text-2); }
+.sk-s13 .sk-fee strong { font-size: 17px; color: var(--sk-text); }
+.sk-rows { display: grid; gap: 12px; margin: 0; }
+.sk-rows > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; font-size: 15px; color: var(--sk-text-2); }
+.sk-rows dd { margin: 0; font-weight: 600; color: var(--sk-text-2); }
+.sk-rows .is-now dt { color: var(--sk-text); font-weight: 600; }
+.sk-rows .is-now dd { font-size: 24px; font-weight: 700; color: var(--sk-text); letter-spacing: -0.02em; }
 
-/* why it is safe to go on (GetYourGuide, Kiwi.com) */
-.sk-why { display: grid; gap: 10px; margin: 4px 0 6px; padding: 0 6px; list-style: none; }
-.sk-why li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45; color: var(--sk-text-2); }
-.sk-why li strong { color: var(--sk-text); font-weight: 600; }
-.sk-why svg { flex: none; width: 18px; height: 18px; margin-top: 1px; fill: none; stroke: var(--sk-green); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="details"] :is(.sk-head, .sk-why) { display: none; }
+/* V14: pass */
+.sk-s14 .sk-card { border-radius: 24px; }
+.sk-s14 .sk-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sk-s14 .sk-hero { display: grid; justify-items: center; gap: 4px; padding: 26px 20px 22px; text-align: center; }
+.sk-s14 .sk-hero__amt { margin: 0; font-size: 52px; line-height: 1; font-weight: 700; letter-spacing: -0.03em; color: var(--sk-text); }
+.sk-s14 .sk-hero__amt small { font-size: 0.5em; vertical-align: 0.75em; margin-right: 2px; font-weight: 600; color: var(--sk-text-2); }
+.sk-s14 .sk-hero__to { margin: 0; font-size: 15px; color: var(--sk-text-2); }
+.sk-s14 .sk-hero__to strong { color: var(--sk-text); }
+.sk-s14 .sk-meta { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; font-size: 14px; color: var(--sk-text-2); }
+.sk-s14 .sk-tear { position: relative; height: 0; border-top: 1.5px dashed var(--sk-line-2); margin: 0 18px; }
+.sk-s14 .sk-tear::before, .sk-s14 .sk-tear::after { content: ""; position: absolute; top: -12px; width: 22px; height: 22px; border-radius: 50%; background: var(--sk-bg); box-shadow: inset 0 0 0 1px var(--sk-line); }
+.sk-s14 .sk-tear::before { left: -30px; clip-path: inset(0 0 0 50%); }
+.sk-s14 .sk-tear::after { right: -30px; clip-path: inset(0 50% 0 0); }
+.sk-s14 .sk-later { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--sk-text-2); }
+.sk-s14 .sk-later strong { color: var(--sk-text); font-weight: 600; }
+.sk-btime { margin-top: 2px; font-size: 12px; font-weight: 500; opacity: 0.85; }
+html[data-pv-skin="14"] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-stub [data-ck-next] { flex-direction: column; gap: 0; height: 62px !important; line-height: 1.2; }
+html[data-pv-skin="14"] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-stub [data-ck-next] > svg { display: none; }
 
-/* the button: one strong action, a light that follows the pointer, a press that gives */
-html[data-pv-skin="13"] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .cp-stub [data-ck-next] {
+/* V15: split */
+.sk-s15 .sk-price { display: grid; justify-items: center; gap: 10px; text-align: center; padding: 6px 0 2px; }
+.sk-s15 .sk-price__amt { margin: 0; display: flex; align-items: baseline; gap: 10px; font-size: 48px; line-height: 1; font-weight: 700; letter-spacing: -0.03em; color: var(--sk-text); }
+.sk-s15 .sk-price__row { display: flex; align-items: center; gap: 8px; }
+.sk-s15 .sk-price__label { margin: 0; font-size: 14px; color: var(--sk-text-2); }
+.sk-bar { position: relative; display: flex; gap: 4px; height: 10px; }
+.sk-bar i { display: block; height: 100%; border-radius: 999px; }
+.sk-bar .is-now { flex: 0 0 18%; background: linear-gradient(90deg, var(--sk-red), #FF6B78); transform-origin: left; }
+.sk-bar .is-later { flex: 1; background: #ECE8E2; }
+.sk-split { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; }
+.sk-split div { display: grid; gap: 2px; }
+.sk-split div:last-child { text-align: right; }
+.sk-split span { font-size: 13px; color: var(--sk-text-2); }
+.sk-split b { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--sk-text); }
+.sk-split div:last-child b { font-size: 16px; font-weight: 600; color: var(--sk-text-2); }
+
+/* the button (all): a light that follows the pointer, a press that gives */
+html[data-pv-skin] .ck-app[data-ck4-root]:is([data-ck-view="offer"], [data-ck-view="details"]) .cp-stub [data-ck-next] {
   position: relative; overflow: hidden; height: 56px; border: 0; border-radius: 16px; color: #fff; font-size: 17px; font-weight: 600; letter-spacing: -0.01em;
   background: radial-gradient(120px circle at var(--sk-x, 50%) var(--sk-y, 50%), rgba(255, 255, 255, 0.28), transparent 70%), linear-gradient(180deg, #F2404F, var(--sk-red) 45%, var(--sk-red-2));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(200, 22, 43, 0.3), 0 12px 24px -10px rgba(200, 22, 43, 0.55);
   transition: transform 0.4s var(--sk-spring), box-shadow 0.3s ease, filter 0.2s ease;
 }
-html[data-pv-skin="13"] .ck-app[data-ck4-root] .cp-stub [data-ck-next]:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(200, 22, 43, 0.3), 0 16px 32px -10px rgba(200, 22, 43, 0.6); }
-html[data-pv-skin="13"] .ck-app[data-ck4-root] .cp-stub [data-ck-next]:active { transform: scale(0.97); transition-duration: 0.12s; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root] .cp-stub [data-ck-next] svg { transition: translate 0.4s var(--sk-spring); }
-html[data-pv-skin="13"] .ck-app[data-ck4-root] .cp-stub [data-ck-next]:hover svg { translate: 4px 0; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root] .cp-stub [data-ck-next]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%) -100% 0 / 220% 100% no-repeat; pointer-events: none; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root] .sk-sheet.is-in ~ .cp-stub [data-ck-next]::after { animation: sk-shine 1.2s var(--sk-ease) 1.3s both; }
-@keyframes sk-shine { to { background-position: 200% 0; } }
-html[data-pv-skin="13"] .ck-app[data-ck4-root] .cp-stub [data-ck-next]:is([aria-disabled="true"], :disabled) { filter: saturate(0.55) brightness(1.18); box-shadow: none; }
-.sk-trust { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 0; font-size: 12px; color: var(--sk-text-3); }
-.sk-trust svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
+html[data-pv-skin] .ck-app[data-ck4-root] .cp-stub [data-ck-next]:active { transform: scale(0.97); transition-duration: 0.12s; }
+html[data-pv-skin] .ck-app[data-ck4-root] .cp-stub [data-ck-next] svg { transition: translate 0.4s var(--sk-spring); }
+html[data-pv-skin] .ck-app[data-ck4-root] .cp-stub [data-ck-next]:hover svg { translate: 4px 0; }
+html[data-pv-skin] .ck-app[data-ck4-root] .cp-stub [data-ck-next]:is([aria-disabled="true"], :disabled) { filter: saturate(0.55) brightness(1.18); box-shadow: none; }
 
-/* the details page: the form, cleaner fields that tick themselves once right */
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="details"] .ck-main .ck-card { border: 1px solid var(--sk-line); border-radius: 20px; box-shadow: 0 1px 2px rgba(23, 23, 26, 0.04), 0 12px 32px -16px rgba(23, 23, 26, 0.14); }
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="details"] .v4-field__label { font-size: 13px; font-weight: 500; color: var(--sk-text); }
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4-input {
-  position: relative; border-radius: 12px; background: var(--sk-surface); box-shadow: inset 0 0 0 1px var(--sk-line-2);
-  transition: box-shadow 0.25s var(--sk-ease), background 0.25s ease;
-}
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4-input:hover { box-shadow: inset 0 0 0 1px #CFCAC2; }
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4-input:focus-within { box-shadow: inset 0 0 0 1.5px var(--sk-text), 0 0 0 4px rgba(23, 23, 26, 0.06); }
-html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4-input.sk-ok { box-shadow: inset 0 0 0 1px #9FD3B6; }
+/* the details page: cleaner fields that tick themselves once right; the centre list unfolds */
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="details"] .ck-main .ck-card { border: 1px solid var(--sk-line); border-radius: 20px; box-shadow: 0 1px 2px rgba(23, 23, 26, 0.04), 0 12px 32px -16px rgba(23, 23, 26, 0.14); }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="details"] .v4-field__label { font-size: 13px; font-weight: 500; color: var(--sk-text); }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4-input { position: relative; border-radius: 12px; background: var(--sk-surface); box-shadow: inset 0 0 0 1px var(--sk-line-2); transition: box-shadow 0.25s var(--sk-ease); }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4-input:hover { box-shadow: inset 0 0 0 1px #CFCAC2; }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4-input:focus-within { box-shadow: inset 0 0 0 1.5px var(--sk-text), 0 0 0 4px rgba(23, 23, 26, 0.06); }
+html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4-input.sk-ok { box-shadow: inset 0 0 0 1px #9FD3B6; }
 .sk-tick { position: absolute; right: 14px; top: 50%; width: 20px; height: 20px; margin-top: -10px; pointer-events: none; opacity: 0; }
-.sk-tick circle { fill: var(--sk-green, #13784A); transform-origin: center; transform: scale(0); transition: transform 0.4s var(--sk-spring, ease); }
+.sk-tick circle { fill: #13784A; transform-origin: center; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .sk-tick path { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 12; stroke-dashoffset: 12; transition: stroke-dashoffset 0.3s ease 0.15s; }
 .sk-ok > .sk-tick { opacity: 1; }
 .sk-ok > .sk-tick circle { transform: scale(1); }
 .sk-ok > .sk-tick path { stroke-dashoffset: 0; }
-html[data-pv-skin="13"] .v11-combo__box.sk-ok:not(:focus-within) .v11-combo__toggle { visibility: hidden; }
-html[data-pv-skin="13"] .v11-combo__box.sk-ok:focus-within > .sk-tick { opacity: 0; }
-/* the centre list unfolds, each centre with a pin (Google Maps' place search) */
-html[data-pv-skin="13"] .v11-combo__list:not([hidden]) { border-radius: 16px; border: 1px solid var(--sk-line); box-shadow: 0 24px 48px -20px rgba(23, 23, 26, 0.28); transform-origin: top; animation: sk-unfold 0.35s var(--sk-ease); }
+html[data-pv-skin] .v11-combo__box.sk-ok:not(:focus-within) .v11-combo__toggle { visibility: hidden; }
+html[data-pv-skin] .v11-combo__box.sk-ok:focus-within > .sk-tick { opacity: 0; }
+html[data-pv-skin] .v11-combo__list:not([hidden]) { border-radius: 16px; border: 1px solid var(--sk-line); box-shadow: 0 24px 48px -20px rgba(23, 23, 26, 0.28); transform-origin: top; animation: sk-unfold 0.35s var(--sk-ease); }
 @keyframes sk-unfold { from { opacity: 0; transform: translateY(-6px) scaleY(0.96); } }
-html[data-pv-skin="13"] .v11-combo__list [role="option"] { position: relative; padding-left: 44px !important; }
-html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
-  content: ""; position: absolute; left: 14px; top: 50%; width: 20px; height: 20px; margin-top: -10px; border-radius: 50%; background: #F3F0EC;
-  -webkit-mask: none; box-shadow: inset 0 0 0 7px #F3F0EC, inset 0 0 0 10px #B9B4AC;
-}
 
 /* the reveal, in turn */
 @keyframes sk-rise { from { opacity: 0; translate: 0 14px; filter: blur(6px); } to { opacity: 1; translate: 0 0; filter: blur(0); } }
 .sk-sheet.is-in > *, .sk-sheet.is-in ~ .cp-stub { animation: sk-rise 0.8s var(--sk-ease) both; }
-.sk-sheet.is-in > :nth-child(2) { animation-delay: 0.07s; } .sk-sheet.is-in > :nth-child(3) { animation-delay: 0.14s; }
-.sk-sheet.is-in > :nth-child(4) { animation-delay: 0.21s; } .sk-sheet.is-in > :nth-child(5) { animation-delay: 0.28s; }
-.sk-sheet.is-in ~ .cp-stub { animation-delay: 0.36s; }
-.sk-sheet.is-in .sk-was::after { animation: sk-strike 0.5s var(--sk-ease) 0.7s both; }
+.sk-sheet.is-in > :nth-child(2) { animation-delay: 0.08s; } .sk-sheet.is-in > :nth-child(3) { animation-delay: 0.16s; }
+.sk-sheet.is-in ~ .cp-stub { animation-delay: 0.28s; }
+.sk-sheet.is-in .sk-was::after { animation: sk-strike 0.5s var(--sk-ease) 0.6s both; }
 @keyframes sk-strike { from { transform: scaleX(0); } }
-.sk-sheet.is-in .sk-chip { animation: sk-pop 0.6s var(--sk-spring) 1s both; }
+.sk-sheet.is-in .sk-chip { animation: sk-pop 0.6s var(--sk-spring) 0.9s both; }
 @keyframes sk-pop { from { opacity: 0; scale: 0.6; } }
-.sk-sheet.is-in .sk-stops::before { animation: sk-grow 0.9s var(--sk-ease) 0.6s both; }
-@keyframes sk-grow { from { transform: scaleY(0); } }
-.sk-sheet.is-in .sk-stops li.is-now .sk-dot { animation: sk-pop 0.5s var(--sk-spring) 0.55s both; }
+.sk-sheet.is-in .sk-bar .is-now { animation: sk-fill 0.9s var(--sk-ease) 0.5s both; }
+@keyframes sk-fill { from { transform: scaleX(0); } }
+.sk-sheet.is-in .sk-hero__amt { animation: sk-pop 0.7s var(--sk-spring) 0.25s both; }
 /* odometer digits */
 .odo { display: inline-flex; height: 1lh; vertical-align: top; overflow: hidden; }
 .odo-c { display: inline-block; height: 1lh; }
 .odo-d { display: inline-block; height: 1lh; overflow: hidden; }
-.odo-s { display: flex; flex-direction: column; transition: transform 0.6s var(--sk-ease, ease); }
+.odo-s { display: flex; flex-direction: column; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 .odo-s > span { display: block; height: 1lh; text-align: center; }
-/* the shared-element glide, offer to details */
-::view-transition-group(sk-course) { animation-duration: 0.6s; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+::view-transition-group(sk-card) { animation-duration: 0.6s; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.35s; }
 
-/* phones: the action stays at the foot of the screen (Booking.com, GetYourGuide) */
 @media (max-width: 860px) {
-  .sk-h { font-size: 30px; }
-  .sk-head { text-align: left; } .sk-sub { margin: 0; }
-  .sk-hold { justify-self: start; }
-  .sk-card > .sk-sec { padding: 18px; }
-  html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub {
+  .sk-h { font-size: 28px; text-align: left; }
+  .sk-pill { justify-self: start; }
+  html[data-pv-skin] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub {
     position: sticky; bottom: 0; z-index: 5; margin: 0 -16px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)) !important;
-    background: rgba(250, 248, 245, 0.86); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4);
-    box-shadow: 0 -1px 0 var(--sk-line);
+    background: rgba(250, 248, 245, 0.86); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); box-shadow: 0 -1px 0 var(--sk-line);
   }
-  html[data-pv-skin="13"] .ck-app[data-ck4-root][data-ck-view="offer"] .sk-trust { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
-  html[data-pv-skin="13"] *, html[data-pv-skin="13"] *::before, html[data-pv-skin="13"] *::after { animation: none !important; transition: none !important; }
+  html[data-pv-skin] *, html[data-pv-skin] *::before, html[data-pv-skin] *::after { animation: none !important; transition: none !important; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
 </style>
@@ -3740,7 +3730,7 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
   // V11 only now: a V10 link keeps its coupon option (?v=10c opens 11c); V9's opens V11
   var legacy = function (x) { return /^10[abc]$/.test(x || '') ? '11' + x.slice(2) : x; };
   var v = legacy(params.get('v'));
-  var known = function (x) { return /^(11[abc]?|13)$/.test(x || ''); };
+  var known = function (x) { return /^(11[abc]?|13|14|15)$/.test(x || ''); };
   // ?test (user testing): no Scenario bar, version switch or prototype notes; V11 unless ?v= says
   // otherwise, and the last version picked is not used
   var test = new URLSearchParams(location.search).has('test');
@@ -3759,8 +3749,8 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
   document.documentElement.dataset.pv11Pd = pdOk(pd) ? pd : 'full';
   // V10 is V9 with an option on its coupon (?v=10a, 10b, 10c); the page runs as V9 under it. V11 is
   // V10 with no centre in the link, the centre picked on the details page (?v=11a, 11b, 11c)
-  // V13: V11, option B, in its own look on the offer and details pages (html[data-pv-skin])
-  if (/^13$/.test(v)) { document.documentElement.dataset.pvSkin = v; v = '11b'; }
+  // V13 to V15: V11, option B, with a new offer and details page (html[data-pv-skin])
+  if (/^1[345]$/.test(v)) { document.documentElement.dataset.pvSkin = v; v = '11b'; }
   if (/^11/.test(v)) document.documentElement.dataset.pv11 = '';
   if (/^1[01]/.test(v)) { document.documentElement.dataset.pv10 = v.slice(2) || 'b'; v = '9'; }
   document.documentElement.dataset.previewV = v;
@@ -6727,6 +6717,8 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
 <div class="pv-toggle" role="group" aria-label="Preview version">
   <button type="button" data-pv="11">V11</button>
   <button type="button" data-pv="13">V13</button>
+  <button type="button" data-pv="14">V14</button>
+  <button type="button" data-pv="15">V15</button>
   <span class="pv-opts" role="group" aria-label="Coupon option">
     <button type="button" data-pv10-opt="a">A</button>
     <button type="button" data-pv10-opt="b">B</button>
@@ -7177,7 +7169,7 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
   var opts = Array.prototype.slice.call(document.querySelectorAll('.pv-toggle [data-pv10-opt]'));
   var lastOpt = root.dataset.pv10 || 'b';
   function show(v) {
-    var skin = v === '13' ? v : '';
+    var skin = /^1[345]$/.test(v) ? v : '';
     if (skin) { root.dataset.pvSkin = skin; v = '11b'; } else delete root.dataset.pvSkin;
     var ten = /^1[01][abc]$/.test(v);
     var major = ten ? v.slice(0, 2) : v;
@@ -7479,49 +7471,49 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
 </script>
 
 
+
 <script>
-/* V13 (html[data-pv-skin="13"]): the offer and details pages' sheet, its countdown and its motion */
+/* V13, V14, V15 (html[data-pv-skin]): the offer and details pages' sheets, their countdown and motion */
 (function () {
   var root = document.documentElement;
   var app = document.querySelector('[data-ck4-root]');
   if (!app) return;
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var on = function () { return root.dataset.pvSkin === '13'; };
+  var skin = function () { return root.dataset.pvSkin || ''; };
   var ticket = app.querySelector('.ck-summary .cp-ticket');
   var ends = app.querySelector('.ck-summary .lk3-ends');
   var cdText = ends && ends.querySelector('[data-ck-countdown-text]');
-  var noteEl = ends && ends.querySelector('[data-ck-offer-note]');
   var logo = (app.querySelector('.ck-summary .ck-course__logo img') || {}).src || '';
-  var check = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
-  var lock = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  var course = '<div class="sk-cr"><span class="sk-logo"><img src="' + logo + '" alt="upGrad"></span><p class="sk-cr__name">Advance Certificate in Digital Marketing</p></div>';
+  var was = '<span class="sk-was"><span class="ck-sr">instead of </span>₹1,00,000</span>';
+  var save = '<span class="sk-chip">Save ₹10,000</span>';
+  var picks = '<dl class="sk-sec sk-picks"><div><dt>Centre</dt><dd data-sk-centre></dd></div><div><dt>Batch starts</dt><dd data-sk-batch></dd></div></dl>';
+  var pill = function (label) { return '<p class="sk-pill sk-num" data-sk-pill><span class="sk-live" aria-hidden="true"></span><span>' + label + ' <b data-sk-clock>00:00:00</b></span></p>'; };
 
   if (ticket) {
     ticket.insertAdjacentHTML('afterbegin',
-      '<div class="cp-part sk-sheet sk-only">' +
-        '<p class="sk-hold" data-sk-hold><span class="sk-live" aria-hidden="true"></span><span>Offer price held for you · <b class="sk-num" data-sk-clock>00:00:00</b></span></p>' +
-        '<div class="sk-head"><h2 class="sk-h">Lock your offer price</h2>' +
-          '<p class="sk-sub">Pay <strong>₹5,000</strong> today and the course is yours at <strong>₹90,000</strong>. It counts toward the fee; it is not extra.</p></div>' +
-        '<div class="sk-card sk-course">' +
-          '<div class="sk-sec sk-cr"><span class="sk-logo"><img src="' + logo + '" alt="upGrad"></span><div>' +
-            '<p class="sk-cr__name">Advance Certificate in Digital Marketing</p><p class="sk-cr__meta">4 months · In class at an upGrad learning centre</p></div></div>' +
-          '<div class="sk-sec sk-price sk-num"><div class="sk-price__l"><p class="sk-price__label">Course fee with this offer</p>' +
-            '<p class="sk-price__amt">₹90,000 <span class="sk-was"><span class="ck-sr">instead of </span>₹1,00,000</span></p></div>' +
-            '<span class="sk-chip">' + check + 'Save ₹10,000</span></div>' +
-          '<dl class="sk-sec sk-picks"><div><dt>Learning centre</dt><dd class="is-empty" data-sk-centre>Choose on the left</dd></div>' +
-            '<div><dt>Batch starts</dt><dd class="is-empty" data-sk-batch>After you choose a centre</dd></div></dl>' +
-          '<div class="sk-sec"><p class="sk-plan__title">How you’ll pay</p><ol class="sk-stops sk-num">' +
-            '<li class="is-now"><span class="sk-dot" aria-hidden="true"></span><span class="sk-when"><b>Today</b><span>Locks ₹90,000 for you</span></span><span class="sk-amt">₹5,000</span></li>' +
-            '<li><span class="sk-dot" aria-hidden="true"></span><span class="sk-when"><b>Before your batch starts</b><span>The remaining amount</span></span><span class="sk-amt">₹85,000</span></li>' +
-          '</ol></div>' +
-        '</div>' +
-        '<ul class="sk-why">' +
-          '<li>' + check + '<span><strong>₹90,000 is locked</strong> once you pay ₹5,000, even after the offer ends.</span></li>' +
-          '<li>' + check + '<span>Next, choose the <strong>learning centre and batch</strong> that suit you.</span></li>' +
-          '<li>' + check + '<span>Pay by <strong>UPI, card or net banking</strong>. The receipt comes by email.</span></li>' +
-        '</ul>' +
-      '</div>');
-    var stub = ticket.querySelector('.cp-stub');
-    if (stub) stub.insertAdjacentHTML('beforeend', '<p class="sk-trust sk-only">' + lock + 'Secure checkout by upGrad</p>');
+      // V13: card
+      '<div class="cp-part sk-sheet sk-s13">' + pill('Offer price held for you ·') +
+        '<h2 class="sk-h">Lock your offer price</h2>' +
+        '<div class="sk-card"><div class="sk-sec">' + course + '</div>' +
+          '<div class="sk-sec sk-fee sk-num"><p>Course fee <strong>₹90,000</strong> ' + was + '</p>' + save + '</div>' + picks +
+          '<dl class="sk-sec sk-rows sk-num"><div class="is-now"><dt>Pay now</dt><dd>₹5,000</dd></div><div><dt>Before your batch starts</dt><dd>₹85,000</dd></div></dl>' +
+        '</div></div>' +
+      // V14: pass
+      '<div class="cp-part sk-sheet sk-s14"><div class="sk-card">' +
+        '<div class="sk-sec sk-top">' + course + '</div>' +
+        '<div class="sk-hero sk-num"><p class="sk-hero__amt"><small>₹</small>5,000</p><p class="sk-hero__to">Pay now to lock <strong>₹90,000</strong></p>' +
+          '<p class="sk-meta">' + was + save + '</p></div>' + picks +
+        '<div class="sk-tear" aria-hidden="true"></div>' +
+        '<div class="sk-sec sk-later sk-num"><span>Remaining, before your batch starts</span><strong>₹85,000</strong></div>' +
+      '</div></div>' +
+      // V15: split
+      '<div class="cp-part sk-sheet sk-s15">' +
+        '<div class="sk-price sk-num">' + pill('Ends in') +
+          '<p class="sk-price__amt">₹90,000 ' + was + '</p><div class="sk-price__row"><p class="sk-price__label">Advance Certificate in Digital Marketing</p></div>' + save + '</div>' +
+        '<div class="sk-card"><div class="sk-sec sk-num"><div class="sk-bar" aria-hidden="true"><i class="is-now"></i><i class="is-later"></i></div>' +
+          '<div class="sk-split"><div><span>Pay now</span><b>₹5,000</b></div><div><span>Before your batch starts</span><b>₹85,000</b></div></div></div>' + picks +
+        '</div></div>');
   }
 
   // odometer: each digit rolls into place on a column of 0 to 9
@@ -7544,53 +7536,52 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
       else col.style.transform = 'translateY(' + (-c * 10) + '%)';
     });
   }
+  var btn = ticket && ticket.querySelector('.cp-stub [data-ck-next]');
   function tick() {
     if (!cdText) return;
+    if (btn && !btn.querySelector('.sk-btime')) btn.insertAdjacentHTML('beforeend', '<span class="sk-btime sk-num">Offer ends in <span data-sk-clock>00:00:00</span></span>');
     var m = /(\d{1,2}:\d{2}(?::\d{2})?)/.exec(cdText.textContent || '');
-    app.querySelectorAll('[data-sk-clock]').forEach(function (el) { if (m) odo(el, m[1]); });
-    var hold = app.querySelector('[data-sk-hold]');
-    if (hold) hold.classList.toggle('is-urgent', !!(ends && ends.dataset.pvUrgency));
+    document.querySelectorAll('[data-sk-clock]').forEach(function (el) { if (m) odo(el, m[1]); });
+    var urgent = !!(ends && ends.dataset.pvUrgency);
+    app.querySelectorAll('[data-sk-pill]').forEach(function (el) { el.classList.toggle('is-urgent', urgent); });
   }
   if (cdText && window.MutationObserver) new MutationObserver(tick).observe(cdText, { childList: true, characterData: true, subtree: true });
   setInterval(tick, 500);
   tick();
 
-  // the details page: the summary follows the centre picked, and right fields tick themselves
+  // the details page: the summary shows the centre and batch once picked; right fields tick
   var centreIn = app.querySelector('[data-ck-centre]');
   var batchEl = app.querySelector('[data-ck-batch]');
-  function setPick(sel, text, emptyText) {
-    var dd = app.querySelector(sel);
-    if (!dd) return;
-    var val = text || emptyText;
-    if (dd.textContent === val) return;
-    dd.textContent = val;
-    dd.classList.toggle('is-empty', !text);
-    dd.classList.remove('is-new'); void dd.offsetWidth; if (text) dd.classList.add('is-new');
-  }
-  function picks() {
+  function setPicks() {
     var batch = batchEl ? (batchEl.textContent || '').replace(/\s+/g, ' ').trim() : '';
-    var starts = (/Batch starts\s*(.+?)(?:Duration|$)/.exec(batch) || [])[1];
+    var starts = ((/Batch starts\s*(.+?)(?:Duration|$)/.exec(batch) || [])[1] || '').trim();
     var picked = !!(batch && centreIn && centreIn.value.trim());
-    setPick('[data-sk-centre]', picked ? centreIn.value.trim() : '', 'Choose on the left');
-    setPick('[data-sk-batch]', picked && starts ? starts.trim() : '', 'After you choose a centre');
+    app.querySelectorAll('.sk-picks').forEach(function (dl) {
+      dl.classList.toggle('is-set', picked);
+      [['[data-sk-centre]', picked ? centreIn.value.trim() : ''], ['[data-sk-batch]', picked ? starts : '']].forEach(function (p) {
+        var dd = dl.querySelector(p[0]);
+        if (!dd || dd.textContent === p[1]) return;
+        dd.textContent = p[1];
+        dd.classList.remove('is-new'); void dd.offsetWidth; if (p[1]) dd.classList.add('is-new');
+      });
+    });
   }
-  if (batchEl && window.MutationObserver) new MutationObserver(picks).observe(batchEl, { childList: true, characterData: true, subtree: true });
-  if (centreIn) centreIn.addEventListener('input', picks);
+  if (batchEl && window.MutationObserver) new MutationObserver(setPicks).observe(batchEl, { childList: true, characterData: true, subtree: true });
+  if (centreIn) centreIn.addEventListener('input', setPicks);
   var rules = {
+    centre: function () { return !!(batchEl && batchEl.textContent.trim()); },
     name: function (v) { return v.trim().length > 1; },
     email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); },
-    phone: function (v) { return /^[6-9]\d{9}$/.test(v.replace(/\D/g, '')); },
-    centre: function () { return !!(batchEl && batchEl.textContent.trim()); }
+    phone: function (v) { return /^[6-9]\d{9}$/.test(v.replace(/\D/g, '')); }
   };
   Object.keys(rules).forEach(function (k) {
     var field = app.querySelector('[data-ck-field="' + k + '"]');
     var box = field && field.querySelector('.ck-phone-field');
     var input = field && field.querySelector('input');
     if (!box || !input) return;
-    box.insertAdjacentHTML('beforeend', '<svg class="sk-tick sk-only" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="m6 10.2 2.6 2.6L14 7.4"/></svg>');
-    var upd = function () { box.classList.toggle('sk-ok', on() && rules[k](input.value)); };
-    input.addEventListener('input', upd);
-    input.addEventListener('change', upd);
+    box.insertAdjacentHTML('beforeend', '<svg class="sk-tick" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="m6 10.2 2.6 2.6L14 7.4"/></svg>');
+    var upd = function () { box.classList.toggle('sk-ok', !!skin() && rules[k](input.value)); };
+    ['input', 'change'].forEach(function (t) { input.addEventListener(t, upd); });
     input.addEventListener('blur', function () { setTimeout(upd, 0); });
     if (k === 'centre' && batchEl && window.MutationObserver) new MutationObserver(upd).observe(batchEl, { childList: true, subtree: true, characterData: true });
     setTimeout(upd, 0);
@@ -7598,27 +7589,27 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
 
   // the reveal
   function enter() {
-    var sheet = ticket && ticket.querySelector('.sk-sheet');
-    if (!on() || !sheet) return;
-    sheet.classList.remove('is-in');
-    if (still) return;
+    if (!skin() || !ticket) return;
+    ticket.querySelectorAll('.sk-sheet').forEach(function (s) { s.classList.remove('is-in'); });
+    var sheet = ticket.querySelector('.sk-s' + skin());
+    if (still || !sheet) return;
     void sheet.offsetWidth;
     sheet.classList.add('is-in');
   }
 
   // the button's light follows the pointer
   app.addEventListener('pointermove', function (e) {
-    var btn = e.target.closest && e.target.closest('.cp-stub [data-ck-next]');
-    if (!btn || !on()) return;
-    var r = btn.getBoundingClientRect();
-    btn.style.setProperty('--sk-x', (e.clientX - r.left) + 'px');
-    btn.style.setProperty('--sk-y', (e.clientY - r.top) + 'px');
+    var b = e.target.closest && e.target.closest('.cp-stub [data-ck-next]');
+    if (!b || !skin()) return;
+    var r = b.getBoundingClientRect();
+    b.style.setProperty('--sk-x', (e.clientX - r.left) + 'px');
+    b.style.setProperty('--sk-y', (e.clientY - r.top) + 'px');
   });
 
-  // offer to details (and back): the course card glides into place (a view transition)
+  // offer to details (and back): the card glides into place (a view transition)
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('.cp-stub [data-ck-next], [data-ck-back], [data-pm-flow-back]');
-    if (!b || !on() || still || !document.startViewTransition || b.__skGo) return;
+    if (!b || !skin() || still || !document.startViewTransition || b.__skGo) return;
     var view = app.dataset.ckView;
     var forward = b.matches('[data-ck-next]') && view === 'offer';
     var back = !b.matches('[data-ck-next]') && view === 'details';
@@ -7627,7 +7618,7 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
     document.startViewTransition(function () { b.__skGo = true; b.click(); b.__skGo = false; });
   }, true);
 
-  var lastView = app.dataset.ckView, lastOn = on();
+  var lastView = app.dataset.ckView, lastSkin = skin();
   if (window.MutationObserver) {
     new MutationObserver(function () {
       if (app.dataset.ckView === lastView) return;
@@ -7636,8 +7627,8 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
       if (lastView === 'offer' && from !== 'details') enter();
     }).observe(app, { attributes: true, attributeFilter: ['data-ck-view'] });
     new MutationObserver(function () {
-      if (on() === lastOn) return;
-      lastOn = on();
+      if (skin() === lastSkin) return;
+      lastSkin = skin();
       enter();
       app.querySelectorAll('[data-ck-field] input').forEach(function (i) { i.dispatchEvent(new Event('change')); });
     }).observe(root, { attributes: true, attributeFilter: ['data-pv-skin'] });
@@ -7646,7 +7637,7 @@ html[data-pv-skin="13"] .v11-combo__list [role="option"]::before {
   if (replay) replay.addEventListener('click', function () { setTimeout(enter, 0); });
   document.addEventListener('ck:scenario', function () { setTimeout(enter, 30); });
   enter();
-  picks();
+  setPicks();
 })();
 </script>
 </body>
