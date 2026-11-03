@@ -156,8 +156,8 @@ V12 and V13  (switch: V11, V12, V13; or ?v=12a, ?v=12b, ?v=12c, ?v=13): copies o
                 place; the coupon's own line stays for screen readers. V12: one line under the
                 button, "Offer ends in 01h 14m 33s" (Codecademy's sale clock). V13: "Offer ends
                 in" and three small bordered tiles, [01] : [14] : [33], under the button (Uxcel's
-                offer timer). Both brighten in the last 10 minutes. On phones the strip's countdown
-                rolls too.
+                offer timer). Both brighten in the last 10 minutes. On phones the digits change
+                in place, as in V11 (rolling them made the coupon's shadow flicker).
              2. "You save ₹10,000" reads "Save ₹10,000", with a tick: it springs in as the coupon
                 lands, the amount counts up from ₹0, and a few sparks leave it once.
              3. The button gives under a press; its arrow nudges forward on hover.
