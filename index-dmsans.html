@@ -3147,7 +3147,15 @@ html:has([data-v8-root]:not([hidden])) .pv-toggle .pv-restart { display: inline-
 .pv-toggle .pv-replay { display: none; margin-left: 4px; box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.18); border-radius: 0 999px 999px 0; color: #fff; }
 html:is([data-preview-v="4"], [data-preview-v="5"], [data-preview-v="6"], [data-preview-v="7"], [data-preview-v="8"], [data-preview-v="9"]):has([data-ck4-root][data-ck-view="offer"]:not([hidden])) .pv-toggle .pv-replay { display: inline-block; }
 @media print { .pv-toggle { display: none; } }
-/* V10's options, beside it while it is on */
+/* the switch keeps out of the way: faint until it is pointed at, tabbed to or tapped, then at full
+   strength; a tap on a faint switch only wakes it (it never switches by accident), and it fades
+   back 3 seconds after its last use. On a touch screen a tap is what wakes it (no hover there) */
+.pv-toggle { opacity: 0.35; transition: opacity 0.2s ease; }
+.pv-toggle:is(:hover, :focus-within), .pv-toggle.is-awake { opacity: 1; }
+@media (hover: none) {
+  .pv-toggle:is(:hover, :focus-within):not(.is-awake) { opacity: 0.35; }
+}
+/* the coupon options, beside V10 or V11 while either is on */
 .pv-toggle .pv-opts { display: none; gap: 2px; margin-left: 2px; padding-left: 4px; box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.18); }
 html[data-pv10] .pv-toggle .pv-opts { display: inline-flex; }
 .pv-toggle .pv-opts button { min-width: 28px; padding: 7px 8px; }
@@ -3226,6 +3234,266 @@ html[data-pv10] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .ck-offer { margin-to
   html[data-pv10] .ck-app[data-ck4-root][data-ck-view="details"] .ck-main .v4-field { gap: 8px; }
   html[data-pv10] .ck-app[data-ck4-root][data-ck-view="details"] .ck-main .v4-input { height: 56px; }
 }
+/* Preview V11: V10, and the link names no centre or batch (html[data-pv11]). The offer page drops
+   the centre and the batch start from the coupon's facts, and the centre from the course's name (so
+   does the payment page's course). On the details page, logged in or out, the learner picks the
+   learning centre they'll attend: first in the form, required, from the centres with a batch coming
+   up. Once one is picked, its batch start and duration show under the list (the coupon keeps to the
+   price, so its facts go on this page). Logged in, the details come filled in from the account and
+   stay editable; a verified mobile needs no code. The payment page and the confirmation name the
+   centre */
+html[data-pv11] .v11-drop { display: none; }
+html:not([data-pv11]) .v11-only { display: none !important; }
+html[data-pv11] .ck-app[data-ck4-root][data-ck-view="details"] .ck-summary .lk3-facts { display: none; }
+/* the centre: a search box, the same box as the fields under it (a magnifier at its start, a
+   chevron at its end that opens the whole list), with the list floating under it */
+.v11-combo { position: relative; }
+.v11-combo__box { gap: 10px; padding: 0 6px 0 var(--uG-16); }
+.v11-combo__box svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.v11-combo__search { color: var(--ck-text-3); }
+.v11-combo__box input::placeholder { color: var(--ck-text-3); font-weight: 400; }
+.v11-combo__toggle {
+  flex: none; display: grid; place-items: center; width: 40px; height: 40px; padding: 0;
+  border: 0; border-radius: 10px; background: none; color: var(--ck-text-2); cursor: pointer;
+}
+.v11-combo__toggle:hover { background: rgba(18, 18, 20, 0.05); }
+.v11-combo__toggle svg { transition: transform 0.15s ease; }
+.v11-combo[data-open] .v11-combo__toggle svg { transform: rotate(180deg); }
+.v11-combo__list, .v11-combo__empty {
+  position: absolute; z-index: 30; top: calc(100% + 6px); left: 0; right: 0; margin: 0;
+  border-radius: var(--uG-radius-03); background: var(--ck-surface);
+  box-shadow: 0 2px 6px rgba(18, 18, 20, 0.06), 0 18px 40px -12px rgba(18, 18, 20, 0.22), inset 0 0 0 1px rgba(18, 18, 20, 0.08);
+}
+.v11-combo__list { max-height: 268px; overflow-y: auto; overscroll-behavior: contain; padding: 6px; list-style: none; }
+.v11-combo__empty { padding: 14px 16px; color: var(--ck-text-2); font-size: 14px; line-height: 20px; }
+.v11-combo__option {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 44px; padding: 10px 12px; border-radius: 10px;
+  color: var(--ck-text); font-size: 15px; line-height: 22px; cursor: pointer;
+}
+.v11-combo__option mark { background: none; color: inherit; font-weight: 700; }
+.v11-combo__option.is-active { background: var(--ck-surface-2); }
+.v11-combo__option[aria-selected="true"] { font-weight: 500; }
+.v11-combo__option svg { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--ck-text); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* picked: the batch start and the duration, side by side, just under the list */
+.v11-batch dl {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--uG-12); margin: 0;
+  padding: 12px 16px; border-radius: var(--uG-radius-03); box-shadow: inset 0 0 0 1px var(--ck-line);
+}
+.v11-batch dt { display: flex; align-items: center; gap: 6px; color: var(--ck-text-2); font-size: 13px; line-height: 18px; }
+.v11-batch dt svg { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.v11-batch dd { margin: 4px 0 0; color: #3F3F46; font-size: 15px; line-height: 22px; font-weight: 400; } /* softer than the fields' text, as the coupon's facts */
+.v11-batch:empty, .v4-field.is-error .v11-batch { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .v11-batch dl { animation: v11-batch-in 0.2s ease-out; }
+}
+@keyframes v11-batch-in { from { opacity: 0; transform: translateY(-4px); } }
+/* logged in: under the heading, where the details came from; under the mobile, that it is verified */
+.v11-head { display: grid; gap: 4px; }
+.v11-head .ck-help { font-size: 14px; }
+.ck-help.is-ok { display: flex; align-items: center; gap: 6px; color: #1B7A47; }
+.ck-help.is-ok svg { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+
+/* V11, the coupon (the offer page; the details page on desktop): one spacing rule. Each section
+   sits in the same inset as the coupon's sides (24px, 20px on phones), above and below each dashed
+   line, and the price's parts are 16px apart. No duration on the coupon (the details page shows it,
+   under the centre picked), so the one dashed line under the course parts what is bought from what
+   is paid. The button has as much space under it, to the top of the scallops, as above it */
+html[data-pv11] .ck-app--coupon[data-ck4-root] .ck-summary .lk3-facts { display: none; }
+/* the course, then the dashed line */
+html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket > .cp-head {
+  position: relative; padding-top: var(--cp-pad); padding-bottom: var(--cp-pad);
+}
+html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket > .cp-head::after {
+  content: ""; position: absolute; left: var(--cp-pad); right: var(--cp-pad); bottom: 0;
+  border-top: 1px dashed var(--ck-line-dash);
+}
+/* the price: the course fee, the option, the countdown, 16px apart; the perforation's dashes
+   (15px into its strip) the inset under the countdown */
+html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v10-offer {
+  margin-top: 0; padding-top: var(--cp-pad); padding-bottom: 0;
+}
+html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v10-offer--b { gap: 16px; }
+html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v10-offer--c .v10-steps { margin-top: 16px; }
+html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket:not(:has(.lk3-ends.is-ended)) > .ck-offer {
+  margin-top: 0; padding-top: 16px; padding-bottom: calc(var(--cp-pad) - var(--cp-notch));
+}
+html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket:not(:has(.lk3-ends.is-ended)) > .ck-offer > [data-ck-countdown] { margin-top: 0; }
+/* once the offer has ended, the price (V9's) is the first part under the dashed line: the same insets */
+html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket:has(.lk3-ends.is-ended) > .ck-offer {
+  margin-top: 0; padding-top: var(--cp-pad); padding-bottom: calc(var(--cp-pad) - var(--cp-notch));
+}
+/* the button: the inset over it (from the dashes) and under it (to the scallops, 7px deep) */
+html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket > .cp-stub {
+  padding-top: calc(var(--cp-pad) - var(--cp-notch)); padding-bottom: calc(var(--cp-pad) + 7px);
+}
+html[data-pv11] .ck-app--coupon[data-ck4-root] .cp-stub > .lk3-action__hint:empty { display: none; }
+
+/* V11, the payment page, choosing how to pay: the least that locks the offer (₹5,000) leads, ahead
+   of the course fee, as on the coupon (the fee small, what is paid now large). On desktop the
+   course card's price column says "Minimum to lock your offer", ₹5,000 large, then the course fee
+   under it, smaller; Reserve a Seat (the ₹5,000 option) is open first. On phones the pinned strip
+   puts the ₹5,000 first and the fee after it, smaller. On the review (an option is picked, maybe
+   the full fee), for a seat's balance, and once the offer has ended, the card shows the course fee
+   as before. Phones also get the billing postal code / PIN code over the options, as desktop has it
+   first (one code: what is typed in one field is in the other) */
+.v11-lock, .pm-strip__min, .pm-zip { display: none; }
+html[data-pv11] .v8[data-v8-view="choose"]:not([data-v8-balance]) .v8-course__price > .v11-lock:not([hidden]) { display: grid; gap: 6px; }
+html[data-pv11] .v8[data-v8-view="choose"]:not([data-v8-balance]) .v8-course__price:has(> .v11-lock:not([hidden])) > :is(.v8-course__row, .v8-price) { display: none; }
+.v11-lock p { margin: 0; }
+.v11-lock__amount {
+  display: flex; align-items: flex-start; height: 44px; color: #121214;
+  font-size: 40px; line-height: 44px; font-weight: 600; letter-spacing: -1.4px; white-space: nowrap;
+  font-variant-numeric: normal; /* the comma at its own width, not a digit's */
+}
+.v11-lock__fee { color: #63636B; font-size: 14px; line-height: 21px; white-space: nowrap; }
+.v11-lock__fee strong { color: #121214; font-weight: 600; }
+.v11-lock__fee s { margin-left: 2px; color: #A0A0A8; }
+@media (max-width: 860px) {
+  html[data-pv11] .v8[data-v8-locked]:not([data-v8-balance]) .pm-strip:not(.is-ended) .pm-strip__save { display: none; }
+  html[data-pv11] .v8[data-v8-locked]:not([data-v8-balance]) .pm-strip:not(.is-ended) .pm-strip__min {
+    order: -2; display: block; margin: 0; color: var(--co-text-primary); font-size: 13px; line-height: 20px; white-space: nowrap;
+  }
+  .pm-strip__min strong { margin-right: 2px; font-size: 16px; font-weight: 700; }
+  html[data-pv11] .v8[data-v8-locked]:not([data-v8-balance]) .pm-strip:not(.is-ended) .pm-strip__price { font-size: 12px; }
+  .pm-strip__fee { color: var(--co-text-muted); font-weight: 400; }
+  html[data-pv11] .v8[data-v8-view="choose"]:not([data-v8-balance]) .pm-zip {
+    display: block; margin-bottom: 24px; padding: 20px 16px; border-radius: 16px;
+    background: var(--uG-white, #FFFFFF); box-shadow: var(--co-shadow-raised);
+  }
+  .pm-zip__label { display: block; color: var(--co-text-primary); font-size: 16px; line-height: 24px; font-weight: 500; }
+  .v8 .pm-zip .v8-zip__field { margin-top: 10px; }
+  html[data-pv11] .v8 .pm-zip .v8-zip__help { justify-content: flex-start; padding: 8px 0 0; text-align: left; }
+}
+
+/* V11 (options A, B and C): no top bar on the flow's pages (the upGrad logo, "Secure checkout", Log in
+   or the learner's name), as on the offer page; the progress bar stays. Logging in stays on the
+   details card ("Log in instead"), which also says when the details came from the account */
+html[data-pv11] .ck-app[data-ck4-root] .ck-header__inner { display: none; }
+
+/* V11: the journey's progress, one plain bar from the offer to the payment. A track shows the whole
+   way, the fill (the Figma gradient) how far the learner has come: offer 12.5%, details 37.5%,
+   payment options 62.5%, review 87.5%, paid 100%, so it never goes back between pages. No glow and
+   no marker at its end. The offer page gets the bar too (the top bar's progress only); the link
+   states with nothing to pay get none. On phones it sits along the very top of every page, full
+   width and pinned, as on the offer page (not under the header's title) */
+html[data-pv11] .ck-app[data-ck4-root][data-ck-view="offer"] .ck-header { display: block; }
+html[data-pv11] .ck-app[data-ck4-root][data-ck-view="status"] .ck-header { display: none; }
+html[data-pv11] .ck-app[data-ck4-root] .ck-progress { height: 6px; background: rgba(18, 18, 20, 0.08); }
+html[data-pv11] .ck-app[data-ck4-root] .ck-progress__fill { border-radius: 0 999px 999px 0; }
+html[data-pv11] .v8 .ug-progress { height: 6px; border-radius: 0 999px 999px 0; }
+html[data-pv11] .v8 .ug-header::after { content: ""; position: absolute; top: 100%; left: 0; right: 0; height: 6px; background: #E9EEF3; }
+html[data-pv11] :is(.ck-app[data-ck4-root] .ck-progress__fill, .v8 .ug-progress, .pm-head__progress span) {
+  background-image: linear-gradient(90deg, #67CBAA, #2BADF8);
+}
+@media (max-width: 860px) {
+  html[data-pv11] .pm-head__progress { top: 0; left: 0; right: 0; height: 6px; border-radius: 0; background: rgba(18, 18, 20, 0.08); }
+  html[data-pv11] .pm-head__progress span { height: 6px; border-radius: 0 999px 999px 0; }
+  html[data-pv11] .pm-head--flow .pm-head__progress.pm-head__progress--details span { width: 37.5%; }
+  html[data-pv11] .v8 .pm-head__progress span { width: 62.5%; }
+  html[data-pv11] .v8 .ug-progress { top: 0; z-index: 11; }
+  html[data-pv11] .v8 .ug-header::after { top: 0; background: rgba(18, 18, 20, 0.08); }
+}
+
+/* V11 on phones, the details page's header: how much of the offer it shows, in three versions (the
+   switch's Min, Mid and Full; Full unless another is picked). All of it is pinned at the top,
+   the course's name included, in all three, and the countdown stays right under the course.
+   Minimal: as before, the course, then the strip (the countdown, "Lock for ₹5,000"); 106px.
+   Medium: the course a little tighter, and the strip gets a second line, so the ₹5,000 reads as
+   part of the course fee, not on top of it: the countdown and "Pay now ₹5,000", then "Course fee
+   ₹90,000 ₹1,00,000" and "Remaining ₹85,000"; 122px.
+   Full: the course, then the offer, "Course fee ₹90,000 ₹1,00,000" with "You save ₹10,000" over a
+   box split in two, "Pay now ₹5,000" (the one strong number) and "Remaining ₹85,000" (quiet),
+   then the strip at the foot (the countdown and when the offer ends, "9:00 PM today"); 184px. The
+   course fee line folds away once the page is scrolled (about 156px), and is back at the top. Once the
+   offer has ended, the extra lines go */
+.pm-strip__more, .pm-strip__now, .pm-strip__at, .pm-offer, .pm-course__back { display: none; }
+.pv-toggle .pv-pd { display: none !important; }
+@media (max-width: 860px) {
+  html[data-pv11] .pv-toggle .pv-pd { display: inline-flex !important; }
+  /* the one version needs no button on a phone (the switch fits the screen with Replay too) */
+  html[data-pv11] .pv-toggle [data-pv="11"] { display: none; }
+  html[data-pv11] .pv-toggle .pv-opts:first-of-type { margin-left: 0; padding-left: 0; box-shadow: none; }
+  /* no title row ("‹ Your Details"): the card under the header is titled "Your details" already.
+     Back moves to the start of the course row, so the pinned header is 50px shorter in all three
+     versions, and that room is the offer's */
+  html[data-pv11] .pm-head--flow .pm-head__nav { display: none; }
+  html[data-pv11] .pm-head--flow { padding-top: 6px; } /* clear of the progress bar */
+  html[data-pv11] .pm-head--flow .pm-course__back {
+    display: grid; place-items: center; flex: none; width: 32px; height: 40px; margin-left: -8px; padding: 0;
+    border: 0; border-radius: 8px; background: none; color: var(--co-text-primary); cursor: pointer;
+  }
+  .pm-course__back svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .pm-course__back:focus-visible { outline: 2px solid var(--co-focus); outline-offset: -2px; }
+  html[data-pv11]:has(.ck-app[data-ck4-root][data-ck-view="details"]:not([hidden])) { scroll-padding-top: 118px; }
+  /* Medium and Full: the course on one line, a smaller tile */
+  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"]) .ck-app[data-ck4-root][data-ck-view="details"] .pm-head--flow .pm-course { gap: 10px; padding-top: 8px; padding-bottom: 8px; }
+  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"]) .pm-head--flow .pm-course__logo { width: 36px; height: 36px; border-radius: 9px; }
+  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"]) .pm-head--flow .pm-course__logo img { width: 31px; height: 11px; }
+  html[data-pv11]:is([data-pv11-pd="medium"], [data-pv11-pd="full"]) .pm-head--flow .pm-course__name { font-size: 14px; line-height: 20px; }
+  /* Medium */
+  html[data-pv11][data-pv11-pd="medium"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__price > .pm-strip__v10 { display: none; }
+  html[data-pv11][data-pv11-pd="medium"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__price > .pm-strip__now { display: inline; font-weight: 400; }
+  .pm-strip__now strong { font-weight: 600; }
+  html[data-pv11][data-pv11-pd="medium"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__in { height: 32px; border-bottom: 0; }
+  html[data-pv11][data-pv11-pd="medium"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__more {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    height: 28px; padding: 0 20px 4px; border-bottom: 1px solid #F6D3D6; background: #FFF4F5;
+    color: var(--co-text-muted); font-size: 12px; line-height: 16px; white-space: nowrap;
+  }
+  .pm-strip__more p { margin: 0; }
+  .pm-strip__more strong { color: var(--co-text-primary); font-weight: 600; }
+  .pm-strip__more s { margin-left: 2px; }
+  html[data-pv11][data-pv11-pd="medium"]:has(.ck-app[data-ck4-root][data-ck-view="details"]:not([hidden])) { scroll-padding-top: 130px; }
+  /* Full */
+  html[data-pv11][data-pv11-pd="full"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__price > .pm-strip__v10 { display: none; }
+  html[data-pv11][data-pv11-pd="full"] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__price > .pm-strip__at {
+    display: inline; color: var(--co-text-muted); font-size: 13px; font-weight: 400;
+  }
+  html[data-pv11][data-pv11-pd="full"] .pm-head--flow:not(:has(.pm-strip.is-ended)) .pm-offer {
+    display: grid; margin: 0 -20px; padding: 4px 20px 12px; background: var(--uG-white, #FFFFFF);
+  }
+  /* the fold: the row's height goes to nothing (a grid row from 1fr to 0fr) as it fades */
+  .pm-offer__fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.2s ease, opacity 0.2s ease; }
+  .pm-offer__fold > p { min-height: 0; overflow: hidden; }
+  .pm-head--flow.is-folded .pm-offer__fold { grid-template-rows: 0fr; opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { .pm-offer__fold { transition: none; } }
+  .pm-offer__fee {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0; padding-bottom: 8px;
+    color: var(--co-text-muted); font-size: 13px; line-height: 20px; white-space: nowrap;
+  }
+  .pm-offer__fee strong { color: var(--co-text-primary); font-weight: 600; }
+  .pm-offer__fee s { margin-left: 2px; color: #A0A0A8; }
+  .pm-offer__save { padding: 2px 8px; border-radius: 999px; background: #E3F5EA; color: #1B7A47; font-size: 12px; line-height: 16px; font-weight: 500; }
+  .pm-offer__split {
+    display: grid; grid-template-columns: 1fr 1fr; margin: 0;
+    border: 1px solid #DADAE0; border-radius: 12px; overflow: hidden;
+  }
+  .pm-offer__split > div { display: flex; align-items: center; justify-content: space-between; gap: 8px; height: 40px; padding: 0 12px; }
+  .pm-offer__split > div + div { border-left: 1px dashed var(--ck-line-dash, #D9D9DE); }
+  .pm-offer__split dt { color: var(--co-text-muted); font-size: 12px; line-height: 16px; }
+  .pm-offer__split dd { margin: 0; color: var(--co-text-primary); font-size: 14px; line-height: 20px; font-weight: 600; font-variant-numeric: normal; }
+  .pm-offer__now { background: #F7F7F9; }
+  .pm-offer__now dt { color: var(--co-text-primary); font-weight: 500; }
+  .pm-offer__now dd { font-size: 17px; }
+  /* what remains, quiet: grey, regular, smaller; the ₹5,000 is the one to see */
+  .pm-offer__split > div:not(.pm-offer__now) dd { color: var(--co-text-muted); font-size: 13px; font-weight: 400; }
+  html[data-pv11][data-pv11-pd="full"]:has(.ck-app[data-ck4-root][data-ck-view="details"]:not([hidden])) { scroll-padding-top: 168px; }
+  /* no line under Continue in the bar (V11) */
+  html[data-pv11] .ck-mobilebar__hint:empty { display: none; }
+}
+
+/* V11, the details form: what is filled in reads at regular weight (it was medium, heavier than the
+   card's heading), in the same size and colour; the +91 before the mobile likewise */
+html[data-pv11] .ck-app[data-ck4-root] [data-ck-details] :is(.ck-phone-field__input, .ck-phone-field__cc) { font-weight: 400; }
+
+/* V11: Continue on the details page, off until everything is in: plainly faded (the brand red at
+   about 40%), no shadow, no hover */
+html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[aria-disabled="true"],
+html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[aria-disabled="true"]:hover {
+  background: #F7A8AE; color: #FFFFFF; box-shadow: none; cursor: default;
+}
+
 /* the details page: no prototype note under the mobile field (the Scenario menu has the reserved
    and paid states; "We'll send a code to verify it." stays under the field) */
 html[data-pv10] [data-pv-phone-hint] { display: none; }
@@ -3236,18 +3504,33 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
 .pm-strip__v10 strong { font-weight: 600; }
 </style>
 <script>
-/* preview version before the first paint: ?v=5 in the link, else the last one picked, else V9 */
+/* preview version before the first paint: ?v=11 in the link, else the last one picked, else V11 */
 (function () {
-  var v = new URLSearchParams(location.search).get('v');
-  var known = function (x) { return /^([5-9]|10[abc]?)$/.test(x || ''); };
-  // ?test (user testing): no Scenario bar, version switch or prototype notes; V9 unless ?v= says
+  var params = new URLSearchParams(location.search);
+  // V11 only now: a V10 link keeps its coupon option (?v=10c opens 11c); V9's opens V11
+  var legacy = function (x) { return /^10[abc]$/.test(x || '') ? '11' + x.slice(2) : x; };
+  var v = legacy(params.get('v'));
+  var known = function (x) { return /^11[abc]?$/.test(x || ''); };
+  // ?test (user testing): no Scenario bar, version switch or prototype notes; V11 unless ?v= says
   // otherwise, and the last version picked is not used
   var test = new URLSearchParams(location.search).has('test');
   if (test) document.documentElement.dataset.pvTest = '';
-  if (!known(v) && !test) { try { v = localStorage.getItem('upi-v9-preview'); } catch (e) {} }
-  if (!known(v)) v = '9';
-  // V10 is V9 with an option on its coupon (?v=10a, 10b, 10c); the page runs as V9 under it
-  if (/^10/.test(v)) { document.documentElement.dataset.pv10 = v.slice(2) || 'a'; v = '9'; }
+  if (!known(v) && !test) { try { v = legacy(localStorage.getItem('upi-v9-preview')); } catch (e) {} }
+  if (!known(v)) v = '11';
+  // an old V9 or V10 link is rewritten to the V11 it opens, so a copied link says V11
+  if (params.has('v') && params.get('v') !== v) {
+    try { params.set('v', v); history.replaceState(history.state, '', location.pathname + '?' + params + location.hash); } catch (e) {}
+  }
+  // V11 on phones: how much of the offer the details page's header shows (?pd=minimal, medium or
+  // full; else the last one picked; else full)
+  var pdOk = function (x) { return /^(minimal|medium|full)$/.test(x || ''); };
+  var pd = params.get('pd');
+  if (!pdOk(pd) && !test) { try { pd = localStorage.getItem('upi-v11-pd'); } catch (e) {} }
+  document.documentElement.dataset.pv11Pd = pdOk(pd) ? pd : 'full';
+  // V10 is V9 with an option on its coupon (?v=10a, 10b, 10c); the page runs as V9 under it. V11 is
+  // V10 with no centre in the link, the centre picked on the details page (?v=11a, 11b, 11c)
+  if (/^11/.test(v)) document.documentElement.dataset.pv11 = '';
+  if (/^1[01]/.test(v)) { document.documentElement.dataset.pv10 = v.slice(2) || 'b'; v = '9'; }
   document.documentElement.dataset.previewV = v;
   // V4 prints the coupon: keep it inside the printer until the print starts (no flash of it first)
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -3315,13 +3598,29 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     <!-- in place of the coupon: the course (logo and name), then its offer's countdown and price,
          pinned with the header however far the form is scrolled -->
     <div class="pm-course">
+      <!-- V11 on phones: back sits here, with no title row above -->
+      <button class="pm-course__back v11-only" type="button" aria-label="Back to offer" data-pm-flow-back><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button>
       <span class="pm-course__logo"><img src="data:image/png;base64,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" alt="upGrad"></span>
-      <p class="pm-course__name">Advance Certificate in Digital Marketing Marathahalli</p>
+      <p class="pm-course__name">Advance Certificate in Digital Marketing<span class="v11-drop"> Marathahalli</span></p>
+    </div>
+    <!-- V11 on phones, Full: the whole offer, pinned over the countdown. The course fee line folds
+         away once the page is scrolled (back at the top, it is back) -->
+    <div class="pm-offer">
+      <div class="pm-offer__fold"><p class="pm-offer__fee"><span>Course fee <strong>₹90,000</strong> <s><span class="ck-sr">instead of </span>₹1,00,000</s></span><span class="pm-offer__save">You save ₹10,000</span></p></div>
+      <dl class="pm-offer__split">
+        <div class="pm-offer__now"><dt>Pay now</dt><dd>₹5,000</dd></div>
+        <div><dt>Remaining</dt><dd>₹85,000</dd></div>
+      </dl>
     </div>
     <div class="pm-strip" role="group" aria-label="Offer ends soon" data-pm-strip>
       <div class="pm-strip__in" aria-hidden="true">
         <p class="pm-strip__ends"><svg class="pm-strip__clock" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2 2M10 2.75h4"/></svg><span data-pm-strip-ends>Offer ends in <strong>00:00:00</strong></span></p>
-        <p class="pm-strip__price"><span data-pm-strip-price>₹90,000</span><s data-pm-strip-was>₹1,00,000</s><span class="pm-strip__v10">Lock for <strong>₹5,000</strong></span></p>
+        <p class="pm-strip__price"><span data-pm-strip-price>₹90,000</span><s data-pm-strip-was>₹1,00,000</s><span class="pm-strip__v10">Lock for <strong>₹5,000</strong></span><span class="pm-strip__now">Pay now <strong>₹5,000</strong></span><span class="pm-strip__at" data-ck-offer-at>9:00 PM today</span></p>
+      </div>
+      <!-- V11 on phones, Medium: what the ₹5,000 is part of, and what remains -->
+      <div class="pm-strip__more" aria-hidden="true">
+        <p>Course fee <strong>₹90,000</strong> <s>₹1,00,000</s></p>
+        <p>Remaining <strong>₹85,000</strong></p>
       </div>
     </div>
   </header>
@@ -3359,10 +3658,34 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
         <form class="ck-stack" data-ck-panel="details" data-ck-details novalidate hidden>
           <section class="ck-card" aria-labelledby="ck9-details-title">
             <div class="ck-card__head">
-              <h2 class="ck-h2" id="ck9-details-title">Your details</h2>
+              <div class="v11-head">
+                <h2 class="ck-h2" id="ck9-details-title">Your details</h2>
+                <p class="ck-help" data-ck-prefill hidden>Filled in from your upGrad account. You can edit them.</p>
+              </div>
               <button class="ck-link" type="button" data-ck-login>Log in instead</button>
             </div>
             <div class="v4-fields">
+              <!-- preview V11: the learning centre the learner will attend (the link names none). First,
+                   as the one choice on the page (logged in, the one field still empty); required. Only
+                   centres with a batch coming up are listed; once one is picked, its batch start and
+                   duration show under the list -->
+              <div class="v4-field v11-only" data-ck-field="centre">
+                <label class="v4-field__label" id="ck9-centre-label" for="ck9-centre">Learning centre</label>
+                <!-- a search box with the list under it: type a city or an area to narrow the centres,
+                     or open the whole list with the chevron -->
+                <div class="v11-combo" data-ck-combo>
+                  <div class="ck-phone-field v4-input v11-combo__box">
+                    <svg class="v11-combo__search" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.25"/><path d="m15.25 15.25 4.5 4.5"/></svg>
+                    <input class="ck-phone-field__input" id="ck9-centre" name="centre" type="text" role="combobox" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Search by city or area" aria-autocomplete="list" aria-expanded="false" aria-controls="ck9-centre-list" aria-required="true" aria-describedby="ck9-centre-msg" data-ck-centre>
+                    <button class="v11-combo__toggle" type="button" tabindex="-1" aria-label="Show all centres" data-ck-combo-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+                  </div>
+                  <ul class="v11-combo__list" id="ck9-centre-list" role="listbox" aria-labelledby="ck9-centre-label" hidden data-ck-combo-list></ul>
+                  <p class="v11-combo__empty" hidden data-ck-combo-empty></p>
+                </div>
+                <p class="ck-sr" aria-live="polite" data-ck-combo-status></p>
+                <div class="v11-batch" aria-live="polite" data-ck-batch></div>
+                <p class="ck-otp__msg" id="ck9-centre-msg" aria-live="polite" data-ck-msg></p>
+              </div>
               <div class="v4-field" data-ck-field="name">
                 <label class="v4-field__label" for="ck9-name">Full name</label>
                 <div class="ck-phone-field v4-input">
@@ -3551,7 +3874,8 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
             <dl class="ck-sheet lk3-rows">
               <div><dt>Paid</dt><dd><span class="ck-dd-main" data-ck-paid-amount>₹10,000</span><span data-ck-paid-via>UPI · Oct 21, 2026</span></dd></div>
               <div><dt>Order</dt><dd data-ck-order>UG-LC-48213</dd></div>
-              <div data-ck-done-balance><dt>Balance</dt><dd><span class="ck-dd-main" data-ck-later>₹80,000</span><span>Due before Oct 31, 2026</span></dd></div>
+              <div class="v11-only" data-ck-done-centre><dt>Centre</dt><dd><span class="ck-dd-main" data-ck-done-centre-name>Bangalore – Marathahalli</span><span data-ck-done-centre-batch>Batch starts Sat, Nov 21, 2026</span></dd></div>
+              <div data-ck-done-balance><dt>Balance</dt><dd><span class="ck-dd-main" data-ck-later>₹80,000</span><span data-ck-done-due>Due before Oct 31, 2026</span></dd></div>
             </dl>
             <div class="v4-done__actions">
               <button class="ck-btn ck-btn--dark" type="button" data-ck-balance-pay data-ck-noop>Pay balance</button>
@@ -3594,11 +3918,11 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
             </div>
             <div class="lk3-course-row">
               <span class="ck-course__logo"><img src="data:image/png;base64,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" width="120" height="40" alt="upGrad"></span>
-              <h2 class="ck-course__name" id="ck9-course-title">Advance Certificate in Digital Marketing Marathahalli</h2>
+              <h2 class="ck-course__name" id="ck9-course-title">Advance Certificate in Digital Marketing<span class="v11-drop"> Marathahalli</span></h2>
             </div>
             <dl class="lk3-facts">
-              <div><dt>Centre</dt><dd>Marathahalli, Bengaluru</dd></div>
-              <div><dt>Batch starts</dt><dd>Oct 31, 2026</dd></div>
+              <div class="v11-drop"><dt>Centre</dt><dd>Marathahalli, Bengaluru</dd></div>
+              <div class="v11-drop"><dt>Batch starts</dt><dd>Oct 31, 2026</dd></div>
               <div><dt>Duration</dt><dd>4 months</dd></div>
             </dl>
           </div>
@@ -3728,16 +4052,17 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     <div class="pm-course">
       <span class="pm-course__logo"><img src="data:image/png;base64,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" alt="upGrad"></span>
       <div class="pm-course__text">
-        <p class="pm-course__name">Advance Certificate in Digital Marketing Marathahalli</p>
-        <p class="pm-course__facts">Marathahalli, Bengaluru · Starts Oct 31 · 4 months</p>
+        <p class="pm-course__name">Advance Certificate in Digital Marketing<span class="v11-drop"> Marathahalli</span></p>
+        <p class="pm-course__facts"><span class="v11-drop">Marathahalli, Bengaluru · Starts Oct 31 · 4 months</span><span class="v11-only" data-v11-facts="short">4 months</span></p>
       </div>
     </div>
     <div class="pm-strip" role="group" aria-label="Offer ends soon" data-pm-strip>
       <div class="pm-strip__in" aria-hidden="true">
         <p class="pm-strip__save">You save ₹10,000</p>
+        <p class="pm-strip__min v11-only"><strong>₹5,000</strong> minimum to lock</p>
         <p class="pm-strip__balance"><span>Balance due before Oct 31</span><strong>₹85,000</strong></p>
         <p class="pm-strip__ends"><svg class="pm-strip__clock" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2 2M10 2.75h4"/></svg><span data-pm-strip-ends>Offer ends in <strong>00:00:00</strong></span></p>
-        <p class="pm-strip__price"><span data-pm-strip-price>₹90,000</span><s data-pm-strip-was>₹1,00,000</s></p>
+        <p class="pm-strip__price"><span class="pm-strip__fee v11-only">Fee</span><span data-pm-strip-price>₹90,000</span><s data-pm-strip-was>₹1,00,000</s></p>
       </div>
     </div>
   </header>
@@ -3754,11 +4079,18 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
           <span class="v8-course__logo"><img src="data:image/png;base64,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" width="120" height="40" alt="upGrad"></span>
           <div class="v8-course__text">
             <p class="v8-course__eyebrow">Your course</p>
-            <h2 class="v8-course__name" id="v9-course-title">Advance Certificate in Digital Marketing Marathahalli</h2>
-            <p class="v8-course__facts">upGrad Marathahalli · 4 months · Starts Oct 31, 2026</p>
+            <h2 class="v8-course__name" id="v9-course-title">Advance Certificate in Digital Marketing<span class="v11-drop"> Marathahalli</span></h2>
+            <p class="v8-course__facts"><span class="v11-drop">upGrad Marathahalli · 4 months · Starts Oct 31, 2026</span><span class="v11-only" data-v11-facts>4 months</span></p>
           </div>
         </div>
         <div class="v8-course__price">
+          <!-- preview V11, choosing how to pay: the least that locks the offer leads, the course fee
+               under it, smaller (as on the coupon) -->
+          <div class="v11-lock v11-only" data-v11-min>
+            <p class="v8-course__eyebrow">Minimum to lock your offer</p>
+            <p class="v11-lock__amount"><span class="v8-price__unit">₹</span>5,000</p>
+            <p class="v11-lock__fee">Course fee <strong>₹90,000</strong> <s><span class="v8-sr">instead of </span>₹1,00,000</s></p>
+          </div>
           <div class="v8-course__row" data-v8-was-row>
             <p class="v8-was"><span class="v8-pct" data-v8-pct>↓10%</span><span class="v8-sr">List price </span><s>₹1,00,000</s></p>
             <span class="v8-save" data-v8-save>You save ₹10,000</span>
@@ -3778,6 +4110,16 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
       <!-- phones (choosing): upGrad's mobile checkout, Figma 94:6801. Every option goes to the
            page's own review, as its Next would -->
       <section class="pm-pay" aria-labelledby="v9-pm-title" data-pm-pay>
+        <!-- preview V11: the billing postal code / PIN code, as desktop's first step (the same code:
+             what is typed here is in that field too); checked when an option is tapped -->
+        <div class="pm-zip v11-only">
+          <label class="pm-zip__label" for="v9-zip-pm">Billing postal code / PIN code</label>
+          <div class="v8-zip__field" data-v8-zip-field>
+            <input class="v8-zip__input" id="v9-zip-pm" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="6" placeholder="6 digits" aria-describedby="v9-zip-pm-help">
+            <button class="v8-zip__edit" type="button" aria-label="Edit postal code / PIN code" data-v8-zip-edit><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19.5 8.5a2.12 2.12 0 0 0-3-3L5 17v3Z"/><path d="m14.5 7.5 2 2"/></svg></button>
+          </div>
+          <p class="v8-zip__help" id="v9-zip-pm-help" aria-live="polite" data-v8-zip-help>For your invoice.</p>
+        </div>
         <h2 class="pm-title" id="v9-pm-title">Choose a payment option</h2>
 
         <div class="pm-group pm-group--reserve">
@@ -4077,7 +4419,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
                   <div class="v8-panel__body v8-loan">
                     <div class="v8-loan__from">
                       <p><span class="v8-loan__big">From <span data-v8-loan-monthly>INR 3,254</span>/mo </span>for 36 months</p>
-                      <p class="v8-loan__rate">(min INR 1,000 downpayment)</p>
+                      <p class="v8-loan__rate">(min INR 1,000 down payment)</p>
                     </div>
                     <h3 class="v8-loan__title" id="v9-partners-title">Choose a Third-Party Loan Facilitators</h3>
                     <div class="v8-partners" role="radiogroup" aria-labelledby="v9-partners-title">
@@ -4184,7 +4526,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
             <div class="co-summary__row" data-v8-offer-row><dt>Offer</dt><dd class="v8-green" data-v8-off>INR -10,000</dd></div>
             <div class="co-summary__row" data-v8-paid-row hidden><dt>Paid to reserve</dt><dd class="v8-green">INR -5,000</dd></div>
             <div class="co-summary__row" data-v8-s-total hidden><dt>Total</dt><dd data-v8-fee>INR 90,000</dd></div>
-            <div class="co-summary__row" data-v8-s-paying hidden><dt>Paying Now<small data-v8-down>(downpayment)</small></dt><dd data-v8-paying-amount>INR 10,000</dd></div>
+            <div class="co-summary__row" data-v8-s-paying hidden><dt>Paying Now<small data-v8-down>(down payment)</small></dt><dd data-v8-paying-amount>INR 10,000</dd></div>
             <div class="co-summary__row" data-v8-s-emi hidden><dt data-v8-s-emi-label>Cardless EMI, 18% p.a.</dt><dd data-v8-s-emi-value>36 × INR 3,254</dd></div>
             <div class="co-summary__row" data-v8-s-repay hidden><dt>Repay in all</dt><dd data-v8-s-repay-value>INR 1,17,144</dd></div>
           </dl>
@@ -4284,6 +4626,38 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   const ORDER_ID = 'UG-LC-48213';
   const SCHOLAR_CODE = 'UGSCHOLAR15'; // prototype: the one code that works
   const SCHOLAR_OFF = 15000; // sample amount; it comes off after the centre offer
+  // preview V11: the link names no centre or batch; the learner picks the learning centre on the
+  // details page. The centres running this course with a proper centre name (city and locality;
+  // those listed by city alone are left out), each with its next batch (null: none coming up, so it
+  // is not listed). The dates are samples; one duration for all unless a centre has its own
+  const V11 = () => document.documentElement.hasAttribute('data-pv11');
+  const DURATION = '4 months';
+  const CENTRES = [
+    { id: 'blr-hsr-layout', city: 'Bangalore', area: 'HSR Layout', starts: '2026-12-05' },
+    { id: 'blr-marathahalli', city: 'Bangalore', area: 'Marathahalli', starts: '2026-11-21' },
+    { id: 'blr-jayanagar', city: 'Bangalore', area: 'Jayanagar', starts: null },
+    { id: 'hyd-ameerpet', city: 'Hyderabad', area: 'Ameerpet', starts: '2026-12-12' },
+    { id: 'hyd-madhapur', city: 'Hyderabad', area: 'Madhapur', starts: '2026-11-28' },
+    { id: 'pune-kothrud', city: 'Pune', area: 'Kothrud', starts: '2026-12-05' },
+    { id: 'chennai-porur', city: 'Chennai', area: 'Porur', starts: '2026-11-28' },
+    { id: 'indore-new-palasia', city: 'Indore', area: 'New Palasia', starts: '2026-12-12' },
+    { id: 'chandigarh-sector-34', city: 'Chandigarh', area: 'Sector 34', starts: '2026-12-05' },
+    { id: 'panipat-gt-road', city: 'Panipat', area: 'GT Road', starts: '2026-12-12' },
+    { id: 'kolkata-salt-lake', city: 'Kolkata', area: 'Salt Lake Sector 5', starts: '2026-11-21' },
+    { id: 'bilaspur-old-bus-stand', city: 'Bilaspur', area: 'Old Bus Stand', starts: '2026-12-12' },
+  ];
+  // "Bangalore – HSR Layout", A to Z, so a city is quick to find in the list
+  const OPEN_CENTRES = CENTRES.filter((c) => c.starts)
+    .map((c) => ({ ...c, name: c.area ? c.city + ' – ' + c.area : c.city, duration: c.duration || DURATION }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const centreOf = (id) => OPEN_CENTRES.find((c) => c.id === id) || null;
+  const dateOf = (c, opts) => new Date(c.starts + 'T00:00:00').toLocaleDateString('en-US', opts);
+  const startsLong = (c) => dateOf(c, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }); // Sat, Nov 21, 2026
+  const startsFull = (c) => dateOf(c, { month: 'short', day: 'numeric', year: 'numeric' }); // Nov 21, 2026
+  const startsShort = (c) => dateOf(c, { month: 'short', day: 'numeric' }); // Nov 21
+  const picked = () => (V11() ? centreOf(state.centre) : null);
+  // the batch start the later screens name: the centre's picked (V11), else the link's
+  const batchStart = () => (picked() ? startsShort(picked()) : BATCH_START);
 
   // lower bound inclusive: ₹1,00,000 gets slab 3
   const discount = (list) => SLABS.filter(([min]) => list >= min).pop()[1];
@@ -4316,6 +4690,8 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     view: 'offer', plan: 'block', option: root.dataset.ckDefault || 'block', method: null, loggedIn: false, verified: false,
     deadline: offerDeadline(), entryLive: true,
     name: '', email: '', phone: '', zip: '', terms: false,
+    centre: '', // preview V11: the learning centre picked on the details page
+    trusted: '', // preview V11: the mobile verified on this visit (the account's, or one confirmed with a code)
     locked: null, // { fee, plan, until } fixed when the payment session starts
     failed: false, status: null,
     opensAt: null, // link not open yet (Scheduled): the offer starts here
@@ -4328,6 +4704,8 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   let stage = null; // countdown milestone last seen, for the live announcement
   const $ = (sel) => root.querySelector(sel);
   const $$ = (sel) => Array.from(root.querySelectorAll(sel));
+  // the details page's heading, its last words ("Add your details."; V11 logged in: "Confirm your details.")
+  const detailsTitle = (() => { const t = $('h1[data-ck-panel="details"]'); return t && t.lastChild && t.lastChild.nodeType === 3 ? t.lastChild : null; })();
   // V8: the offer page's heading, and the one it shows once the offer has ended (data-ck-offer-title)
   const offerTitle = $('[data-ck-offer-title]');
   const offerTitleText = offerTitle ? offerTitle.textContent : '';
@@ -4396,8 +4774,9 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   }
   const bill = () => (paying() && state.locked ? state.locked : quote(state, live()));
 
-  // the FOMO page only when the link opened live; details only when logged out
-  const steps = () => [state.entryLive && 'offer', !state.loggedIn && 'details', 'checkout', 'pay'].filter(Boolean);
+  // the FOMO page only when the link opened live; details only when logged out (preview V11: always,
+  // for the centre, filled in when logged in)
+  const steps = () => [state.entryLive && 'offer', (!state.loggedIn || V11()) && 'details', 'checkout', 'pay'].filter(Boolean);
 
   function deadlineLabel() {
     const today = new Date().toDateString() === state.deadline.toDateString();
@@ -4437,7 +4816,10 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
       if (i === at) el.setAttribute('aria-current', 'step'); else el.removeAttribute('aria-current');
     });
     $('[data-ck-steps]').hidden = status;
-    const pct = state.view === 'done' ? 100 : status ? 0 : Math.round(((at + 0.5) / order.length) * 100);
+    // preview V11: one scale for the whole journey (the payment page goes on from it), so the bar
+    // never goes back between pages
+    const JOURNEY = { offer: 12.5, details: 37.5, checkout: 62.5, pay: 87.5 };
+    const pct = state.view === 'done' ? 100 : status ? 0 : V11() && JOURNEY[state.view] ? JOURNEY[state.view] : Math.round(((at + 0.5) / order.length) * 100);
     $('[data-ck-progress-fill]').style.width = pct + '%';
     const progress = $('[data-ck-progress]');
     progress.setAttribute('aria-valuenow', String(pct));
@@ -4454,6 +4836,16 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     // header: Log in only helps before the details are in
     $('[data-ck-user]').hidden = !state.loggedIn;
     $$('[data-ck-login]').forEach((el) => { el.hidden = state.loggedIn || !['offer', 'details'].includes(state.view); });
+
+    // details. Preview V11: the learning centre, and once picked its batch start and duration; logged
+    // in, a line says where the details came from, and the heading asks to confirm them
+    renderCentre();
+    renderPhoneHelp();
+    $('[data-ck-prefill]').hidden = !(V11() && state.loggedIn);
+    if (detailsTitle) {
+      const asked = V11() && state.loggedIn ? ' Confirm your details.' : detailsTitle.nodeValue === ' Confirm your details.' ? ' Add your details.' : detailsTitle.nodeValue;
+      if (detailsTitle.nodeValue !== asked) detailsTitle.nodeValue = asked;
+    }
 
     // FOMO page. V8: if the offer ends while the page is open, its heading says so
     if (offerTitle) offerTitle.textContent = live() || pending() ? offerTitleText : offerTitle.dataset.ckOfferTitle;
@@ -4494,7 +4886,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     }[state.view];
     const hint = {
       offer: blockOk ? 'Balance ' + inr(b.fee - block()) + ' due before ' + BATCH_START : HANDOFF && V9() ? '' : 'This offer has ended',
-      details: 'We’ll send a code to verify your mobile',
+      details: V11() ? '' : 'We’ll send a code to verify your mobile', // V11: the mobile's own help says it
       checkout: b.plan === 'block' ? 'Balance ' + inr(b.later) + ' due before ' + BATCH_START : 'The price locks when you pay',
     }[state.view];
     $$('[data-ck-next]').forEach((el) => { el.innerHTML = (cta || '') + ARROW; });
@@ -4543,6 +4935,14 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     $('[data-ck-paid-via]').textContent = (state.method || 'UPI') + ' · ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     $('[data-ck-order]').textContent = ORDER_ID;
     $('[data-ck-done-balance]').hidden = !blocked;
+    // preview V11: the centre picked and its batch start; the balance is due before it
+    const c = picked();
+    $('[data-ck-done-centre]').hidden = !c;
+    if (c) {
+      $('[data-ck-done-centre-name]').textContent = c.name;
+      $('[data-ck-done-centre-batch]').textContent = 'Batch starts ' + startsLong(c);
+    }
+    $('[data-ck-done-due]').textContent = 'Due before ' + (c ? startsFull(c) : BATCH_START_FULL);
     $('[data-ck-balance-pay]').hidden = !blocked;
 
     if (status) renderStatus();
@@ -4789,13 +5189,44 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     check: '<svg class="ck-i" viewBox="0 0 24 24"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg>',
     info: '<svg class="ck-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg>',
     clock: '<svg class="ck-i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2 2M10 2.75h4"/></svg>',
+    // preview V11: the batch start, the duration, a verified mobile, the centre picked in the list
+    tick: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12.5 4 4 8-9"/></svg>',
+    date: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.75" y="5.25" width="16.5" height="15" rx="2.5"/><path d="M3.75 10h16.5M8 3v4M16 3v4"/></svg>',
+    span: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.25"/><path d="M12 7.5V12l3 2"/></svg>',
+    ok: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.75"/><path d="m5.25 8.25 1.9 1.9 3.6-3.9"/></svg>',
   };
+  // preview V11: the box shows the centre picked; under it, its batch start and duration. Redrawn
+  // only when the centre changes, so it is announced once
+  function renderCentre() {
+    const c = centreOf(state.centre);
+    const box = $('#' + P + '-centre');
+    box.dataset.value = c ? c.id : '';
+    if (document.activeElement !== box && box.value !== (c ? c.name : '')) box.value = c ? c.name : '';
+    const facts = $('[data-ck-batch]');
+    if (facts.dataset.for === (c ? c.id : '')) return;
+    facts.dataset.for = c ? c.id : '';
+    facts.innerHTML = c ? '<dl>'
+      + '<div><dt>' + ICONS.date + 'Batch starts</dt><dd>' + startsLong(c) + '</dd></div>'
+      + '<div><dt>' + ICONS.span + 'Duration</dt><dd>' + c.duration + '</dd></div></dl>' : '';
+  }
+  // preview V11: the mobile on the account is verified already; a changed number needs a code
+  const phoneVerified = () => V11() && Boolean(state.trusted)
+    && $('#' + P + '-phone').value.replace(/\D/g, '') === state.trusted;
+  function renderPhoneHelp() {
+    const ok = phoneVerified();
+    const help = $('#' + P + '-phone-help');
+    if (help.dataset.ok === String(ok)) return;
+    help.dataset.ok = String(ok);
+    help.classList.toggle('is-ok', ok);
+    help.innerHTML = ok ? ICONS.ok + 'Verified' : 'We’ll send a code to verify it.';
+  }
+
   function renderStatus() {
     const opens = state.opensAt || new Date();
     const copy = {
-      enrolled: ['check', 'You’re already enrolled', 'Your seat in the ' + BATCH_START + ' batch is confirmed, so there’s nothing to pay from this link.', 'Go to your dashboard'],
-      'paid-phone': ['check', 'You’re already enrolled', 'This mobile number already has a paid seat in the ' + BATCH_START + ' batch, so there’s nothing more to pay.', 'Go to your dashboard'],
-      reserved: ['check', 'Your seat is already reserved', 'You paid ' + inr(block()) + ' to reserve it on ' + RESERVED_ON + '. The balance of ' + inr(OFFER_PRICE - block()) + ' is due before ' + BATCH_START + '.', 'Pay remaining ' + inr(OFFER_PRICE - block())],
+      enrolled: ['check', 'You’re already enrolled', 'Your seat in the ' + batchStart() + ' batch is confirmed, so there’s nothing to pay from this link.', 'Go to your dashboard'],
+      'paid-phone': ['check', 'You’re already enrolled', 'This mobile number already has a paid seat in the ' + batchStart() + ' batch, so there’s nothing more to pay.', 'Go to your dashboard'],
+      reserved: ['check', 'Your seat is already reserved', 'You paid ' + inr(block()) + ' to reserve it on ' + RESERVED_ON + '. The balance of ' + inr(OFFER_PRICE - block()) + ' is due before ' + batchStart() + '.', 'Pay remaining ' + inr(OFFER_PRICE - block())],
       closed: ['info', 'This batch is no longer open', 'The ' + BATCH_START + ' batch at Marathahalli is full. Your counsellor can help you find another batch.', 'Talk to your counsellor'],
       scheduled: ['clock', 'This offer opens at ' + clock(opens) + ' today', 'Come back then for the offer price, or join now at the full price of ' + inr(LIST_PRICE) + '. This link stays the same.', state.reminded ? 'Reminder set for ' + clock(opens) : 'Remind me'],
     }[state.status];
@@ -4831,7 +5262,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     const calm = on && left > 3600;
     box.classList.toggle('is-calm', calm);
     const heldText = state.view === 'done'
-      ? (b.plan === 'block' ? 'Price locked until ' + BATCH_START : 'Paid at the offer price')
+      ? (b.plan === 'block' ? 'Price locked until ' + batchStart() : 'Paid at the offer price')
       : 'Price held until ' + clock(state.locked ? state.locked.until : new Date());
     const opensText = notYet ? 'Offer opens at ' + clock(state.opensAt) + ' today' : '';
     $('[data-ck-countdown-text]').innerHTML = held
@@ -4846,6 +5277,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     $('[data-ck-ends-sep]').hidden = !on;
     $('[data-ck-offer-note]').hidden = !on;
     $('[data-ck-offer-note]').textContent = time + ' ' + day;
+    $$('[data-ck-offer-at]').forEach((el) => { el.textContent = time + ' ' + day; }); // V11 on phones, Full: the strip's end time
 
     const hrs = Math.floor(left / 3600);
     const mins = hrs ? Math.floor(left / 60) % 60 : Math.ceil(left / 60);
@@ -4896,7 +5328,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
       const away = view === 'checkout';
       root.hidden = away;
       document.dispatchEvent(new CustomEvent('ck:handoff', {
-        detail: away ? { version: VER, name: state.name, zip: state.zip, seen: state.entryLive, deadline: state.deadline.getTime(), opensAt: state.opensAt ? state.opensAt.getTime() : null, scenario: root.hasAttribute('data-v8-s3') ? 3 : root.hasAttribute('data-v8-s2') ? 2 : 1 } : { version: VER, back: true },
+        detail: away ? { version: VER, name: state.name, centre: centreCard(), zip: state.zip, seen: state.entryLive, deadline: state.deadline.getTime(), opensAt: state.opensAt ? state.opensAt.getTime() : null, scenario: root.hasAttribute('data-v8-s3') ? 3 : root.hasAttribute('data-v8-s2') ? 2 : 1 } : { version: VER, back: true },
       }));
       if (away) { state.view = view; window.scrollTo(0, 0); return; }
     }
@@ -4909,6 +5341,11 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     if (view === 'status') $('[data-ck-status-title]').focus({ preventScroll: true });
   }
   function showStatus(key) { state.status = key; go('status'); }
+  // preview V11: the centre picked, as the payment page's course card shows it
+  function centreCard() {
+    const c = picked();
+    return c ? { name: c.name, starts: startsFull(c), startsShort: startsShort(c), duration: c.duration } : null;
+  }
 
   // ---- field errors ----
   function fieldError(key, text) {
@@ -4919,7 +5356,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     const box = wrap.querySelector('.ck-phone-field');
     if (box) box.classList.toggle('is-error', Boolean(text));
     wrap.classList.toggle('is-error', Boolean(text));
-    const input = wrap.querySelector('input');
+    const input = wrap.querySelector('input, select');
     input.setAttribute('aria-invalid', String(Boolean(text)));
     return text ? input : null;
   }
@@ -4936,6 +5373,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     const email = $('#' + P + '-email').value.trim();
     const phone = $('#' + P + '-phone').value.replace(/\D/g, '');
     return [
+      V11() ? fieldError('centre', centreOf(state.centre) ? '' : 'Select the learning centre you’ll attend.') : null,
       fieldError('name', name.length < 2 ? 'Enter your full name.' : ''),
       fieldError('email', !email ? 'Enter your email.' : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? 'Check the email, it looks incomplete.' : ''),
       fieldError('phone', phone.length !== 10 ? 'Enter all 10 digits of your mobile number.' : !/^[6-9]/.test(phone) ? 'Indian mobile numbers start with 6, 7, 8 or 9.' : ''),
@@ -4955,11 +5393,11 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   function next(plan) {
     if (state.view === 'offer') {
       if (plan && !PLANS) state.plan = plan;
-      go(state.loggedIn ? 'checkout' : 'details');
+      go(state.loggedIn && !V11() ? 'checkout' : 'details'); // V11: the centre is picked there, logged in or out
     } else if (state.view === 'details') {
       if (focusFirst(validateDetails())) return;
       const phone = $('#' + P + '-phone').value.replace(/\D/g, '');
-      if (phone !== state.phone) state.verified = false; // a new number needs a new code
+      if (phone !== state.phone) state.verified = V11() && phone === state.trusted; // a new number needs a new code (V11: not one verified already)
       state.name = $('#' + P + '-name').value.trim().replace(/\s+/g, ' ');
       state.email = $('#' + P + '-email').value.trim();
       state.phone = phone;
@@ -4984,16 +5422,16 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     if (prev) go(prev);
   }
   function logIn() {
-    Object.assign(state, { loggedIn: true, verified: true, name: ME.name, email: ME.email, phone: ME.phone, zip: state.zip || ME.zip });
+    Object.assign(state, { loggedIn: true, verified: true, trusted: ME.phone, name: ME.name, email: ME.email, phone: ME.phone, zip: state.zip || ME.zip });
     fillDetails();
-    if (state.view === 'details') go('checkout'); else render();
+    if (state.view === 'details' && !V11()) go('checkout'); else render(); // V11: the page stays, filled in, for the centre
   }
   function fillDetails() {
     $('#' + P + '-name').value = state.name;
     $('#' + P + '-email').value = state.email;
     $('#' + P + '-phone').value = spaced(state.phone);
     $('#' + P + '-zip').value = state.zip;
-    ['name', 'email', 'phone', 'zip', 'terms'].forEach((k) => fieldError(k, ''));
+    ['centre', 'name', 'email', 'phone', 'zip', 'terms'].forEach((k) => fieldError(k, ''));
   }
 
   // ---- OTP sheet ----
@@ -5074,6 +5512,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     renderOtp();
     setTimeout(() => {
       state.verified = true;
+      state.trusted = state.phone;
       otp.close();
       afterVerify();
     }, 600);
@@ -5204,7 +5643,116 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   $('#' + P + '-phone').addEventListener('input', (event) => {
     event.target.value = spaced(event.target.value.replace(/\D/g, '').slice(0, 10));
     fieldError('phone', '');
+    if (V11()) render(); // a verified number, changed, needs a code: the help and the hint say so
   });
+  // preview V11 on phones, Full: the header's course fee line folds away once the page is scrolled
+  // (past 40px) and is back at the top (under 8px)
+  const flowHead = $('.pm-head--flow');
+  let folded = false;
+  addEventListener('scroll', () => {
+    const y = window.scrollY;
+    const fold = folded ? y > 8 : y > 40;
+    if (fold !== folded) { folded = fold; flowHead.classList.toggle('is-folded', folded); }
+  }, { passive: true });
+  // preview V11: the learning centre, a search box with a list (the ARIA combobox pattern). Typing a
+  // city or an area narrows the centres (Bengaluru finds Bangalore); the chevron, a tap or the down
+  // arrow opens the whole list. Arrow keys move through it, Enter picks, Escape closes. Text that
+  // names no centre goes back to the centre picked (or empty) when the box is left
+  const combo = $('[data-ck-combo]');
+  const centreBox = $('#' + P + '-centre');
+  const comboList = $('[data-ck-combo-list]');
+  const comboEmpty = $('[data-ck-combo-empty]');
+  const comboStatus = $('[data-ck-combo-status]');
+  const ALIASES = { bengaluru: 'bangalore', calcutta: 'kolkata', madras: 'chennai' };
+  const fold = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const centreKeys = (c) => [c.name].concat(Object.keys(ALIASES).filter((a) => ALIASES[a] === fold(c.city)).map((a) => a + ' ' + (c.area || ''))).map(fold);
+  const esc = (t) => t.replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+  // a match starts a word ("ba" finds Bangalore, not HyderaBAd); the letters typed are marked
+  const startsWord = (key, q) => key.startsWith(q) || key.includes(' ' + q);
+  const marked = (name, q) => {
+    const m = q ? new RegExp('(^|[^A-Za-z0-9])(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'i').exec(name) : null;
+    if (!m) return esc(name);
+    const i = m.index + m[1].length;
+    return esc(name.slice(0, i)) + '<mark>' + esc(name.slice(i, i + m[2].length)) + '</mark>' + esc(name.slice(i + m[2].length));
+  };
+  let found = [];
+  let active = -1;
+  function setActive(i) {
+    active = i;
+    Array.from(comboList.children).forEach((el, n) => el.classList.toggle('is-active', n === i));
+    const el = comboList.children[i];
+    if (el) { centreBox.setAttribute('aria-activedescendant', el.id); el.scrollIntoView({ block: 'nearest' }); } else centreBox.removeAttribute('aria-activedescendant');
+  }
+  function openCentres(query) {
+    const q = query.trim();
+    found = q ? OPEN_CENTRES.filter((c) => centreKeys(c).some((k) => startsWord(k, fold(q)))) : OPEN_CENTRES.slice();
+    comboList.innerHTML = found.map((c, i) => '<li class="v11-combo__option" role="option" id="' + P + '-centre-' + i + '" aria-selected="' + (c.id === state.centre) + '" data-id="' + c.id + '"><span>' + marked(c.name, q) + '</span>' + (c.id === state.centre ? ICONS.tick : '') + '</li>').join('');
+    comboList.hidden = !found.length;
+    comboEmpty.hidden = found.length > 0;
+    comboEmpty.textContent = found.length ? '' : 'No centre matches “' + q + '”. Try a city or an area.';
+    combo.setAttribute('data-open', '');
+    centreBox.setAttribute('aria-expanded', String(found.length > 0));
+    comboStatus.textContent = !q ? '' : found.length ? found.length + (found.length === 1 ? ' centre' : ' centres') + ' found' : 'No centres found';
+    setActive(q && found.length ? 0 : found.findIndex((c) => c.id === state.centre));
+  }
+  function closeCentres() {
+    comboList.hidden = true;
+    comboEmpty.hidden = true;
+    combo.removeAttribute('data-open');
+    centreBox.setAttribute('aria-expanded', 'false');
+    centreBox.removeAttribute('aria-activedescendant');
+    active = -1;
+  }
+  function pickCentre(id) {
+    state.centre = id;
+    fieldError('centre', '');
+    closeCentres();
+    centreBox.value = centreOf(id).name;
+    render();
+    centreBox.dispatchEvent(new Event('change', { bubbles: true })); // the Continue gate looks again
+  }
+  // left with text that names no centre: the centre picked, or empty
+  function settleCentre() {
+    const exact = OPEN_CENTRES.find((c) => fold(c.name) === fold(centreBox.value));
+    if (exact && exact.id !== state.centre) { pickCentre(exact.id); return; }
+    const c = centreOf(state.centre);
+    centreBox.value = c ? c.name : '';
+    closeCentres();
+  }
+  centreBox.addEventListener('input', () => openCentres(centreBox.value));
+  centreBox.addEventListener('click', () => { if (!combo.hasAttribute('data-open')) { centreBox.select(); openCentres(''); } });
+  centreBox.addEventListener('keydown', (event) => {
+    const open = combo.hasAttribute('data-open');
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!open) { openCentres(''); return; }
+      if (!found.length) return;
+      setActive(event.key === 'ArrowDown' ? Math.min(active + 1, found.length - 1) : Math.max(active - 1, 0));
+    } else if (event.key === 'Enter' && open && active >= 0) {
+      event.preventDefault(); // picks, does not send the form
+      pickCentre(found[active].id);
+    } else if (event.key === 'Escape' && open) {
+      event.preventDefault();
+      settleCentre();
+    }
+  });
+  centreBox.addEventListener('blur', () => { setTimeout(() => { if (document.activeElement !== centreBox) settleCentre(); }, 0); });
+  // the list keeps the focus in the box (mousedown), and a tap picks
+  comboList.addEventListener('mousedown', (event) => event.preventDefault());
+  comboList.addEventListener('click', (event) => {
+    const option = event.target.closest('[data-id]');
+    if (option) pickCentre(option.dataset.id);
+  });
+  const comboToggle = $('[data-ck-combo-toggle]');
+  comboToggle.addEventListener('mousedown', (event) => event.preventDefault());
+  comboToggle.addEventListener('click', () => {
+    if (combo.hasAttribute('data-open')) { settleCentre(); return; }
+    centreBox.focus();
+    centreBox.select();
+    openCentres('');
+  });
+  // the preview switch, V11 on or off: the details page gains or loses the centre (and logged in, the page)
+  new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ['data-pv11'] });
   $('#' + P + '-name').addEventListener('input', () => fieldError('name', ''));
   $('#' + P + '-email').addEventListener('input', () => fieldError('email', ''));
   $('#' + P + '-zip').addEventListener('input', (event) => {
@@ -5238,7 +5786,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   $('[data-ck-status-full]').addEventListener('click', () => {
     state.entryLive = false; // no offer page: this is the full-price journey
     state.status = null;
-    go(state.loggedIn ? 'checkout' : 'details');
+    go(state.loggedIn && !V11() ? 'checkout' : 'details');
   });
   // preview V9: the balance is paid on the regular payment page (the confirmation's Pay balance, and
   // Pay remaining on "Seat already reserved")
@@ -5276,8 +5824,8 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     return d;
   };
   const topOfHourIn = (h) => { const d = new Date(Date.now() + h * 3600 * 1000); d.setMinutes(0, 0, 0); return d; };
-  const filled = { name: ME.name, email: ME.email, phone: ME.phone, verified: true };
-  const ready = { ...filled, zip: ME.zip, method: 'UPI', terms: true };
+  const filled = { name: ME.name, email: ME.email, phone: ME.phone, verified: true, trusted: ME.phone };
+  const ready = { ...filled, zip: ME.zip, method: 'UPI', terms: true, centre: 'blr-marathahalli' };
   // a payment session already started: the choice and its locked quote
   const session = (extra) => {
     const s = { plan: 'block', option: 'block', method: 'UPI', ...extra };
@@ -5410,6 +5958,9 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   const DEMO_SECONDS = 2 * 3600 + 14 * 60 + 33; // used once 9 PM has passed
   const HOLD_MINUTES = 30; // the PRD: once the payment session starts (the review), the price is held 30 minutes
   const PROGRESS = { choose: '15%', review: '80%' };
+  // preview V11: the journey's scale, on from the details page's 37.5%
+  const V11 = () => document.documentElement.hasAttribute('data-pv11');
+  const PROGRESS_V11 = { choose: '62.5%', review: '87.5%' };
   const PLANS = { 'cc-emi': 'CREDIT CARD EMI', cardless: 'NO COST CARDLESS EMI' };
   const PARTNERS = { fibe: 'Fibe', propelld: 'Propelld', northernarc: 'Northernarc' };
   const CHECK = '<svg class="v8-zip__check" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.75"/><path d="m5.25 8.25 1.9 1.9 3.6-3.9"/></svg>';
@@ -5418,6 +5969,10 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   // preview V5 and V6: a learner with no code on file (logged out) gets the PIN code of where they are, as a
   // location lookup would give it: Marathahalli, Bengaluru, by the centre (editable, as ever)
   const NEAR_ZIP = '560037';
+  // preview V11: the link names no centre; the learner picks one on the details page and the flow
+  // hands it over (its name, batch start and duration, as shown). Opened straight from a scenario,
+  // the page shows this sample centre
+  const SAMPLE_CENTRE = { name: 'Bangalore – Marathahalli', starts: 'Nov 21, 2026', startsShort: 'Nov 21', duration: '4 months' };
 
   const inr = (n) => 'INR ' + Math.round(n).toLocaleString('en-IN');
   const pad = (n) => String(n).padStart(2, '0');
@@ -5451,9 +6006,10 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   }
 
   const fresh = () => ({
-    view: 'choose', tab: 'recommended',
+    view: 'choose', tab: V11() ? 'reserve' : 'recommended', // preview V11: the ₹5,000 option open first
     method: { reserve: null, other: null }, plan: null, partner: null, amount: null,
     zip: ME_ZIP, zipError: '', deadline: offerDeadline(), opensAt: null, name: ME,
+    centre: SAMPLE_CENTRE, // preview V11: the centre picked on the details page
     scenario: BASE, // 2: the countdown on a band across the course card's top; 3: under the summary's total
     held: null, // { price, until }: the price held from the review on, even if the offer ends meanwhile
     seen: true, // the link opened while the offer was live; if not, the page never mentions the offer
@@ -5483,6 +6039,9 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     return t.replace(/ (AM|PM)$/, '\u00a0$1'); // "9:00 PM" never splits over two lines
   };
   // preview V6 calls it a PIN code, the word most learners know
+  // the postal code's fields: desktop's first step, and (preview V11) the card over the options on phones
+  const zipInputs = () => $$('#' + VER + '-zip, #' + VER + '-zip-pm');
+  const zipOnScreen = () => zipInputs().find((el) => el.getClientRects().length) || zipInputs()[0];
   const zipWord = () => (/^[6-9]$/.test(document.documentElement.dataset.previewV || '') ? 'PIN code' : 'postal code');
   const amountOk = () => Number.isInteger(state.amount) && state.amount >= minReserve() && state.amount <= (fixedBlock() ? minReserve() : price());
   const ready = () => ({
@@ -5524,7 +6083,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     root.toggleAttribute('data-v8-s3', state.scenario === 3);
     $('.ug-header__logo').setAttribute('href', '#' + VER + (state.scenario !== BASE ? '-s' + state.scenario : '') + '-offer'); // the logo starts this scenario again
     $$('[data-v8-view]').forEach((el) => { el.hidden = el.dataset.v8View !== state.view; });
-    $('[data-v8-progress]').style.width = PROGRESS[state.view];
+    $('[data-v8-progress]').style.width = (V11() ? PROGRESS_V11 : PROGRESS)[state.view];
 
     // who is paying, from the details step
     const name = state.name || ME;
@@ -5535,22 +6094,34 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
 
     // the course card: the offer price while the link is live, or while it is held
     const offer = on || holding();
+    $('[data-v11-min]').hidden = state.balance || !offer; // preview V11: the least that locks the offer
     $('[data-v8-price]').textContent = price().toLocaleString('en-IN'); // the course's price (the balance is in the summary)
     $('[data-v8-was-row]').hidden = !offer;
     renderCountdown();
 
     // postal code
     const place = lookup(state.zip);
-    const help = $('[data-v8-zip-help]');
-    // beside the field: the error, the place it found, or what the code is for
-    help.classList.toggle('is-error', Boolean(state.zipError));
-    help.classList.toggle('is-valid', !state.zipError && Boolean(place));
-    help.innerHTML = state.zipError || (place ? CHECK + place : 'For your invoice.');
-    $('[data-v8-zip-field]').classList.toggle('is-error', Boolean(state.zipError));
-    $('#' + VER + '-zip').setAttribute('aria-invalid', String(Boolean(state.zipError)));
+    // beside the field (and under it on phones): the error, the place it found, or what the code is for
+    $$('[data-v8-zip-help]').forEach((help) => {
+      help.classList.toggle('is-error', Boolean(state.zipError));
+      help.classList.toggle('is-valid', !state.zipError && Boolean(place));
+      help.innerHTML = state.zipError || (place ? CHECK + place : 'For your invoice.');
+    });
+    $$('[data-v8-zip-field]').forEach((el) => el.classList.toggle('is-error', Boolean(state.zipError)));
+    zipInputs().forEach((el) => el.setAttribute('aria-invalid', String(Boolean(state.zipError))));
     // preview V9: Billing details, the state and the PIN code
     const msPlace = $('[data-ms-place]');
     if (msPlace) msPlace.textContent = place ? place.split(', ').pop() + ', ' + state.zip : (state.zip || 'Add your billing PIN code');
+
+    // preview V11: the course card names the centre picked and its batch (a reserved seat's balance:
+    // the centre it was reserved at, not known here)
+    const centre = state.balance ? null : state.centre;
+    $$('[data-v11-facts]').forEach((el) => {
+      const text = !centre ? '4 months'
+        : el.dataset.v11Facts === 'short' ? centre.name + ' · Starts ' + centre.startsShort + ' · ' + centre.duration
+        : centre.name + ' · ' + centre.duration + ' · Starts ' + centre.starts;
+      if (el.textContent !== text) el.textContent = text;
+    });
 
     // tabs and panels
     $$('[data-v8-tab]').forEach((tab) => {
@@ -5609,7 +6180,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     $('[data-v8-paid-row]').hidden = !state.balance;
     $('[data-v8-s-paying]').hidden = q.paying === null;
     $$('[data-v8-paying-amount]').forEach((el) => { el.textContent = inr(q.paying || 0); });
-    $('[data-v8-down]').hidden = state.tab !== 'reserve'; // only a seat reservation is a downpayment
+    $('[data-v8-down]').hidden = state.tab !== 'reserve'; // only a seat reservation is a down payment
     $('[data-v8-s-emi]').hidden = !q.emi;
     if (q.emi) { $('[data-v8-s-emi-label]').textContent = q.emi[0]; $('[data-v8-s-emi-value]').textContent = q.emi[1]; }
     $('[data-v8-s-repay]').hidden = q.repay === null;
@@ -5717,7 +6288,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     if (!lookup(state.zip)) {
       state.zipError = state.zip.length < 6 ? 'Enter your 6-digit ' + zipWord() + '.' : 'We couldn’t find this ' + zipWord() + '.';
       render();
-      const zip = $('#' + VER + '-zip');
+      const zip = zipOnScreen();
       zip.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
       zip.focus({ preventScroll: true });
       return;
@@ -5725,7 +6296,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     go('review');
   }
   function fill() {
-    $('#' + VER + '-zip').value = state.zip;
+    zipInputs().forEach((el) => { el.value = state.zip; });
     $('#' + VER + '-amount').value = state.amount === null ? '' : String(state.amount);
   }
 
@@ -5766,17 +6337,17 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     state.amount = Number.isFinite(n) ? n : null;
     render();
   });
-  $('#' + VER + '-zip').addEventListener('input', (event) => {
+  zipInputs().forEach((input) => input.addEventListener('input', (event) => {
     state.zip = event.target.value.replace(/\D/g, '').slice(0, 6);
-    event.target.value = state.zip;
+    zipInputs().forEach((el) => { if (el.value !== state.zip) el.value = state.zip; });
     state.zipError = state.zip.length === 6 && !lookup(state.zip) ? 'We couldn’t find this ' + zipWord() + '.' : '';
     render();
-  });
+  }));
   $$('[data-v8-next]').forEach((el) => el.addEventListener('click', next));
   $('[data-v8-edit]').addEventListener('click', () => go('choose'));
-  $('[data-v8-edit-zip]').addEventListener('click', () => { go('choose'); $('#' + VER + '-zip').focus(); });
+  $('[data-v8-edit-zip]').addEventListener('click', () => { go('choose'); zipOnScreen().focus(); });
   // the pencil in the field: edit the code, selected so typing replaces it
-  $('[data-v8-zip-edit]').addEventListener('click', () => { const zip = $('#' + VER + '-zip'); zip.focus(); zip.select(); });
+  $$('[data-v8-zip-edit]').forEach((edit) => edit.addEventListener('click', () => { const zip = edit.parentElement.querySelector('input'); zip.focus(); zip.select(); }));
   $('[data-v8-reveal]').addEventListener('click', () => { $('[data-v8-qr]').classList.add('co-qr--revealed'); });
   // preview V9: Billing details, the PIN code edited in place (the pencil)
   const msForm = $('[data-ms-zipform]');
@@ -5814,6 +6385,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     if (d.back) { show(false); return; }
     Object.assign(state, fresh(), {
       name: d.name || ME, deadline: new Date(d.deadline), opensAt: d.opensAt, scenario: d.scenario || BASE,
+      centre: d.centre || SAMPLE_CENTRE,
       zip: d.zip === undefined ? ME_ZIP : d.zip || (/^[5-9]$/.test(document.documentElement.dataset.previewV || '') ? NEAR_ZIP : ''), seen: d.seen !== false,
     });
     fill();
@@ -5857,7 +6429,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   // the preview switch: V7 locks the offer here (or another version lets it go) at once; V10 takes
   // V8's page (an amount to enter) from V9's
   new MutationObserver(() => { if (!root.hidden) { render(); was = phase(); } })
-    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-preview-v', 'data-pv10'] });
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['data-preview-v', 'data-pv10', 'data-pv11'] });
 
   // ---- deep links to the payment page, for review against the frames ----
   const review = () => ({ tab: 'other', method: { reserve: null, other: 'UPI' }, zip: '560037', view: 'review' });
@@ -5906,21 +6478,24 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
 })();
 
 </script>
-<!-- preview versions (V10: V9 with options A, B and C on the coupon, the ₹5,000 first): V5 with the printer, the price reveal and the countdown under the price,
+<!-- preview versions, V9 to V11 (V11, the final direction: V10 with no centre in the link, the centre
+     picked on the details page; V10: V9 with options A, B and C on the coupon, the ₹5,000 first). They build
+     on earlier versions, no longer in the switch: V5 with the printer, the price reveal and the countdown under the price,
      V6 with the postal / PIN code step, V7 with the offer locked at checkout (no timer there),
      V8 with "Reserve seat for ₹5,000" on the offer page's button, V9 with the block amount only
      (₹10,000 at a Microsoft-style checkout; "Seat already reserved"; Pay balance) -->
 <div class="pv-toggle" role="group" aria-label="Preview version">
-  <button type="button" data-pv="5">V5</button>
-  <button type="button" data-pv="6">V6</button>
-  <button type="button" data-pv="7">V7</button>
-  <button type="button" data-pv="8">V8</button>
-  <button type="button" data-pv="9">V9</button>
-  <button type="button" data-pv="10">V10</button>
-  <span class="pv-opts" role="group" aria-label="V10 option">
+  <button type="button" data-pv="11">V11</button>
+  <span class="pv-opts" role="group" aria-label="Coupon option">
     <button type="button" data-pv10-opt="a">A</button>
     <button type="button" data-pv10-opt="b">B</button>
     <button type="button" data-pv10-opt="c">C</button>
+  </span>
+  <!-- phones: the details page's header, Minimal, Medium or Full -->
+  <span class="pv-opts pv-pd" role="group" aria-label="Details page header on phones">
+    <button type="button" data-pv-pd="minimal" aria-label="Minimal">Min</button>
+    <button type="button" data-pv-pd="medium" aria-label="Medium">Mid</button>
+    <button type="button" data-pv-pd="full" aria-label="Full">Full</button>
   </span>
   <button type="button" class="pv-replay" data-pv-replay>Replay</button>
   <button type="button" class="pv-restart" data-pv-restart>Restart</button>
@@ -6199,7 +6774,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   function setCta(v) {
     if (!flow || !ctaAsBuilt) return;
     var was = flow.dataset.ckOfferCta;
-    var now = /^10/.test(v) ? 'Lock offer for ₹5,000' : /^[89]$/.test(v) ? 'Reserve seat for ₹5,000' : /^[4-9]$/.test(v) ? 'Claim now' : ctaAsBuilt;
+    var now = /^1[01]/.test(v) ? 'Lock offer for ₹5,000' : /^[89]$/.test(v) ? 'Reserve seat for ₹5,000' : /^[4-9]$/.test(v) ? 'Claim now' : ctaAsBuilt;
     flow.dataset.ckOfferCta = now;
     flow.querySelectorAll('[data-ck-next]').forEach(function (b) {
       var label = b.firstChild;
@@ -6210,6 +6785,10 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   // (a name of two letters or more, a whole email, a 10-digit Indian mobile); meanwhile the line
   // under it says what is missing. Checked as the learner types, and whenever the page changes
   var GATE_HINT = 'Fill in your name, email and mobile to continue';
+  // V11: the learning centre as well; the line names what is missing
+  var GATE_CENTRE = 'Select your learning centre to continue';
+  var GATE_BOTH = 'Select a centre and add your details to continue';
+  var GATE_HINTS = [GATE_HINT, GATE_CENTRE, GATE_BOTH];
   var gateHint = null; // the page's own hint, put back once Continue is on
   var field = function (key) { return flow ? flow.querySelector('#' + (flow.dataset.ckPrefix || 'ck4') + '-' + key) : null; };
   function detailsIn() {
@@ -6222,9 +6801,19 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
       && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())
       && digits.length === 10 && /^[6-9]/.test(digits);
   }
+  function centreIn() {
+    var box = field('centre');
+    return !root.hasAttribute('data-pv11') || !box || Boolean(box.dataset.value);
+  }
   function gateContinue() {
     if (!flow) return;
-    var off = /^[4-9]$/.test(root.dataset.previewV) && !flow.hidden && flow.dataset.ckView === 'details' && !detailsIn();
+    var details = detailsIn();
+    var centre = centreIn();
+    // V11: Continue is marked off until the centre, name, email and mobile are in, with no line
+    // under it; pressed meanwhile, it shows what is missing under each field and moves to the first
+    var v11 = root.hasAttribute('data-pv11');
+    var off = /^[4-9]$/.test(root.dataset.previewV) && !flow.hidden && flow.dataset.ckView === 'details' && !(details && centre);
+    var says = centre ? GATE_HINT : details ? GATE_CENTRE : GATE_BOTH;
     // V4 turns Continue off; V5 only marks it (aria-disabled) and keeps it clickable, so a click
     // shows the page's own errors on what is missing
     var v5 = /^[5-9]$/.test(root.dataset.previewV);
@@ -6233,17 +6822,21 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
       if (off && v5) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled');
     });
     flow.querySelectorAll('[data-ck-hint]').forEach(function (h) {
-      if (off && h.textContent !== GATE_HINT) { gateHint = h.textContent; h.textContent = GATE_HINT; }
-      if (!off && h.textContent === GATE_HINT) h.textContent = gateHint || '';
+      var ours = GATE_HINTS.indexOf(h.textContent) >= 0;
+      if (v11) { if (ours) h.textContent = ''; return; } // V11: no line under Continue
+      if (off && h.textContent !== says) { if (!ours) gateHint = h.textContent; h.textContent = says; }
+      if (!off && ours) h.textContent = gateHint || '';
     });
   }
   if (flow) {
     flow.addEventListener('input', gateContinue);
+    flow.addEventListener('change', gateContinue); // V11: a centre picked from the list
     // V5: Continue pressed before the details are in: the page shows its errors under what is
     // missing and moves to the first; each such field gives a small shake as well
     flow.addEventListener('click', function (event) {
       var b = event.target.closest('[data-ck-next]');
-      if (!b || b.getAttribute('aria-disabled') !== 'true' || (still && still.matches)) return;
+      var v11 = root.hasAttribute('data-pv11') && flow.dataset.ckView === 'details';
+      if (!b || (b.getAttribute('aria-disabled') !== 'true' && !v11) || (still && still.matches)) return;
       setTimeout(function () {
         flow.querySelectorAll('[data-ck-details] .v4-field.is-error .ck-phone-field').forEach(function (box) {
           if (box.animate) {
@@ -6337,12 +6930,15 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   function setPhoneHint(v) {
     if (phoneHint) phoneHint.textContent = v === '9' ? 'Prototype: 90000 00000 has reserved a seat; 90000 00001 has paid in full.' : phoneHintAsBuilt;
   }
-  // V10 (10a, 10b, 10c): V9's page with an option on its coupon (html[data-pv10])
+  // V10 (10a, 10b, 10c): V9's page with an option on its coupon (html[data-pv10]); V11 (11a, 11b,
+  // 11c): V10 with no centre in the link, the centre picked on the details page (html[data-pv11] as well)
   var opts = Array.prototype.slice.call(document.querySelectorAll('.pv-toggle [data-pv10-opt]'));
-  var lastOpt = root.dataset.pv10 || 'a';
+  var lastOpt = root.dataset.pv10 || 'b';
   function show(v) {
-    var ten = /^10[abc]$/.test(v);
+    var ten = /^1[01][abc]$/.test(v);
+    var major = ten ? v.slice(0, 2) : v;
     if (ten) root.dataset.pv10 = lastOpt = v.slice(2); else delete root.dataset.pv10;
+    if (major === '11') root.dataset.pv11 = ''; else delete root.dataset.pv11;
     var base = ten ? '9' : v;
     root.dataset.previewV = base;
     setPhoneHint(base);
@@ -6354,7 +6950,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     gateVerify();
     gateContinue();
     if (/^[4-9]$/.test(base)) printCoupon(); else stopPrint();
-    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.pv === (ten ? '10' : v))); });
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.pv === major)); });
     opts.forEach(function (b) { b.setAttribute('aria-pressed', String(ten && b.dataset.pv10Opt === lastOpt)); });
   }
   function pick(v) {
@@ -6368,12 +6964,31 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     } catch (e) {} // a page hosted in a sandboxed frame may not rewrite its URL
   }
   buttons.forEach(function (b) {
-    b.addEventListener('click', function () { pick(b.dataset.pv === '10' ? '10' + lastOpt : b.dataset.pv); });
+    b.addEventListener('click', function () { pick(/^1[01]$/.test(b.dataset.pv) ? b.dataset.pv + lastOpt : b.dataset.pv); });
   });
   opts.forEach(function (b) {
-    b.addEventListener('click', function () { pick('10' + b.dataset.pv10Opt); });
+    b.addEventListener('click', function () { pick((root.hasAttribute('data-pv11') ? '11' : '10') + b.dataset.pv10Opt); });
   });
-  show(root.dataset.pv10 ? '10' + root.dataset.pv10 : root.dataset.previewV || '9');
+  show(root.dataset.pv10 ? (root.hasAttribute('data-pv11') ? '11' : '10') + root.dataset.pv10 : root.dataset.previewV || '9');
+
+  // V11 on phones: how much of the offer the details page's header shows (Minimal, Medium, Full)
+  var pds = Array.prototype.slice.call(document.querySelectorAll('.pv-toggle [data-pv-pd]'));
+  function showPd(pd) {
+    root.dataset.pv11Pd = pd;
+    pds.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.pvPd === pd)); });
+  }
+  pds.forEach(function (b) {
+    b.addEventListener('click', function () {
+      showPd(b.dataset.pvPd);
+      try { localStorage.setItem('upi-v11-pd', b.dataset.pvPd); } catch (e) {}
+      try {
+        var url = new URL(location.href);
+        url.searchParams.set('pd', b.dataset.pvPd);
+        history.replaceState(history.state, '', url);
+      } catch (e) {}
+    });
+  });
+  showPd(root.dataset.pv11Pd || 'full');
 
   // the payment page on phones (upGrad's mobile checkout): its amounts follow the page's price
   // (the offer price while the offer is live or held, the full price after); an option opens the
@@ -6435,10 +7050,12 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
       // opened straight from a scenario: there is no step before it in the flow, so start it again
       if (!payPage.hidden) document.dispatchEvent(new CustomEvent('ck:scenario', { detail: 'v9-offer' }));
     });
-    var pmFlowBack = document.querySelector('[data-pm-flow-back]');
-    if (pmFlowBack) pmFlowBack.addEventListener('click', function () {
-      var flowBack = flow && flow.querySelector('[data-ck-back]');
-      if (flowBack) flowBack.click();
+    // the title row's back, and V11's in the course row
+    document.querySelectorAll('[data-pm-flow-back]').forEach(function (pmFlowBack) {
+      pmFlowBack.addEventListener('click', function () {
+        var flowBack = flow && flow.querySelector('[data-ck-back]');
+        if (flowBack) flowBack.click();
+      });
     });
     var pmTop = pm.querySelector('[data-pm-top]');
     if (pmTop) pmTop.addEventListener('click', function () {
@@ -6469,6 +7086,14 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
       // V10: the details page's strip asks for the ₹5,000 that locks the offer, not the price
       if (label && document.documentElement.dataset.pv10 && strip.querySelector('.pm-strip__v10') && !strip.classList.contains('is-ended')) {
         label = label.replace(/Price ₹[\d,]+/, 'Lock the offer for ₹5,000');
+      }
+      // V11 on phones, Medium: the strip's second line too
+      if (label && document.documentElement.dataset.pv11Pd === 'medium' && strip.querySelector('.pm-strip__more') && !strip.classList.contains('is-ended')) {
+        label = label.replace('Lock the offer for ₹5,000', 'Pay ₹5,000 now') + '. Course fee ₹90,000, down from ₹1,00,000; ₹85,000 remaining';
+      }
+      // V11: the payment page's strip names the least that locks the offer, in place of the saving
+      if (label && p.locked && !p.balance && document.documentElement.hasAttribute('data-pv11') && strip.querySelector('.pm-strip__min') && !strip.classList.contains('is-ended')) {
+        label = 'Pay a minimum of ₹5,000 to lock your offer. Course fee ' + p.price + (p.list ? ', down from ' + p.list : '') + '.';
       }
       if (label && strip.getAttribute('aria-label') !== label) strip.setAttribute('aria-label', label);
     };
@@ -6585,6 +7210,27 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   }
   addEventListener('resize', clearBars);
   clearBars();
+
+  // the switch, faint until used: on a touch screen the first tap only wakes it (that tap does not
+  // press a button), and it fades back 3 seconds after the last touch
+  var nap = null;
+  var swallow = false;
+  function wake() {
+    toggle.classList.add('is-awake');
+    clearTimeout(nap);
+    nap = setTimeout(function () { toggle.classList.remove('is-awake'); }, 3000);
+  }
+  toggle.addEventListener('pointerdown', function (event) {
+    if (event.pointerType === 'mouse') return; // a mouse sees it at full strength on hover
+    swallow = !toggle.classList.contains('is-awake');
+    wake();
+  }, true);
+  toggle.addEventListener('click', function (event) {
+    if (!swallow) return;
+    swallow = false;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, true);
 })();
 </script>
 </body>
