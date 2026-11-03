@@ -1,4 +1,4 @@
-upGrad UPI checkout prototype, V11 (the final direction)
+upGrad UPI checkout prototype, V11 (the final direction), with V12 and V13 (new looks and motion)
 
 index.html   V11, the final direction (described below): the offer link names no centre or
              batch; the learner picks the learning centre on the details page. Step 1 and 2 are
@@ -126,6 +126,32 @@ V11          V10, the final direction: the link names no centre or batch, and th
              11. Every centre has the course's 4 months. Opened straight from the Scenario menu,
              the payment page shows Bangalore – Marathahalli. Paying the balance
              of a reserved seat asks for no centre.
+
+V12 and V13 (switch: V11, V12, V13; or ?v=12, ?v=13): V11 with option B's offer (₹5,000 now,
+             ₹85,000 remaining), the same flow, checks and payment page, in a new look with motion,
+             from patterns found on Mobbin. Proceed to Pay now goes on to a "seat locked" screen
+             (or "You're enrolled" when the full fee was paid) instead of ending the prototype.
+             With reduced motion, everything is simply there.
+V12          "Night pass" (refs: FocusFlight, BitePal and QUITTR offers; Panera's countdown): a dark
+             boarding-pass coupon with no printer; it rises in and its parts follow one by one. A
+             "Limited-time offer" tag with a live dot, then ₹5,000 large in a gradient, counting up
+             from 0, "The remaining ₹85,000 is paid before your batch starts", and the course fee
+             (₹90,000, ₹1,00,000 struck, "You save ₹10,000"). The countdown is a flip clock: each
+             digit flips as it changes, the colons blink, and in the last 10 minutes the digits
+             turn red and glow. A sheen crosses the coupon now and then; the button is a red to
+             violet gradient with a shine that sweeps across it. The details page is on the same
+             dark background; the payment page's course card goes dark. Paid: a "LOCKED" stamp
+             lands on the card, the tick draws itself and confetti bursts.
+V13          "Split plan" (refs: Airbnb's and Peerspace's "pay part now", Insight Timer's deposit
+             note, Pillow's offer): a light coupon with a red top edge. The fee as a plan on a
+             two-stop timeline: Pay now ₹5,000 (a pulsing red dot, "Locks your course fee"), then
+             Remaining amount ₹85,000 ("Before your batch starts"); the line between them and a bar
+             (₹5,000 of ₹90,000) fill as the coupon lands. The countdown's clock is a ring that
+             sweeps with the seconds, its digits roll up as they change, and it beats in the last
+             10 minutes. The button breathes and ripples from where it is pressed. The payment
+             page's course card gets the red edge and a small ₹5,000-of-₹90,000 bar. Paid: a green
+             tick draws itself inside a ring that bursts, and the timeline shows ₹5,000 paid and
+             ₹85,000 to go.
 
 What V11 builds on (no longer in the switch):
 
