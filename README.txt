@@ -1,4 +1,4 @@
-upGrad UPI checkout prototype, V11 (the final direction), and V12 (V11's copy, to try new things in), with V12 and V13 (premium light looks)
+upGrad UPI checkout prototype, V11 (the final direction), with V12 and V13 (copies of V11 to try new things in), with V12 and V13 (premium light looks)
 
 index.html   V11, the final direction (described below): the offer link names no centre or
              batch; the learner picks the learning centre on the details page. Step 1 and 2 are
@@ -148,20 +148,28 @@ V13          Warm off-white, #F7F4EF (refs: Airbnb's Confirm and pay, Request to
              the countdown on a soft note; a red gradient button with a light that follows the
              pointer. Paid: a calm card with the centre, batch and "₹5,000 (Payment 1 of 2)".
 
-V12          (switch: V11, V12; or ?v=12a, ?v=12b, ?v=12c): a copy of V11, options A, B and C and
-             the phone headers (Min, Mid, Full, Full 2) included, to try new things in without
-             touching V11. It looks the same as V11 at rest; only how it moves and responds
-             changes. (V13 to V15, new offer and details pages, were tried and dropped.)
-             1. The countdowns (the coupon's, the phone strip's) roll their digits into place,
-                like an odometer.
-             2. The button gives under a press, its arrow nudges forward on hover, and a sheen
-                crosses it once as the coupon lands.
-             3. From the offer page to the details page (and back) the coupon glides to its new
+V12 and V13  (switch: V11, V12, V13; or ?v=12a, ?v=12b, ?v=12c, ?v=13): copies of V11 to try new
+             things in without touching V11: the coupon, the printer, the flow and the phone headers
+             (Min, Mid, Full, Full 2) are V11's. (V13 to V15 with new pages were tried and dropped.)
+             Both:
+             1. The countdown is a timer of its own: "Offer ends in" and "9:00 PM today" over three
+                cells, hours, minutes and seconds, each with its unit under it; the digits roll
+                into place and a hairline under the seconds drains every second. In the last 10
+                minutes the cells turn red. On phones the strip's countdown rolls too. (Refs:
+                Best Buy's and Swiggy's deal timers.)
+             2. "You save ₹10,000" reads "Save ₹10,000", with a tick: it springs in as the coupon
+                lands, the amount counts up from ₹0, and a few sparks leave it once.
+             3. The button gives under a press; its arrow nudges forward on hover.
+             4. From the offer page to the details page (and back) the coupon glides to its new
                 place (a view transition, where the browser has them).
-             4. On the details page, a field draws a green tick once it is right (a centre picked,
-                a name, a valid email, a 10-digit mobile).
-             5. The centre list unfolds from the search box.
-             With reduced motion, none of it.
+             5. On the details page a field draws a green tick once it is right; the centre list
+                unfolds.
+V12          V11's coupon (options A, B, C) with the above.
+V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,000, large, which rolls
+             up from ₹0 as the coupon lands; "₹85,000 later, before your batch starts"; then the
+             course fee (₹90,000, ₹1,00,000 struck, Save ₹10,000), smaller, on a grey row. (Ref:
+             Givingli's "Your price … That's just $4.99 / mo".) No A, B, C.
+             With reduced motion, none of the motion.
 
 What V11 builds on (no longer in the switch):
 
