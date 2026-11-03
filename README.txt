@@ -127,27 +127,6 @@ V11          V10, the final direction: the link names no centre or batch, and th
              the payment page shows Bangalore – Marathahalli. Paying the balance
              of a reserved seat asks for no centre.
 
-V12 and V13 (switch: V11, V12, V13; or ?v=12, ?v=13): V11's flow, checks, centre picker, OTP,
-             phone headers (Min, Mid, Full, Full 2) and payment options, in two premium light
-             looks with quiet, high-end motion. Proceed to Pay goes on to "Your seat is locked."
-             (or "You're enrolled." when the full fee was paid). With reduced motion, everything
-             is simply there. Once the offer has ended, the coupon is V11's.
-             Motion in both: the headline's words come out of a blur one by one; ₹5,000 and the
-             countdown roll like an odometer; blocks fade up in turn; the success mark draws
-             itself with a spring and a ring of light dots.
-V12          Plain white (refs: Apple Store bag and checkout review). The offer as one sentence,
-             "Lock your seat for ₹5,000.", then "Then ₹85,000 before your batch starts. The offer
-             price of ₹90,000 is yours."; the course; hairline rows that draw in from the left
-             (Course fee, Offer, Before your batch starts, Due today ₹5,000); a quiet countdown;
-             one blue button with a sheen on hover; "Secure payment … Receipt by email". A soft
-             light drifts behind the offer. The details page shows it as a grey order summary.
-V13          Warm off-white, #F7F4EF (refs: Airbnb's Confirm and pay, Request to book and its
-             "Payment 1 of 2" confirmation). "Lock your offer"; the course on a rounded card
-             that tilts toward the pointer with a sheen where the light falls; "When you'll pay"
-             (Due now ₹5,000, with a red marker that grows in; Before your batch starts ₹85,000);
-             the countdown on a soft note; a red gradient button with a light that follows the
-             pointer. Paid: a calm card with the centre, batch and "₹5,000 (Payment 1 of 2)".
-
 V13 and V15  (switch: V11, V13, V15; or ?v=13, ?v=15): copies of V11 to try new things in without
              touching V11. Only the offer page and the details page change; the OTP, the payment
              page and everything after are V11's. On phones the details page's header keeps two of
