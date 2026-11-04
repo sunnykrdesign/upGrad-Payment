@@ -3525,11 +3525,24 @@ html[data-pv11] :is(.ck-app[data-ck4-root] .ck-progress__fill, .v8 .ug-progress,
    card's heading), in the same size and colour; the +91 before the mobile likewise */
 html[data-pv11] .ck-app[data-ck4-root] [data-ck-details] :is(.ck-phone-field__input, .ck-phone-field__cc) { font-weight: 400; }
 
-/* V11: Continue on the details page, off until everything is in: plainly faded (the brand red at
-   about 40%), no shadow, no hover */
-html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[aria-disabled="true"],
-html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[aria-disabled="true"]:hover {
+/* V11 (and V13, V15): the OTP sheet's Verify, off until all six digits are in: plainly faded (the
+   brand red at about 40%), no shadow, no hover */
+html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[aria-disabled="true"]:not([data-ck-next]),
+html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[aria-disabled="true"]:not([data-ck-next]):hover {
   background: #F7A8AE; color: #FFFFFF; box-shadow: none; cursor: default;
+}
+/* V11 (and V13, V15): Continue on the details page looks like the primary button it is from the
+   start: full upGrad red, white label, the usual hover and press. It still waits for the details:
+   pressed early, it shows what is missing and moves to the first. (It was a washed-out pink, white
+   on #F7A8AE at about 1.9:1, which read as unavailable though it works.) */
+html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[data-ck-next][aria-disabled="true"] {
+  background: var(--uG-theme-primary); color: #FFFFFF; cursor: pointer;
+}
+html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[data-ck-next][aria-disabled="true"]:hover {
+  background: var(--uG-red-shade-1); box-shadow: 0 8px 20px -10px rgba(190, 35, 48, 0.55);
+}
+html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[data-ck-next][aria-disabled="true"]:active {
+  background: var(--uG-fill-cta-primary-red-pressed);
 }
 
 /* the details page: no prototype note under the mobile field (the Scenario menu has the reserved
@@ -4174,20 +4187,20 @@ html[data-pv15] .ck-app[data-ck4-root][data-ck-view="offer"] .v14-pass { border-
                small and still. A: the course fee, then the amount large. B: the course fee, then what
                is paid now and the rest in a box. C: the two payments as steps -->
           <div class="cp-part v10-offer v10-offer--a">
-            <p class="v10-intro"><span><span class="v10-intro__label">Course fee</span> <span class="v10-intro__amounts"><strong>₹90,000</strong> <s><span class="ck-sr">instead of </span>₹1,00,000</s></span></span><span class="cp-save">You save ₹10,000</span></p>
+            <p class="v10-intro"><span><span class="v10-intro__label">Course fee</span> <span class="v10-intro__amounts"><strong>₹90,000</strong> <s><span class="ck-sr">instead of </span>₹1,00,000</s></span></span><span class="cp-save">Save ₹10,000</span></p>
             <p class="v10-lead">Pay now to lock your offer</p>
             <p class="v10-amount"><span class="ck-unit">₹</span>5,000</p>
             <p class="v10-note">Remaining amount ₹85,000</p>
           </div>
           <div class="cp-part v10-offer v10-offer--b">
-            <p class="v10-intro"><span><span class="v10-intro__label">Course fee</span> <span class="v10-intro__amounts"><strong>₹90,000</strong> <s><span class="ck-sr">instead of </span>₹1,00,000</s></span></span><span class="cp-save">You save ₹10,000</span></p>
+            <p class="v10-intro"><span><span class="v10-intro__label">Course fee</span> <span class="v10-intro__amounts"><strong>₹90,000</strong> <s><span class="ck-sr">instead of </span>₹1,00,000</s></span></span><span class="cp-save">Save ₹10,000</span></p>
             <dl class="v10-plan">
               <div class="v10-plan__now"><dt>Pay now</dt><dd><span class="ck-unit">₹</span>5,000</dd></div>
               <div><dt>Remaining amount</dt><dd>₹85,000</dd></div>
             </dl>
           </div>
           <div class="cp-part v10-offer v10-offer--c">
-            <p class="v10-price"><span><span class="v10-intro__label">Course fee</span> <span class="v10-intro__amounts"><strong>₹90,000</strong> <s><span class="ck-sr">instead of </span>₹1,00,000</s></span></span><span class="cp-save">You save ₹10,000</span></p>
+            <p class="v10-price"><span><span class="v10-intro__label">Course fee</span> <span class="v10-intro__amounts"><strong>₹90,000</strong> <s><span class="ck-sr">instead of </span>₹1,00,000</s></span></span><span class="cp-save">Save ₹10,000</span></p>
             <ol class="v10-steps">
               <li class="is-now"><span class="v10-step__when">Pay now</span><span class="v10-step__what">Locks your course fee</span><span class="v10-step__amt"><span class="ck-unit">₹</span>5,000</span></li>
               <li><span class="v10-step__when">Remaining amount</span><span class="v10-step__amt">₹85,000</span></li>
@@ -5104,7 +5117,7 @@ html[data-pv15] .ck-app[data-ck4-root][data-ck-view="offer"] .v14-pass { border-
 
     // coupon: the saving and the struck-out list price only at the offer price
     $('[data-ck-price-big]').innerHTML = '<span class="ck-unit">₹</span>' + b.fee.toLocaleString('en-IN');
-    $$('[data-ck-save]').forEach((el) => { el.hidden = b.saved <= 0; el.textContent = 'You save ' + inr(b.saved); });
+    $$('[data-ck-save]').forEach((el) => { el.hidden = b.saved <= 0; el.textContent = 'Save ' + inr(b.saved); });
     $('[data-ck-was]').hidden = !b.offer && !b.sch;
     renderCountdown();
 
@@ -7712,7 +7725,7 @@ html[data-pv15] .ck-app[data-ck4-root][data-ck-view="offer"] .v14-pass { border-
   // 2. "Save ₹10,000": the chips read so, spring in and count up as the coupon lands
   var chips = Array.prototype.slice.call(document.querySelectorAll('.v10-offer--b .cp-save, .v10-offer--a .cp-save, .v10-offer--c .cp-save, [data-vx-save], .pm-offer__save'));
   chips.forEach(function (el) { el.dataset.vxAsBuilt = el.textContent; });
-  var saves = function () { return root.hasAttribute('data-pv13'); }; // V15 keeps V11's "You save ₹10,000"
+  var saves = function () { return root.hasAttribute('data-pv13'); }; // V15 keeps V11's own "Save ₹10,000" pill
   function dress(el) {
     if (saves()) {
       if (!el.querySelector('.vx-save')) el.innerHTML = '<span class="vx-save">' + check + '<span>Save ₹10,000</span></span>';

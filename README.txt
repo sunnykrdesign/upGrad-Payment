@@ -37,6 +37,7 @@ V11          V10, the final direction: the link names no centre or batch, and th
                 the centre ("Advance Certificate in Digital Marketing"). No duration either (the
                 details page shows it, under the centre picked), so one dashed line parts the
                 course from the price.
+                The saving reads "Save ₹10,000" (it was "You save ₹10,000"), in A, B and C.
                 The prices, the ₹5,000 block and the countdown are as in V10, except that in
                 option B the countdown line is centred on the coupon (here and on the details
                 page): one short line between the full-width box and the full-width button. (A and
@@ -60,11 +61,13 @@ V11          V10, the final direction: the link names no centre or batch, and th
                   the right, which keeps to the price.
                 - It is required: Continue without one says "Select the learning centre you'll
                   attend." under it and moves there.
-                - Continue stays off (plainly faded) until the centre, name, email and mobile are
-                  all in, and has no line under it (no "Fill in your name, email and mobile to
-                  continue", no "We'll send a code to verify your mobile", which the mobile's own
-                  help already says). Pressed while off, it does not go on: it shows what is
-                  missing under each field, moves to the first and shakes them.
+                - Continue looks like the primary button it is from the start (full upGrad red,
+                  white label; it was a washed-out pink that read as unavailable though it works),
+                  and has no line under it (no "Fill in your name, email and mobile to continue",
+                  no "We'll send a code to verify your mobile", which the mobile's own help
+                  already says). It waits for the centre, name, email and mobile: pressed before
+                  they are all in, it does not go on: it shows what is missing under each field,
+                  moves to the first and shakes them. (V13 and V15 have the same.)
                 - Phones, how much of the offer the pinned header shows, in four versions
                   (switch: Min, Mid, Full, Full 2; or &pd=minimal, medium, full or full2 in the
                   link; Full unless another is picked, the recommended one). In all four the whole
@@ -141,7 +144,7 @@ V13 and V15  (switch: V11, V13, V15; or ?v=13, ?v=15): copies of V11 to try new 
              without the receipt, were tried and dropped: an old ?v=12b link opens 11b, ?v=14 opens
              V15. V13 to V15 with whole new pages were tried and dropped before that.)
              Both:
-             - (V13 only) "You save ₹10,000" reads "Save ₹10,000", with a tick: as the coupon
+             - (V13 only) The saving reads "Save ₹10,000", with a tick: as the coupon
                lands it wipes in from its left edge and the tick draws itself (it keeps its width,
                so nothing around it moves).
              - The button gives under a press; its arrow nudges forward on hover.
@@ -159,7 +162,7 @@ V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,
 V15          "Seat pass + slide to lock", printed as V11's receipt. The coupon's content is a pass,
              as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
              pass" and the course, in place of V11's course row. Under it, V11's coupon content as
-             it is: "Course fee ₹90,000 ₹1,00,000 (struck)" with the "You save ₹10,000" pill, then
+             it is: "Course fee ₹90,000 ₹1,00,000 (struck)" with the "Save ₹10,000" pill, then
              the box with "Pay now ₹5,000" over "Remaining amount ₹85,000", and under the box, V11's
              countdown line, centred as V11's: "Offer ends in 17:59:44 · 9:00 PM today" (red under
              10 minutes, as V11's). Around it, V11's receipt:
