@@ -1,4 +1,5 @@
-upGrad UPI checkout prototype, V11 (the final direction), with V13 and V15 (copies of V11 to try new things in)
+upGrad UPI checkout prototype, V11 (the final direction): coupon option B, and on phones the Full
+details header
 
 index.html   V11, the final direction (described below): the offer link names no centre or
              batch; the learner picks the learning centre on the details page. Step 1 and 2 are
@@ -6,10 +7,13 @@ index.html   V11, the final direction (described below): the offer link names no
              page, Figma 73:3744, with the payment-options tabs from 78:5054), a desktop layout
              (1512px wide) with upGrad's mobile checkout on phones.
 
-Open index.html in a browser. The "Scenario" menu at the top jumps to any state: logged in
-or out, last hour, under 10 minutes left, an offer that ends while the page is open, the
-payment page's review (and an offer that ends on the payment page), and the other link states. On the payment page, the upGrad logo
-starts the flow again.
+Open index.html in a browser. The "Scenario" menu at the top jumps to the offer page's states:
+logged out or in, under 10 minutes left, and an offer that ends while the page is open. The
+other states are no longer in the menu but still open from their links: index.html#v9-last-hour,
+#v9-options-review (the payment page's review, UPI), #v9-options-expiring and
+#v9-options-review-expiring (an offer that ends on the payment page), and the other link states,
+#v9-scheduled, #v9-enrolled, #v9-reserved and #v9-batch-closed. On the payment page, the upGrad
+logo starts the flow again.
 
 Text is set in upGrad's Circular, embedded in the page; Circular has no ₹ sign, so that
 one glyph comes from Inter (online) or a system font (offline). Circular is licensed to
@@ -17,26 +21,26 @@ upGrad: keep this file internal. The UPI QR is a sample and cannot take a paymen
 
 For user testing, add ?test to the link (index.html?test): no Scenario bar, no version switch and
 no prototype notes; it opens on V11, option B, at the offer page, with the Full header on
-phones (add &v=11a or &v=11c for another coupon option, &pd=minimal, &pd=medium or &pd=full2 for
-another phone header). The code hint reads "For this test, enter any 6 digits as the code.", and Proceed to
-Pay ends with "That's the end of this test. No payment is taken."
+phones. The code hint reads "For this test, enter any 6 digits as the code.", and the
+confirmation after paying says "That's the end of this test. No payment is taken."
 
 On the payment page, the switch in the bottom-left corner also has Restart (that page has no
 Scenario bar), and the upGrad logo starts the flow again every time it is pressed.
 
-Preview: V11 only; V9 and V10 are out of the switch (an old ?v=9 or ?v=10a to ?v=10c link opens
-V11, with the same coupon option). The switch in the bottom-left corner has the coupon options A,
-B and C (or ?v=11a to ?v=11c) and, on phones, the details page's header: Min, Mid, Full and Full
-2 (or &pd=minimal, medium, full or full2). It opens on option B with the Full header. On phones the switch has
-no V11 button (there is one version), so it fits the screen. What V11 builds on
+Preview: V11 only, with coupon option B and, on phones, the details page's Full header. The
+other options and versions are dropped: coupon options A and C, the phone headers Minimal, Medium
+and Full 2, and the trial copies V12 to V15. Any older link (?v=9, ?v=10a to ?v=10c, ?v=11a,
+?v=11c, ?v=12 to ?v=15, any &pd=) opens this one and is rewritten to say so. The switch in the
+bottom-left corner keeps V11 and Replay (Restart on the payment page). What V11 builds on
 (V10, V9, then V5 to V8) is described after it.
 
 V11          V10, the final direction: the link names no centre or batch, and the learner picks
-             the learning centre on the details page. Same coupon options (A, B, C; B by default).
+             the learning centre on the details page. Coupon option B (A and C are dropped).
              1. Offer page: the coupon has no centre or batch start, and the course's name drops
                 the centre ("Advance Certificate in Digital Marketing"). No duration either (the
                 details page shows it, under the centre picked), so one dashed line parts the
                 course from the price.
+                The saving reads "Save ₹10,000" (it was "You save ₹10,000").
                 The prices, the ₹5,000 block and the countdown are as in V10, except that in
                 option B the countdown line is centred on the coupon (here and on the details
                 page): one short line between the full-width box and the full-width button. (A and
@@ -60,36 +64,27 @@ V11          V10, the final direction: the link names no centre or batch, and th
                   the right, which keeps to the price.
                 - It is required: Continue without one says "Select the learning centre you'll
                   attend." under it and moves there.
-                - Continue stays off (plainly faded) until the centre, name, email and mobile are
-                  all in, and has no line under it (no "Fill in your name, email and mobile to
-                  continue", no "We'll send a code to verify your mobile", which the mobile's own
-                  help already says). Pressed while off, it does not go on: it shows what is
-                  missing under each field, moves to the first and shakes them.
-                - Phones, how much of the offer the pinned header shows, in four versions
-                  (switch: Min, Mid, Full, Full 2; or &pd=minimal, medium, full or full2 in the
-                  link; Full unless another is picked, the recommended one). In all four the whole
-                  header is pinned at the top, the course's name included. There is no title row ("‹ Your
-                  Details"; the card under it is titled "Your details"): back is at the start of
-                  the course row, so the header is 50px shorter and the room is the offer's.
-                  Minimal: as before, the course, then the strip (the countdown, "Lock for
-                  ₹5,000"); 106px.
-                  Medium: the course a little tighter, and the strip gets a second line, so the
-                  ₹5,000 reads as part of the course fee, not on top of it: the countdown and
-                  "Pay now ₹5,000", then "Course fee ₹90,000 ₹1,00,000" (struck) and "Remaining
-                  ₹85,000"; 122px.
+                - Continue, until the details are in, is the brand red at 60% opacity (down 40%),
+                  white label (it was a washed-out pink, #F7A8AE); full strength once they are in.
+                  It has no line under it (no "Fill in your name, email and mobile to continue",
+                  no "We'll send a code to verify your mobile", which the mobile's own help
+                  already says). It waits for the centre, name, email and mobile: pressed before
+                  they are all in, it does not go on: it shows what is missing under each field,
+                  moves to the first and shakes them.
+                - Phones, the pinned header: Full (Minimal, Medium and Full 2 were tried and are
+                  dropped). The whole header is pinned at the top, the course's name included.
+                  There is no title row ("‹ Your Details"; the card under it is titled "Your
+                  details"): back is at the start of the course row, so the room is the offer's.
                   Full: the course, then the offer, "Course fee ₹90,000 ₹1,00,000" with "You
                   save ₹10,000", over a box split in two, "Pay now ₹5,000" (the one strong
                   number) and "Remaining ₹85,000" (grey, regular, smaller), then the strip at the
-                  foot (the countdown and when the offer ends, "9:00 PM today"); 184px. Once the
-                  page is scrolled, the course fee line folds away (about 156px pinned); back at
-                  the top, it is back.
-                  Full 2: the top keeps the offer, the course, "Course fee ₹90,000 ₹1,00,000"
-                  with "You save ₹10,000" (never folding) and the strip with the countdown and
-                  when it ends; about 126px. No Pay now / Remaining box: the ₹5,000 is in the
-                  button's own words ("Continue to pay ₹5,000"), and under the button, in grey,
-                  "Remaining ₹85,000, pay later", so both parts of the payment sit where it is
-                  made. That line goes once the offer has ended.
+                  foot (the countdown and when the offer ends, "9:00 PM today"); 184px. It stays
+                  the same however far the page is scrolled (the course fee line, with the
+                  saving, used to fold away; it no longer does).
                   Once the offer has ended, the extra lines go (the strip shows the full price).
+                - No "Log in instead" on the card: a learner who arrives logged in gets the
+                  details filled in (below); anyone else types them, with no detour into a login
+                  in the middle of paying. (The Scenario menu's "Logged in" shows that state.)
                 - Logged in, the name, email and mobile come filled in from the account and can
                   be edited ("Filled in from your upGrad account. You can edit them."; the heading
                   says "Confirm your details."). The mobile shows "Verified": kept, Continue goes
@@ -110,6 +105,35 @@ V11          V10, the final direction: the link names no centre or batch, and th
                 and when the page opens after the offer has ended, the card shows the course fee
                 as before. (A learner who reached the page while the offer was live keeps the
                 offer price, so the ₹5,000 stays.)
+                On phones the review (once an option is picked) is upGrad's mobile checkout,
+                Figma 129:373, in place of the desktop review, which ran off a phone's screen.
+                Under the options page's header (back returns to the options; the bar at 87.5%):
+                Program (the logo, the course, the centre picked, "4 months | Starts from: Nov 21,
+                2026"); Payment Details (Course Fee, Offer, Total, as the desktop summary has
+                them); Payment Options (the option, Change); Payment Method (e.g. "Custom Amount
+                Details", Paying Now INR 5,000, Change); Billing Address (the name and the PIN
+                code's place, Change goes to the PIN code); then how to pay: for UPI, "Pay via
+                UPI app" with Google Pay, PhonePe, Paytm and BHIM (a tap pays in the app; a
+                phone can't scan a QR on its own screen; here it says the prototype ends), for
+                the other options Proceed to Pay; then Please Note and the Terms and Conditions.
+                The second line under the course is the centre picked, where Figma names the
+                institute (the logo already says upGrad).
+                Paying (a UPI app or Proceed to Pay on phones; Proceed to Pay on desktop, or on
+                desktop's UPI QR, a few seconds after Show Code, under "Waiting for your
+                payment…") goes on to the confirmation: upGrad's application page, Figma 131:1015
+                (desktop) and 130:676 (phones). The green tick badge; "Your Profile is a 100%
+                match for" the course (the centre, "4 months | Starts at: 21 November 2026");
+                Admission Process with both steps done, Screening Round and Block payment
+                ("Payment" when paid in full); then the sheet: "Your seat is reserved!",
+                "Congratulations!", "Your seat is locked at ₹90,000", "Pay the remaining ₹85,000
+                before 21 November 2026", PAY REMAINING ₹85,000 (paid in full: "You're
+                enrolled!", "Your seat is confirmed", "The receipt is on its way to your email.",
+                DOWNLOAD RECEIPT). Figma's frames are the page before paying ("You're just one
+                step away!", RESERVE A SEAT); here both steps are done. On phones the sheet is
+                pinned to the foot of the screen (on phones under 700px tall it follows the
+                steps, so it doesn't cover them), and the illustration is the desktop's at two
+                thirds (the phone frame caught its animation before the badge). Back starts the
+                flow again.
                 On phones the billing postal code / PIN code is now shown too, in a card over
                 "Choose a payment option" (desktop has it as step 1): filled in, editable, with
                 the place it finds under it. It is the same code as desktop's field. Tapping an
@@ -129,54 +153,12 @@ V11          V10, the final direction: the link names no centre or batch, and th
              Mangalore, Chhatrapati Sambhaji Nagar, Bhopal, Jabalpur, Raipur, Rajkot) are left
              out. Their batch dates are samples (Nov 21 to Dec 12, 2026); Bangalore – Jayanagar is
              given no batch coming up, to show how such a centre is left out, so the list shows
-             11. Every centre has the course's 4 months. Opened straight from the Scenario menu,
+             11. Every centre has the course's 4 months. Opened straight from a link (#v9-options-review),
              the payment page shows Bangalore – Marathahalli. Paying the balance
              of a reserved seat asks for no centre.
 
-V13 and V15  (switch: V11, V13, V15; or ?v=13, ?v=15): copies of V11 to try new things in without
-             touching V11. Only the offer page and the details page change; the OTP, the payment
-             page and everything after are V11's. On phones the details page's header keeps two of
-             V11's four, Min and Full 2 (Full 2 unless Min is picked; back on V11, the one last
-             picked there returns). (V12, V11's coupon with the changes below, and V14, V15's pass
-             without the receipt, were tried and dropped: an old ?v=12b link opens 11b, ?v=14 opens
-             V15. V13 to V15 with whole new pages were tried and dropped before that.)
-             Both:
-             - (V13 only) "You save ₹10,000" reads "Save ₹10,000", with a tick: as the coupon
-               lands it wipes in from its left edge and the tick draws itself (it keeps its width,
-               so nothing around it moves).
-             - The button gives under a press; its arrow nudges forward on hover.
-             - From the offer page to the details page (and back) the coupon glides to its new
-               place (a view transition, where the browser has them).
-             - On the details page the centre list unfolds. (V13 only) A field draws a green tick
-               once it is right (a centre picked, a name, a valid email, a 10-digit mobile).
-             - On phones the countdowns change in place, as in V11 (rolling digits repainted the
-               coupon's shadow, which phones showed as flicker).
-V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,000, large, which rolls
-             up from ₹0 as the coupon lands; "₹85,000 later, before your batch starts"; then the
-             course fee (₹90,000, ₹1,00,000 struck, Save ₹10,000), smaller, on a grey row. (Ref:
-             Givingli's "Your price … That's just $4.99 / mo".) Under the button, in red, "Offer
-             ends in" and three small bordered tiles, [01] : [14] : [33] (Uxcel's offer timer).
-V15          "Seat pass + slide to lock", printed as V11's receipt. The coupon's content is a pass,
-             as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
-             pass" and the course, in place of V11's course row. Under it, V11's coupon content as
-             it is: "Course fee ₹90,000 ₹1,00,000 (struck)" with the "You save ₹10,000" pill, then
-             the box with "Pay now ₹5,000" over "Remaining amount ₹85,000", and under the box, V11's
-             countdown line, centred as V11's: "Offer ends in 17:59:44 · 9:00 PM today" (red under
-             10 minutes, as V11's). Around it, V11's receipt:
-             it prints out of the printer, its corners near-square on the offer page, with the
-             perforation and notches over the slider and the scalloped bottom edge.
-             On the offer page the button is "Slide to lock offer for ₹5,000" (V11's "Lock offer
-             for ₹5,000"; Wealthfront's "Drag to confirm", Swiggy's "Slide to Pay"): a red handle
-             with an open padlock on a soft grey track, three chevrons after the words (not on
-             phones under 400px, where the words need the room). The fill follows the handle and
-             the words turn white where it has reached; let go early and it springs back; at the
-             end the padlock shuts, the handle turns white, "✓ Almost there" (the details page's
-             own words; nothing is locked until the ₹5,000 is paid), phones that can give a short
-             vibration, and the flow goes on as the button would. A tap, Enter or Space plays the
-             slide. Once the receipt has printed the handle nudges right twice, to show the
-             gesture. On the details page the button is V11's (it waits for the details), and the
-             fields have no green ticks. Nothing moves on its own after the entrance.
-             With reduced motion, none of the motion.
+(V12 to V15, copies of V11 with new offer and details pages, were tried and dropped; their notes
+are in this branch's history.)
 
 What V11 builds on (no longer in the switch):
 
@@ -223,7 +205,7 @@ V9           V7, and the offer link takes the block amount only, ₹5,000 (never
                 pinned header, the cards stack, and the button stays at the foot of the screen.
              4. Confirmation: "Your seat is locked at ₹90,000", what was paid and the balance
                 row; Pay balance opens the regular payment page (all options) for ₹85,000.
-             5. "Your seat is already reserved" (Scenario: Seat already reserved): when the block
+             5. "Your seat is already reserved" (#v9-reserved): when the block
                 was paid and the balance (₹85,000) is due before Oct 31; "Pay remaining ₹85,000"
                 opens the regular payment page. "You're already enrolled" stays for learners who
                 paid in full.
@@ -301,7 +283,7 @@ V7           V6, and the offer does not run out on the payment page: a learner w
              desktop the course card shows the price and the saving; on phones the pinned strip
              shows the price, and "You save ₹10,000" where the countdown was. The offer and details pages keep their
              countdown, and a learner who reaches checkout after the offer has ended pays the full
-             price, as before. (Try "Offer ends in 10 seconds" under Payment page.)
+             price, as before. (Try index.html#v9-options-expiring.)
 
 V8           V7, and the offer page's button reads "Reserve seat for ₹5,000" (it was "Claim now").
              To match it, the payment page reserves the seat for ₹5,000: "Pay minimum INR 5,000
