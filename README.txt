@@ -61,9 +61,9 @@ V11          V10, the final direction: the link names no centre or batch, and th
                   the right, which keeps to the price.
                 - It is required: Continue without one says "Select the learning centre you'll
                   attend." under it and moves there.
-                - Continue looks like the primary button it is from the start (full upGrad red,
-                  white label; it was a washed-out pink that read as unavailable though it works),
-                  and has no line under it (no "Fill in your name, email and mobile to continue",
+                - Continue, until the details are in, is the brand red at 60% opacity (down 40%),
+                  white label (it was a washed-out pink, #F7A8AE); full strength once they are in.
+                  It has no line under it (no "Fill in your name, email and mobile to continue",
                   no "We'll send a code to verify your mobile", which the mobile's own help
                   already says). It waits for the centre, name, email and mobile: pressed before
                   they are all in, it does not go on: it shows what is missing under each field,

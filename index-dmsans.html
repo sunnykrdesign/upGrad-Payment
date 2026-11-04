@@ -3531,18 +3531,14 @@ html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[aria-d
 html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[aria-disabled="true"]:not([data-ck-next]):hover {
   background: #F7A8AE; color: #FFFFFF; box-shadow: none; cursor: default;
 }
-/* V11 (and V13, V15): Continue on the details page looks like the primary button it is from the
-   start: full upGrad red, white label, the usual hover and press. It still waits for the details:
-   pressed early, it shows what is missing and moves to the first. (It was a washed-out pink, white
-   on #F7A8AE at about 1.9:1, which read as unavailable though it works.) */
-html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[data-ck-next][aria-disabled="true"] {
-  background: var(--uG-theme-primary); color: #FFFFFF; cursor: pointer;
-}
-html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[data-ck-next][aria-disabled="true"]:hover {
-  background: var(--uG-red-shade-1); box-shadow: 0 8px 20px -10px rgba(190, 35, 48, 0.55);
-}
+/* V11 (and V13, V15): Continue on the details page, until everything is in: the brand red with
+   its opacity down 40% (to 60%), white label, no hover change. Once the centre, name, email and
+   mobile are in it is full strength. Pressed early it still shows what is missing and moves to the
+   first. (It was #F7A8AE, then full red; this reads as "not yet" without looking broken.) */
+html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[data-ck-next][aria-disabled="true"],
+html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[data-ck-next][aria-disabled="true"]:hover,
 html[data-pv11] .ck-app[data-ck4-root][data-ck-cta="brand"] .ck-btn--dark[data-ck-next][aria-disabled="true"]:active {
-  background: var(--uG-fill-cta-primary-red-pressed);
+  background: var(--uG-theme-primary); color: #FFFFFF; opacity: 0.6; box-shadow: none; cursor: pointer;
 }
 
 /* the details page: no prototype note under the mobile field (the Scenario menu has the reserved
