@@ -3570,32 +3570,237 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
 
 
 
+/* ============================================================================================
+   Previews V13 and V15: copies of V11 (V11's page under html[data-pvx], with html[data-pv13] or
+   html[data-pv15]) to try new things in without touching V11. The coupon, the printer and the flow
+   are V11's; on phones the details page's header keeps two of V11's four, Minimal and Full 2 (Full 2
+   unless Minimal is picked). (V12, V11's coupon with the changes below, and V14 are dropped.)
+   Both:
+   1. (V13 only) "You save ₹10,000" reads "Save ₹10,000": as the coupon lands it wipes in from its
+      left edge and its tick draws itself (it keeps its width, so nothing around it moves).
+   2. The button gives under a press and its arrow nudges forward on hover.
+   3. From the offer page to the details page (and back) the coupon glides to its new place (a
+      view transition, where the browser has them).
+   4. On the details page the centre list unfolds; in V13 a field also draws a green tick once it
+      is right.
+   5. On phones the strip's countdown changes in place, as in V11.
+   V13: the ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,000, large, which rolls up
+      from ₹0 as the coupon lands; "₹85,000 later, before your batch starts" under it; then the
+      course fee (₹90,000, ₹1,00,000 struck, Save ₹10,000), smaller. (Ref: Givingli's "Your price
+      … That's just $4.99 / mo".) The countdown is "Offer ends in" and three small bordered tiles,
+      [01] : [14] : [33], in red under the button (Uxcel's offer timer); its digits roll on
+      desktop and change in place on phones (rolling repainted the coupon's shadow, which phones
+      showed as flicker). No A, B, C.
+   V15: see its own notes below.
+   With reduced motion, none of the motion.
+   ============================================================================================ */
+.vx-clock, .vx-tick, .v13-hero { display: none; }
+html[data-pvx] .vx-clock { display: inline; }
+html[data-pv13] .vx-tick { display: block; }
+html[data-pv13] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
+html:is([data-pv13], [data-pv15]) .pv-toggle [data-pv-pd="full"] { display: none !important; }
+/* 1. the countdown, quiet and close to the button, in red (the coupon's own line stays for screen
+   readers and once the offer ends). V12: one line under the button, "Offer ends in 01h 14m 33s"
+   (Codecademy's sale clock). V13: "Offer ends in" and three small bordered tiles, [01] : [14] : [33],
+   under the button (Uxcel's offer timer). V15: V11's own line, in V11's place */
+html[data-pvx] .vx-hide { display: none !important; }
+html[data-pvx]:not([data-pv15]) .cp-ticket .lk3-ends:not(.is-ended) { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+html[data-pvx]:not([data-pv15]) .cp-ticket .ck-offer:has(.lk3-ends:not(.is-ended)) { padding-top: 0 !important; padding-bottom: 0 !important; }
+.vx-tiles { display: none; }
+html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-tiles { display: flex; }
+.vx-tiles { align-items: center; justify-content: center; gap: 8px; margin: 4px 0 0; color: #C21F2E; font-size: 13px; line-height: 18px; font-weight: 500; }
+.vx-tiles__t { display: inline-flex; align-items: center; gap: 4px; }
+.vx-tiles__t b { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 24px; padding: 0 4px; border-radius: 6px; box-shadow: inset 0 0 0 1px #F4C7CC; font-size: 13px; line-height: 24px; font-weight: 700; font-variant-numeric: tabular-nums; overflow: hidden; }
+.vx-tiles__t i { font-style: normal; font-weight: 700; opacity: 0.6; }
+.vx-tiles.is-urgent .vx-tiles__t b { box-shadow: inset 0 0 0 1px #EE2C3C; }
+/* rolling digits */
+.vx-odo { display: inline; }
+.vx-odo .odo-c { display: inline; }
+.vx-odo .odo-d { display: inline-block; height: 1lh; overflow: hidden; vertical-align: bottom; }
+.vx-odo .odo-s { display: flex; flex-direction: column; transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1); }
+.vx-odo .odo-s > span { display: block; height: 1lh; text-align: center; }
+/* 2. Save ₹10,000 */
+.vx-save { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.vx-save svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.vx-save svg path { stroke-dasharray: 20; stroke-dashoffset: 0; }
+/* as the coupon lands: the chip wipes in from its left edge, then its tick draws itself */
+.vx-chip-in { animation: vx-wipe 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.vx-chip-in .vx-save svg path { animation: vx-tick 0.35s cubic-bezier(0.65, 0, 0.35, 1) 0.4s both; }
+@keyframes vx-wipe { from { opacity: 0; clip-path: inset(0 100% 0 0 round 999px); } 40% { opacity: 1; } to { opacity: 1; clip-path: inset(0 0 0 0 round 999px); } }
+@keyframes vx-tick { from { stroke-dashoffset: 20; } to { stroke-dashoffset: 0; } }
+/* 3. the button */
+html[data-pvx] :is(.cp-stub, .ck-mobilebar) [data-ck-next] { transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease; }
+html[data-pvx] :is(.cp-stub, .ck-mobilebar) [data-ck-next]:active { transform: scale(0.97); transition-duration: 0.12s; }
+html[data-pvx] :is(.cp-stub, .ck-mobilebar) [data-ck-next] svg { transition: translate 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+html[data-pvx] :is(.cp-stub, .ck-mobilebar) [data-ck-next]:hover svg { translate: 4px 0; }
+/* 4. the coupon glides between the pages */
+/* named only while the glide runs (a name held all the time keeps the coupon on a layer of its own) */
+html[data-pvx].vx-gliding .ck-app[data-ck4-root] .ck-summary .cp-ticket { view-transition-name: vx-coupon; }
+::view-transition-group(vx-coupon) { animation-duration: 0.6s; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.3s; }
+/* 5. the fields, the centre list */
+html[data-pvx] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4-input { position: relative; }
+.vx-tick { position: absolute; right: 14px; top: 50%; width: 20px; height: 20px; margin-top: -10px; pointer-events: none; opacity: 0; }
+.vx-tick circle { fill: #13784A; stroke: none; transform-origin: center; transform: scale(0); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.vx-tick path { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 12; stroke-dashoffset: 12; transition: stroke-dashoffset 0.3s ease 0.15s; }
+.vx-ok > .vx-tick { opacity: 1; }
+.vx-ok > .vx-tick circle { transform: scale(1); }
+.vx-ok > .vx-tick path { stroke-dashoffset: 0; }
+html[data-pv13] .v11-combo__box.vx-ok:not(:focus-within) .v11-combo__toggle { display: none; }
+html[data-pv13] .v11-combo__box.vx-ok:focus-within > .vx-tick { opacity: 0; }
+html[data-pvx] .v11-combo__list:not([hidden]) { transform-origin: top; animation: vx-unfold 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes vx-unfold { from { opacity: 0; transform: translateY(-6px) scaleY(0.96); } }
+/* V13: the ₹5,000 leads */
+html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v10-offer { display: none !important; }
+html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: grid; }
+.v13-hero { gap: 4px; justify-items: center; text-align: center; padding-top: 6px !important; }
+.v13-k { margin: 0; font-size: 14px; color: var(--ck-text-2); }
+.v13-amt { margin: 0; display: flex; align-items: flex-start; gap: 2px; font-size: 60px; line-height: 64px; font-weight: 700; letter-spacing: -0.035em; color: var(--ck-text); font-variant-numeric: normal; font-feature-settings: normal; }
+.v13-amt small { font-size: 26px; line-height: 40px; font-weight: 600; color: var(--ck-text-2); letter-spacing: 0; }
+.v13-later { margin: 2px 0 0; font-size: 13px; color: var(--ck-text-2); }
+.v13-later strong { color: var(--ck-text); font-weight: 600; }
+.v13-fee { display: flex; align-items: center; justify-content: space-between; gap: 10px; justify-self: stretch; text-align: left; white-space: nowrap; margin-top: 14px; padding: 12px 14px; border-radius: 14px; background: #F6F6F8; font-size: 14px; color: var(--ck-text-2); }
+.v13-fee strong { color: var(--ck-text); }
+.v13-fee s { margin-left: 4px; color: var(--ck-text-3); }
+@media (max-width: 860px) {
+  .v13-amt { font-size: 52px; line-height: 56px; }
+  .v13-fee { font-size: 13px; padding: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-pvx] *, html[data-pvx] *::before, html[data-pvx] *::after { animation: none !important; transition: none !important; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+
+/* ============================================================================================
+   Preview V15: "Seat pass + slide to lock", as V11's receipt (html[data-pv15], with html[data-pv-pass]
+   for the pass and html[data-pvx], so it shares V13's button and coupon glide; not V13's Save
+   ₹10,000 or its field ticks).
+   Only the offer page and the details page change; after them it is V11. (V14 was the same pass
+   standing alone, without the receipt; it is dropped.) While the offer is live the coupon's content
+   gives way to:
+   - A pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
+     pass" and the course, in place of V11's course row; under it V11's own content, as it is:
+     "Course fee ₹90,000 ₹1,00,000 (struck)" with the "You save ₹10,000" pill, then the box with
+     "Pay now ₹5,000" over "Remaining amount ₹85,000". Under the box, V11's countdown line, "Offer ends
+     in 17:59:44 · 9:00 PM today", centred on the card, as V11's.
+   - V11's receipt around it: it prints out of the printer, its corners near-square on the offer
+     page, a perforation with notches over the slider, and the scalloped bottom edge.
+   - On the offer page, "Slide to lock offer for ₹5,000" (V11's "Lock offer for ₹5,000") in place
+     of the button (Wealthfront's "Drag to
+     confirm", Swiggy's "Slide to Pay"). The red handle carries an open padlock; the fill follows
+     it and the label turns white where the fill has reached; let go early and it springs back; at
+     the end the padlock shuts, the handle turns white, "Almost there" (the details page's own
+     words: nothing is locked until the ₹5,000 is paid), and the flow goes on as the
+     button would (phones that can, give a short tap of vibration). A tap, Enter or Space plays the
+     slide. Once the receipt has printed, the handle nudges right twice to show the gesture. On the
+     details page the button is V11's (it waits for the details).
+   No motion runs on its own after the entrance (the countdown changes in place, as V11's). With
+   reduced motion, none of it.
+   ============================================================================================ */
+.v14-pass, .v14-slide { display: none; }
+html[data-pv-pass] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
+html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) > :is(.cp-head, .cp-tear, .v13-hero) { display: none !important; }
+html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v14-pass { display: grid; }
+html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) :is(.v8-cta-timer, .lk3-action__hint) { display: none !important; }
+html[data-pv-pass] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-slide { display: block; }
+html[data-pv-pass] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-ticket:not(:has(.lk3-ends.is-ended)) .cp-stub [data-ck-next] { display: none !important; }
+html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { background: #fff; }
+/* V15: V11's receipt: the printer, the perforation over the slider, the scalloped edge */
+html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-tear.cp-tear--stub { display: block !important; }
+html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-tear.cp-tear--stub { background: #fff !important; } /* white on both sides of the perforation, as the pass is */
+html[data-pv15] .ck-app[data-ck4-root][data-ck-view="offer"] .v14-pass { border-radius: 4px 4px 0 0; }
+
+/* the pass */
+.v14-pass { gap: 0; padding: 0 !important; background: transparent !important; overflow: hidden; border-radius: 24px 24px 0 0; }
+.v14-band { position: relative; display: grid; gap: 12px; padding: 16px var(--cp-pad, 20px) 20px; color: #fff; overflow: hidden;
+  background: radial-gradient(120% 140% at 100% 0%, #FF5A68 0%, transparent 55%), linear-gradient(135deg, #EE2C3C 0%, #C8162B 100%); }
+.v14-band::before { content: ""; position: absolute; inset: 0; opacity: 0.16; pointer-events: none;
+  background: repeating-linear-gradient(-18deg, transparent 0 9px, rgba(255, 255, 255, 0.9) 9px 10px); -webkit-mask: linear-gradient(90deg, transparent 25%, #000 80%); mask: linear-gradient(90deg, transparent 25%, #000 80%); }
+.v14-band__top { position: relative; display: flex; align-items: center; justify-content: space-between; height: 26px; }
+.v14-logo { display: inline-flex; align-items: center; height: 26px; padding: 0 8px; border-radius: 7px; background: #fff; }
+.v14-logo img { display: block; height: 16px; width: auto; }
+.v14-tag { font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.88); }
+.v14-course { position: relative; margin: 0; font-size: 17px; line-height: 24px; font-weight: 600; letter-spacing: -0.01em; }
+
+/* slide to lock */
+.v14-slide { position: relative; height: 60px; border-radius: 999px; background: #F2F2F4; box-shadow: inset 0 1px 2px rgba(18, 18, 20, 0.07), inset 0 0 0 1px rgba(18, 18, 20, 0.04); overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; cursor: grab; outline: none; }
+.v14-slide.is-held { cursor: grabbing; }
+.v14-slide:focus-visible { box-shadow: inset 0 1px 2px rgba(18, 18, 20, 0.07), 0 0 0 3px rgba(238, 44, 60, 0.3); }
+.v14-fill { position: absolute; inset: 0 auto 0 0; width: calc(var(--x, 0px) + 60px); border-radius: 999px; background: linear-gradient(90deg, #F04757, #E0283A); }
+.v14-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; padding-left: 52px; font-size: 16px; line-height: 20px; font-weight: 600; letter-spacing: -0.01em; color: #26262B; pointer-events: none; }
+.v14-label--on { color: #fff; clip-path: inset(0 calc(100% - var(--x, 0px) - 30px) 0 0); }
+.v14-chev { display: inline-flex; color: #EE2C3C; }
+.v14-label--on .v14-chev { color: #fff; }
+/* "Slide to lock offer for ₹5,000" on one line beside the handle: on narrow phones without the
+   chevrons (the handle and the words already say slide), and smaller and clear of the handle under
+   340px */
+@media (max-width: 400px) { .v14-chev { display: none; } }
+@media (max-width: 340px) { .v14-label { padding-left: 60px; font-size: 14px; } }
+.v14-chev svg { width: 9px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.v14-chev svg:nth-child(1) { opacity: 0.3; } .v14-chev svg:nth-child(2) { opacity: 0.6; margin-left: -2px; } .v14-chev svg:nth-child(3) { margin-left: -2px; }
+.v14-done { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 8px; padding-right: 52px; font-size: 16px; line-height: 20px; font-weight: 600; color: #fff; opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
+.v14-done svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.v14-slide.is-locked .v14-done { opacity: 1; }
+.v14-slide.is-locked .v14-label { opacity: 0; }
+.v14-handle { position: absolute; top: 4px; left: 4px; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; color: #fff;
+  --lb: #fff; --lk: #E0283A;
+  background: radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.28), transparent 55%), linear-gradient(160deg, #F2404F, #D21C2F);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 2px rgba(150, 10, 25, 0.3), 0 8px 18px -6px rgba(200, 22, 43, 0.6);
+  transform: translateX(var(--x, 0px)); transition: scale 0.2s ease, background 0.25s ease, color 0.25s ease; }
+.v14-slide.is-held .v14-handle { scale: 1.05; }
+.v14-slide.is-locked .v14-handle { background: #fff; color: #E0283A; --lb: #E0283A; --lk: #fff; box-shadow: 0 1px 2px rgba(150, 10, 25, 0.3), 0 6px 14px -6px rgba(120, 8, 20, 0.5); }
+.v14-handle svg { width: 26px; height: 26px; overflow: visible; }
+.v14-handle .v14-body-lock { fill: var(--lb); transition: fill 0.25s ease; }
+.v14-handle .v14-keyhole { fill: var(--lk); transition: fill 0.25s ease; }
+.v14-shackle { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; transform-origin: 15.5px 11px; transform: translateY(-2.5px) rotate(-26deg); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.v14-slide.is-locked .v14-shackle { transform: none; }
+.v14-slide.is-locked .v14-handle { animation: v14-bump 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes v14-bump { 50% { scale: 1.12; } }
+.v14-slide.is-back .v14-handle, .v14-slide.is-back .v14-fill, .v14-slide.is-back .v14-label--on { transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), clip-path 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), scale 0.2s ease; }
+.v14-slide.is-auto .v14-handle, .v14-slide.is-auto .v14-fill, .v14-slide.is-auto .v14-label--on { transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1), width 0.6s cubic-bezier(0.65, 0, 0.35, 1), clip-path 0.6s cubic-bezier(0.65, 0, 0.35, 1), scale 0.2s ease; }
+/* once the pass lands: the handle nudges right twice, to show the gesture */
+.v14-slide.is-hint .v14-handle { animation: v14-hint 1.3s cubic-bezier(0.45, 0, 0.25, 1); }
+@keyframes v14-hint { 0%, 100% { translate: 0 0; } 22% { translate: 16px 0; } 44% { translate: 0 0; } 64% { translate: 9px 0; } 82% { translate: 0 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .v14-slide *, .v14-slide.is-locked .v14-handle, .v14-slide.is-hint .v14-handle { animation: none !important; transition: none !important; }
+}
 </style>
 <script>
 /* preview version before the first paint: ?v=11 in the link, else the last one picked, else V11 */
 (function () {
   var params = new URLSearchParams(location.search);
-  // one version now: V11 with coupon option B. Any older link (V9, V10a to c, V11a or c, V12 to V15)
-  // opens it, and is rewritten to say so
-  var legacy = function (x) { return /^(9|1[0-5][abc]?)$/.test(x || '') ? '11b' : x; };
+  // a V10 link keeps its coupon option (?v=10c opens 11c); V9's opens V11. V12 (a copy of V11)
+  // and V14 (V15 without the receipt) are dropped: ?v=12b opens 11b, ?v=14 opens V15
+  var legacy = function (x) { return /^1[02][abc]?$/.test(x || '') ? '11' + x.slice(2) : x === '14' ? '15' : x; };
   var v = legacy(params.get('v'));
-  var known = function (x) { return x === '11b'; };
+  var known = function (x) { return /^(11[abc]?|13|15)$/.test(x || ''); };
   // ?test (user testing): no Scenario bar, version switch or prototype notes; V11 unless ?v= says
   // otherwise, and the last version picked is not used
   var test = new URLSearchParams(location.search).has('test');
   if (test) document.documentElement.dataset.pvTest = '';
   if (!known(v) && !test) { try { v = legacy(localStorage.getItem('upi-v9-preview')); } catch (e) {} }
-  if (!known(v)) v = '11b';
+  if (!known(v)) v = '11';
   // an old V9 or V10 link is rewritten to the V11 it opens, so a copied link says V11
   if (params.has('v') && params.get('v') !== v) {
     try { params.set('v', v); history.replaceState(history.state, '', location.pathname + '?' + params + location.hash); } catch (e) {}
   }
-  // on phones, the details page's header is Full 2 (Minimal, Medium and Full are dropped); an old
-  // &pd= link is rewritten to say so
-  document.documentElement.dataset.pv11Pd = 'full2';
-  if (params.has('pd') && params.get('pd') !== 'full2') { try { params.set('pd', 'full2'); history.replaceState(history.state, '', location.pathname + '?' + params + location.hash); } catch (e) {} }
+  // V11 on phones: how much of the offer the details page's header shows (?pd=minimal, full or
+  // full2; else the last one picked; else full)
+  // (Medium, "Mid", is dropped: an old pd=medium link or pick opens Full)
+  var pdOk = function (x) { return /^(minimal|full|full2)$/.test(x || ''); };
+  var pd = params.get('pd');
+  if (!pdOk(pd) && !test) { try { pd = localStorage.getItem('upi-v11-pd'); } catch (e) {} }
+  document.documentElement.dataset.pv11Pd = pdOk(pd) ? pd : 'full';
+  // an old &pd=medium link is rewritten to the Full it opens, so a copied link says what it shows
+  if (params.get('pd') === 'medium') { try { params.set('pd', 'full'); history.replaceState(history.state, '', location.pathname + '?' + params + location.hash); } catch (e) {} }
+  // V13 and V15 keep two of them, Minimal and Full 2 (Full 2 unless Minimal was picked)
+  if (/^1[35]$/.test(v) && !/^(minimal|full2)$/.test(document.documentElement.dataset.pv11Pd)) document.documentElement.dataset.pv11Pd = 'full2';
   // V10 is V9 with an option on its coupon (?v=10a, 10b, 10c); the page runs as V9 under it. V11 is
   // V10 with no centre in the link, the centre picked on the details page (?v=11a, 11b, 11c)
+  // V13 and V15: copies of V11 (html[data-pvx], and data-pv13 or data-pv15 with data-pv-pass, on
+  // V11's page, option B underneath) to try new things in (?v=13, ?v=15)
+  if (/^1[35]$/.test(v)) { document.documentElement.dataset.pvx = ''; document.documentElement.dataset['pv' + v] = ''; if (v === '15') document.documentElement.dataset.pvPass = ''; v = '11b'; }
   if (/^11/.test(v)) document.documentElement.dataset.pv11 = '';
   if (/^1[01]/.test(v)) { document.documentElement.dataset.pv10 = v.slice(2) || 'b'; v = '9'; }
   document.documentElement.dataset.previewV = v;
@@ -6562,6 +6767,19 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
      (₹10,000 at a Microsoft-style checkout; "Seat already reserved"; Pay balance) -->
 <div class="pv-toggle" role="group" aria-label="Preview version">
   <button type="button" data-pv="11">V11</button>
+  <button type="button" data-pv="13">V13</button>
+  <button type="button" data-pv="15">V15</button>
+  <span class="pv-opts" role="group" aria-label="Coupon option">
+    <button type="button" data-pv10-opt="a">A</button>
+    <button type="button" data-pv10-opt="b">B</button>
+    <button type="button" data-pv10-opt="c">C</button>
+  </span>
+  <!-- phones: the details page's header, Minimal, Medium or Full -->
+  <span class="pv-opts pv-pd" role="group" aria-label="Details page header on phones">
+    <button type="button" data-pv-pd="minimal" aria-label="Minimal">Min</button>
+    <button type="button" data-pv-pd="full" aria-label="Full">Full</button>
+    <button type="button" data-pv-pd="full2" aria-label="Full 2: what remains under Continue">Full 2</button>
+  </span>
   <button type="button" class="pv-replay" data-pv-replay>Replay</button>
   <button type="button" class="pv-restart" data-pv-restart>Restart</button>
 </div>
@@ -7000,6 +7218,19 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   var opts = Array.prototype.slice.call(document.querySelectorAll('.pv-toggle [data-pv10-opt]'));
   var lastOpt = root.dataset.pv10 || 'b';
   function show(v) {
+    // V13 and V15: V11 under html[data-pvx], always on option B underneath (V15's pass: data-pv-pass)
+    var copyOf = /^1[35]$/.test(v) ? v : '';
+    if (copyOf) { root.dataset.pvx = ''; v = '11b'; } else delete root.dataset.pvx;
+    if (copyOf === '13') root.dataset.pv13 = ''; else delete root.dataset.pv13;
+    if (copyOf === '15') { root.dataset.pv15 = ''; root.dataset.pvPass = ''; } else { delete root.dataset.pv15; delete root.dataset.pvPass; }
+    // on phones, V13 and V15 keep two of the details page's headers, Minimal and Full 2; back on
+    // V11, the one last picked there comes back
+    var keepPd = /^(minimal|full2)$/.test(root.dataset.pv11Pd || '');
+    if (copyOf && !keepPd) {
+      showPd('full2');
+      try { var pdUrl = new URL(location.href); if (pdUrl.searchParams.has('pd')) { pdUrl.searchParams.set('pd', 'full2'); history.replaceState(history.state, '', pdUrl); } } catch (e) {}
+    }
+    if (!copyOf && pds) { try { var savedPd = localStorage.getItem('upi-v11-pd'); if (/^(minimal|full|full2)$/.test(savedPd || '') && savedPd !== root.dataset.pv11Pd) showPd(savedPd); } catch (e) {} }
     var ten = /^1[01][abc]$/.test(v);
     var major = ten ? v.slice(0, 2) : v;
     if (ten) root.dataset.pv10 = lastOpt = v.slice(2); else delete root.dataset.pv10;
@@ -7015,7 +7246,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     gateVerify();
     gateContinue();
     if (/^[4-9]$/.test(base)) printCoupon(); else stopPrint();
-    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.pv === major)); });
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.pv === (copyOf || major))); });
     opts.forEach(function (b) { b.setAttribute('aria-pressed', String(ten && b.dataset.pv10Opt === lastOpt)); });
   }
   function pick(v) {
@@ -7034,7 +7265,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   opts.forEach(function (b) {
     b.addEventListener('click', function () { pick((root.hasAttribute('data-pv11') ? '11' : '10') + b.dataset.pv10Opt); });
   });
-  show(root.dataset.pv10 ? (root.hasAttribute('data-pv11') ? '11' : '10') + root.dataset.pv10 : root.dataset.previewV || '9');
+  show(root.hasAttribute('data-pv15') ? '15' : root.hasAttribute('data-pv13') ? '13' : root.dataset.pv10 ? (root.hasAttribute('data-pv11') ? '11' : '10') + root.dataset.pv10 : root.dataset.previewV || '9');
 
   // V11 on phones: how much of the offer the details page's header shows (Minimal, Medium, Full)
   var pds = Array.prototype.slice.call(document.querySelectorAll('.pv-toggle [data-pv-pd]'));
@@ -7053,7 +7284,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
       } catch (e) {}
     });
   });
-  showPd('full2');
+  showPd(root.dataset.pv11Pd || 'full');
 
   // the payment page on phones (upGrad's mobile checkout): its amounts follow the page's price
   // (the offer price while the offer is live or held, the full price after); an option opens the
@@ -7303,9 +7534,288 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
 
 
 
+<script>
+/* Preview V15 (html[data-pv-pass]): the seat pass, and slide to lock on the offer page */
+(function () {
+  var root = document.documentElement;
+  var app = document.querySelector('[data-ck4-root]');
+  if (!app) return;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var on = function () { return root.hasAttribute('data-pv-pass'); };
+  var ticket = app.querySelector('.ck-summary .cp-ticket');
+  if (!ticket) return;
+  var logo = (ticket.querySelector('.ck-course__logo img') || {}).src || '';
+  var optA = ticket.querySelector('.v10-offer--a');
+  var pass = document.createElement('div');
+  pass.className = 'cp-part v14-pass';
+  pass.innerHTML =
+    '<div class="v14-band"><div class="v14-band__top"><span class="v14-logo"><img src="' + logo + '" alt="upGrad"></span><span class="v14-tag">Seat pass</span></div>' +
+      '<p class="v14-course">Advance Certificate in Digital Marketing</p></div>';
+  ticket.insertBefore(pass, optA || ticket.firstChild);
+
+  // slide to lock, in place of the offer page's button
+  var btn = ticket.querySelector('.cp-stub [data-ck-next]');
+  var chev = '<span class="v14-chev" aria-hidden="true">' + [1, 2, 3].map(function () { return '<svg viewBox="0 0 9 14"><path d="m2 2 5 5-5 5"/></svg>'; }).join('') + '</span>';
+  var slide = document.createElement('div');
+  slide.className = 'v14-slide';
+  slide.setAttribute('role', 'button');
+  slide.setAttribute('tabindex', '0');
+  slide.setAttribute('aria-label', 'Slide to lock offer for ₹5,000');
+  slide.innerHTML = '<span class="v14-fill"></span>' +
+    '<span class="v14-label" aria-hidden="true">Slide to lock offer for ₹5,000' + chev + '</span>' +
+    '<span class="v14-label v14-label--on" aria-hidden="true">Slide to lock offer for ₹5,000' + chev + '</span>' +
+    '<span class="v14-done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Almost there</span>' +
+    '<span class="v14-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="v14-shackle" d="M8.5 11V8.3a3.5 3.5 0 0 1 7 0V11"/>' +
+      '<rect class="v14-body-lock" x="5.5" y="10.5" width="13" height="10" rx="2.6"/><circle class="v14-keyhole" cx="12" cy="15.3" r="1.5"/></svg></span>';
+  if (btn) btn.parentNode.insertBefore(slide, btn);
+  var max = function () { return Math.max(0, slide.clientWidth - 60); };
+  function set(x) { var m = max(); x = Math.max(0, Math.min(m, x)); slide.style.setProperty('--x', x + 'px'); return x; }
+  function reset() { slide.classList.remove('is-locked', 'is-auto', 'is-back', 'is-held', 'is-hint'); set(0); }
+  function lock() {
+    set(max());
+    slide.classList.add('is-locked');
+    try { if (navigator.vibrate) navigator.vibrate(12); } catch (e) {}
+    setTimeout(function () { if (btn) btn.click(); setTimeout(reset, 450); }, still ? 0 : 480);
+  }
+  function auto() {
+    if (slide.classList.contains('is-locked')) return;
+    slide.classList.remove('is-hint');
+    slide.classList.add('is-auto');
+    requestAnimationFrame(function () { set(max()); });
+    setTimeout(function () { slide.classList.remove('is-auto'); lock(); }, still ? 0 : 620);
+  }
+  var drag = null;
+  slide.addEventListener('pointerdown', function (e) {
+    if (slide.classList.contains('is-locked')) return;
+    drag = { x0: e.clientX, moved: false };
+    slide.classList.remove('is-back', 'is-auto', 'is-hint');
+    slide.classList.add('is-held');
+    try { slide.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+  slide.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x0;
+    if (Math.abs(dx) > 4) drag.moved = true;
+    set(dx);
+  });
+  function end() {
+    if (!drag) return;
+    var moved = drag.moved, x = parseFloat(slide.style.getPropertyValue('--x')) || 0;
+    drag = null;
+    slide.classList.remove('is-held');
+    if (!moved) { auto(); return; }
+    if (x >= max() * 0.82) lock();
+    else { slide.classList.add('is-back'); set(0); setTimeout(function () { slide.classList.remove('is-back'); }, 520); }
+  }
+  slide.addEventListener('pointerup', end);
+  slide.addEventListener('pointercancel', end);
+  slide.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); auto(); } });
+
+  // the entrance: the receipt prints (V11's printer), then the handle nudges twice
+  var hintTimer;
+  function enter() {
+    reset();
+    clearTimeout(hintTimer);
+    if (!on() || still) return;
+    hintTimer = setTimeout(function () {
+      if (!on() || app.dataset.ckView !== 'offer' || slide.classList.contains('is-locked')) return;
+      slide.classList.remove('is-hint'); void slide.offsetWidth; slide.classList.add('is-hint');
+    }, 2300);
+  }
+  slide.addEventListener('animationend', function (e) { if (e.animationName === 'v14-hint') slide.classList.remove('is-hint'); });
+  if (window.MutationObserver) {
+    var last = app.dataset.ckView;
+    new MutationObserver(function () {
+      if (app.dataset.ckView === last) return;
+      var from = last; last = app.dataset.ckView;
+      if (last === 'offer') { reset(); if (from !== 'details') enter(); }
+    }).observe(app, { attributes: true, attributeFilter: ['data-ck-view'] });
+    new MutationObserver(enter).observe(root, { attributes: true, attributeFilter: ['data-pv-pass'] });
+  }
+  document.addEventListener('ck:scenario', function () { setTimeout(enter, 30); });
+  var replay = document.querySelector('[data-pv-replay]');
+  if (replay) replay.addEventListener('click', function () { setTimeout(enter, 0); });
+  enter();
+})();
+</script>
 
 
+<script>
+/* Previews V12 and V13 (html[data-pvx]): V11 with a timer of its own, Save ₹10,000, a livelier
+   button, the coupon gliding between pages, fields that tick; V13 leads with the ₹5,000 */
+(function () {
+  var root = document.documentElement;
+  var app = document.querySelector('[data-ck4-root]');
+  if (!app) return;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // phones: digits change in place, as in V11 (rolling them repaints the coupon's drop shadow and
+  // the pinned header's blur on every frame, which phones show as a flicker)
+  var phone = window.matchMedia ? window.matchMedia('(max-width: 860px)') : { matches: false };
+  var on = function () { return root.hasAttribute('data-pvx'); };
+  var ticket = app.querySelector('.ck-summary .cp-ticket');
+  var ends = ticket && ticket.querySelector('.lk3-ends');
+  var cdText = ends && ends.querySelector('[data-ck-countdown-text]');
+  var noteEl = ends && ends.querySelector('[data-ck-offer-note]');
+  var check = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
 
+  function odo(el, text) {
+    if (el.dataset.odo === text) return;
+    // phones: plain text, swapped once a second, as in V11 (no rolling columns to restyle)
+    if (phone.matches) {
+      if (el.dataset.odoShape) { delete el.dataset.odoShape; el.classList.remove('vx-odo'); }
+      el.dataset.odo = text;
+      el.textContent = text;
+      return;
+    }
+    var shape = text.replace(/\d/g, 'd'), fresh = el.dataset.odoShape !== shape;
+    if (fresh) {
+      el.dataset.odoShape = shape;
+      el.classList.add('vx-odo');
+      el.innerHTML = text.split('').map(function (c) {
+        return /\d/.test(c) ? '<span class="odo-d"><span class="odo-s">' + '0123456789'.split('').map(function (n) { return '<span>' + n + '</span>'; }).join('') + '</span></span>' : '<span class="odo-c">' + c + '</span>';
+      }).join('');
+    }
+    el.dataset.odo = text;
+    var cols = el.querySelectorAll('.odo-s'), i = 0;
+    text.split('').forEach(function (c) {
+      if (!/\d/.test(c)) return;
+      var col = cols[i++];
+      if (fresh || still) { col.style.transition = 'none'; col.style.transform = 'translateY(' + (-c * 10) + '%)'; void col.offsetWidth; col.style.transition = ''; }
+      else col.style.transform = 'translateY(' + (-c * 10) + '%)';
+    });
+  }
 
+  // V13: the ₹5,000 leads, in place of the coupon's option
+  var optA = ticket && ticket.querySelector('.v10-offer--a');
+  if (optA) optA.insertAdjacentHTML('beforebegin',
+    '<div class="cp-part v13-hero"><p class="v13-k">Lock this offer with</p>' +
+    '<p class="v13-amt"><small>₹</small><span data-v13-amt>5,000</span></p>' +
+    '<p class="v13-later"><strong>₹85,000</strong> later, before your batch starts</p>' +
+    '<p class="v13-fee"><span>Course fee <strong>₹90,000</strong><s><span class="ck-sr">instead of </span>₹1,00,000</s></span><span class="cp-save" data-vx-save>Save ₹10,000</span></p></div>');
+
+  // 1. the countdown, under the button: V13's tiles
+  var tiles;
+  var under = ticket && ticket.querySelector('.cp-stub [data-ck-next]');
+  if (under) {
+    under.insertAdjacentHTML('afterend',
+      '<p class="vx-tiles" aria-hidden="true">Offer ends in <span class="vx-tiles__t"><b>00</b><i>:</i><b>00</b><i>:</i><b>00</b></span></p>');
+    tiles = ticket.querySelector('.vx-tiles');
+  }
+  // phones: the strip's countdown rolls its digits (a copy beside it; the page's own for screen readers)
+  var strips = Array.prototype.slice.call(document.querySelectorAll('[data-pm-strip-ends]')).map(function (src) {
+    var copy = document.createElement('span');
+    copy.className = 'vx-clock';
+    copy.setAttribute('aria-hidden', 'true');
+    copy.innerHTML = '<span data-vx-pre></span><strong></strong>';
+    src.parentNode.insertBefore(copy, src.nextSibling);
+    return { src: src, copy: copy };
+  });
+  function tick() {
+    if (!on()) return; // V11: nothing to keep up to date
+    var m = cdText && /(\d{1,2}:\d{2}:\d{2})/.exec(cdText.textContent || '');
+    var urgent = !!(ends && ends.dataset.pvUrgency);
+    if (m) {
+      var p = m[1].split(':').map(function (x) { return x.length < 2 ? '0' + x : x; });
+      if (tiles) tiles.querySelectorAll('b').forEach(function (b, i) { odo(b, p[i]); });
+    }
+    if (tiles && tiles.classList.contains('is-urgent') !== urgent) tiles.classList.toggle('is-urgent', urgent);
+    strips.forEach(function (c) {
+      var t = c.src.textContent || '', m = /(\d{1,2}:\d{2}:\d{2})/.exec(t);
+      if (c.src.classList.contains('vx-hide') !== !!m) c.src.classList.toggle('vx-hide', !!m);
+      var disp = m ? '' : 'none';
+      if (c.copy.style.display !== disp) c.copy.style.display = disp;
+      if (!m) return;
+      var pre = c.copy.querySelector('[data-vx-pre]');
+      if (pre.textContent !== t.slice(0, m.index)) pre.textContent = t.slice(0, m.index);
+      var st = c.src.querySelector('strong'), o = c.copy.querySelector('strong');
+      if (st) { var cs = getComputedStyle(st); ['fontSize', 'fontWeight', 'color', 'letterSpacing', 'fontFamily', 'fontVariantNumeric', 'lineHeight'].forEach(function (k) { if (o.style[k] !== cs[k]) o.style[k] = cs[k]; }); }
+      odo(o, m[1]);
+    });
+  }
+  if (cdText && window.MutationObserver) new MutationObserver(tick).observe(cdText, { childList: true, characterData: true, subtree: true });
+  setInterval(tick, 250);
+  tick();
+
+  // 2. "Save ₹10,000": the chips read so, spring in and count up as the coupon lands
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.v10-offer--b .cp-save, .v10-offer--a .cp-save, .v10-offer--c .cp-save, [data-vx-save], .pm-offer__save'));
+  chips.forEach(function (el) { el.dataset.vxAsBuilt = el.textContent; });
+  var saves = function () { return root.hasAttribute('data-pv13'); }; // V15 keeps V11's own "Save ₹10,000" pill
+  function dress(el) {
+    if (saves()) {
+      if (!el.querySelector('.vx-save')) el.innerHTML = '<span class="vx-save">' + check + '<span>Save ₹10,000</span></span>';
+    } else if (el.querySelector('.vx-save')) el.textContent = el.dataset.vxAsBuilt;
+  }
+  function chipsIn(delay) {
+    chips.forEach(dress);
+    chips.forEach(function (el) { el.classList.remove('vx-chip-in'); });
+    if (!saves() || still) return;
+    setTimeout(function () {
+      chips.forEach(function (el) {
+        if (!el.offsetParent) return;
+        void el.offsetWidth;
+        el.classList.add('vx-chip-in');
+      });
+    }, delay);
+  }
+  // V13: ₹5,000 rolls up as the coupon lands
+  var amt = app.querySelector('[data-v13-amt]');
+  function amtIn(delay) {
+    if (!amt) return;
+    if (!root.hasAttribute('data-pv13') || still) { odo(amt, '5,000'); return; }
+    odo(amt, '0,000');
+    setTimeout(function () { odo(amt, '5,000'); }, delay);
+  }
+  function land() { var d = (root.dataset.pvPrint || app.dataset.ckView !== 'offer') ? 300 : 1600; chipsIn(d); amtIn(d - 200); }
+
+  // 4. offer to details (and back): the coupon glides
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.cp-stub [data-ck-next], .ck-mobilebar [data-ck-next], [data-ck-back], [data-pm-flow-back]');
+    if (!b || !on() || still || !document.startViewTransition || b.__vxGo) return;
+    var view = app.dataset.ckView, next = b.matches('[data-ck-next]');
+    if (!(next && view === 'offer') && !(!next && view === 'details')) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    root.classList.add('vx-gliding');
+    var vt = document.startViewTransition(function () { b.__vxGo = true; b.click(); b.__vxGo = false; });
+    vt.finished.then(function () { root.classList.remove('vx-gliding'); }, function () { root.classList.remove('vx-gliding'); });
+  }, true);
+
+  // 5. the fields tick once right (V13)
+  var batchEl = app.querySelector('[data-ck-batch]');
+  var rules = {
+    centre: function () { return !!(batchEl && batchEl.textContent.trim()); },
+    name: function (v) { return v.trim().length > 1; },
+    email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); },
+    phone: function (v) { return /^[6-9]\d{9}$/.test(v.replace(/\D/g, '')); }
+  };
+  var checks = [];
+  Object.keys(rules).forEach(function (k) {
+    var field = app.querySelector('[data-ck-field="' + k + '"]');
+    var box = field && field.querySelector('.ck-phone-field');
+    var input = field && field.querySelector('input');
+    if (!box || !input) return;
+    box.insertAdjacentHTML('beforeend', '<svg class="vx-tick" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="m6 10.2 2.6 2.6L14 7.4"/></svg>');
+    var upd = function () { box.classList.toggle('vx-ok', root.hasAttribute('data-pv13') && rules[k](input.value)); };
+    checks.push(upd);
+    ['input', 'change'].forEach(function (t) { input.addEventListener(t, upd); });
+    input.addEventListener('blur', function () { setTimeout(upd, 0); });
+    if (k === 'centre' && batchEl && window.MutationObserver) new MutationObserver(upd).observe(batchEl, { childList: true, subtree: true, characterData: true });
+    setTimeout(upd, 0);
+  });
+
+  if (window.MutationObserver) {
+    var lastView = app.dataset.ckView;
+    new MutationObserver(function () {
+      if (app.dataset.ckView === lastView) return;
+      var from = lastView; lastView = app.dataset.ckView;
+      if (lastView === 'offer' && from !== 'details') land();
+    }).observe(app, { attributes: true, attributeFilter: ['data-ck-view'] });
+    new MutationObserver(function () { checks.forEach(function (f) { f(); }); land(); }).observe(root, { attributes: true, attributeFilter: ['data-pvx', 'data-pv13'] });
+  }
+  var replay = document.querySelector('[data-pv-replay]');
+  if (replay) replay.addEventListener('click', function () { setTimeout(land, 0); });
+  document.addEventListener('ck:scenario', function () { setTimeout(land, 30); });
+  land();
+})();
+</script>
 </body>
 </html>
