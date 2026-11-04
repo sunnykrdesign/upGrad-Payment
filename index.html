@@ -3439,9 +3439,9 @@ html[data-pv11] :is(.ck-app[data-ck4-root] .ck-progress__fill, .v8 .ug-progress,
    ₹90,000 ₹1,00,000" and "Remaining ₹85,000"; 122px.
    Full: the course, then the offer, "Course fee ₹90,000 ₹1,00,000" with "You save ₹10,000" over a
    box split in two, "Pay now ₹5,000" (the one strong number) and "Remaining ₹85,000" (quiet),
-   then the strip at the foot (the countdown and when the offer ends, "9:00 PM today"); 184px. The
-   course fee line folds away once the page is scrolled (about 156px), and is back at the top. Once the
-   offer has ended, the extra lines go */
+   then the strip at the foot (the countdown and when the offer ends, "9:00 PM today"); 184px,
+   however far the page is scrolled (the course fee line no longer folds away). Once the offer has
+   ended, the extra lines go */
 .pm-strip__more, .pm-strip__now, .pm-strip__at, .pm-offer, .pm-course__back, .ck-mobilebar__rest { display: none; }
 .pv-toggle .pv-pd { display: none !important; }
 @media (max-width: 860px) {
@@ -5721,15 +5721,8 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
     fieldError('phone', '');
     if (V11()) render(); // a verified number, changed, needs a code: the help and the hint say so
   });
-  // preview V11 on phones, Full: the header's course fee line folds away once the page is scrolled
-  // (past 40px) and is back at the top (under 8px)
-  const flowHead = $('.pm-head--flow');
-  let folded = false;
-  addEventListener('scroll', () => {
-    const y = window.scrollY;
-    const fold = folded ? y > 8 : y > 40;
-    if (fold !== folded) { folded = fold; flowHead.classList.toggle('is-folded', folded); }
-  }, { passive: true });
+  // preview V11 on phones, Full: the header's course fee line stays put however far the page is
+  // scrolled (it used to fold away past 40px; kept simple, it no longer does)
   // preview V11: the learning centre, a search box with a list (the ARIA combobox pattern). Typing a
   // city or an area narrows the centres (Bengaluru finds Bangalore); the chevron, a tap or the down
   // arrow opens the whole list. Arrow keys move through it, Enter picks, Escape closes. Text that

@@ -75,9 +75,9 @@ V11          V10, the final direction: the link names no centre or batch, and th
                   Full: the course, then the offer, "Course fee ₹90,000 ₹1,00,000" with "You
                   save ₹10,000", over a box split in two, "Pay now ₹5,000" (the one strong
                   number) and "Remaining ₹85,000" (grey, regular, smaller), then the strip at the
-                  foot (the countdown and when the offer ends, "9:00 PM today"); 184px. Once the
-                  page is scrolled, the course fee line folds away (about 156px pinned); back at
-                  the top, it is back.
+                  foot (the countdown and when the offer ends, "9:00 PM today"); 184px. It stays
+                  the same however far the page is scrolled (the course fee line, with the
+                  saving, used to fold away; it no longer does).
                   Once the offer has ended, the extra lines go (the strip shows the full price).
                 - Logged in, the name, email and mobile come filled in from the account and can
                   be edited ("Filled in from your upGrad account. You can edit them."; the heading
