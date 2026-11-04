@@ -37,7 +37,12 @@ V11          V10, the final direction: the link names no centre or batch, and th
                 the centre ("Advance Certificate in Digital Marketing"). No duration either (the
                 details page shows it, under the centre picked), so one dashed line parts the
                 course from the price.
-                The prices, the ₹5,000 block and the countdown are as in V10.
+                The prices, the ₹5,000 block and the countdown are as in V10, except that in
+                option B the countdown line is centred on the coupon (here and on the details
+                page): one short line between the full-width box and the full-width button. (A and
+                C keep it at the left edge, with their left-set prices.) On a 360px phone the line
+                is set a little tighter so it stays on one line; under 340px "9:00 PM today" takes
+                a line of its own.
                 The coupon (here and on the details page) keeps one spacing rule: each section has
                 the same inset as the coupon's sides (24px, 20px on phones) above and below each
                 dashed line, the price's parts are 16px apart, and the button has as much space
@@ -94,12 +99,13 @@ V11          V10, the final direction: the link names no centre or batch, and th
                 the centre and its batch ("Pune – Kothrud · 4 months · Starts Dec 5, 2026"); Back
                 returns to the details page to change it. The confirmation shows the centre and
                 its batch start, and the balance is due before that date.
-                Choosing how to pay, the ₹5,000 that locks the offer leads, ahead of the course
-                fee (as on the coupon: the fee small, what is paid now large). On desktop the
-                course card's price column reads "Minimum to lock your offer", ₹5,000 large, then
-                "Course fee ₹90,000 ₹1,00,000" under it, smaller; Reserve a Seat (the ₹5,000
-                option) is open first, not Recommended. On phones the pinned strip reads "₹5,000
-                minimum to lock" first and "Fee ₹90,000 ₹1,00,000" after it, smaller. On the
+                Choosing how to pay, the ₹5,000 that locks the offer leads, and what remains
+                follows it, small (the Summary beside the options already shows how the fee comes
+                to ₹90,000, so the card doesn't repeat it). On desktop the course card's price
+                column reads "Minimum to lock your offer", ₹5,000 large, then "Remaining ₹85,000
+                later" under it, smaller; Reserve a Seat (the ₹5,000 option) is open first, not
+                Recommended. On phones the pinned strip reads "₹5,000 minimum to lock" first and
+                "Remaining ₹85,000 later" after it, smaller. On the
                 review (an option is picked, maybe the full fee), for a reserved seat's balance,
                 and when the page opens after the offer has ended, the card shows the course fee
                 as before. (A learner who reached the page while the offer was live keeps the
@@ -135,14 +141,14 @@ V13 and V15  (switch: V11, V13, V15; or ?v=13, ?v=15): copies of V11 to try new 
              without the receipt, were tried and dropped: an old ?v=12b link opens 11b, ?v=14 opens
              V15. V13 to V15 with whole new pages were tried and dropped before that.)
              Both:
-             - "You save ₹10,000" reads "Save ₹10,000", with a tick: as the coupon lands it wipes
-               in from its left edge and the tick draws itself (it keeps its width, so nothing
-               around it moves).
+             - (V13 only) "You save ₹10,000" reads "Save ₹10,000", with a tick: as the coupon
+               lands it wipes in from its left edge and the tick draws itself (it keeps its width,
+               so nothing around it moves).
              - The button gives under a press; its arrow nudges forward on hover.
              - From the offer page to the details page (and back) the coupon glides to its new
                place (a view transition, where the browser has them).
-             - On the details page a field draws a green tick once it is right (a centre picked,
-               a name, a valid email, a 10-digit mobile); the centre list unfolds.
+             - On the details page the centre list unfolds. (V13 only) A field draws a green tick
+               once it is right (a centre picked, a name, a valid email, a 10-digit mobile).
              - On phones the countdowns change in place, as in V11 (rolling digits repainted the
                coupon's shadow, which phones showed as flicker).
 V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,000, large, which rolls
@@ -152,25 +158,24 @@ V13          The ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,
              ends in" and three small bordered tiles, [01] : [14] : [33] (Uxcel's offer timer).
 V15          "Seat pass + slide to lock", printed as V11's receipt. The coupon's content is a pass,
              as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
-             pass" and the course; then, in V11's order, the price and the saving first and what
-             to pay to keep it after: as V11's coupon, "Course fee ₹90,000 ₹1,00,000 (struck)" on
-             the left and the "You save ₹10,000" pill on the right of the same line; below a dashed
-             rule, centred, "Pay now to lock this price" over ₹5,000, large (the ₹ smaller, its top
-             on the digits' top), and "Remaining ₹85,000 before your batch starts". Under the
-             slider (and under V11's button on the details page), V13's countdown: "Offer ends in"
-             and three small bordered tiles, [01] : [14] : [33], in red. Around it, V11's receipt:
+             pass" and the course, in place of V11's course row. Under it, V11's coupon content as
+             it is: "Course fee ₹90,000 ₹1,00,000 (struck)" with the "You save ₹10,000" pill, then
+             the box with "Pay now ₹5,000" over "Remaining amount ₹85,000", and under the box, V11's
+             countdown line, centred as V11's: "Offer ends in 17:59:44 · 9:00 PM today" (red under
+             10 minutes, as V11's). Around it, V11's receipt:
              it prints out of the printer, its corners near-square on the offer page, with the
              perforation and notches over the slider and the scalloped bottom edge.
-             On the offer page the button is "Slide to lock ₹5,000" (Wealthfront's "Drag to
-             confirm", Swiggy's "Slide to Pay"): a red handle with an open padlock on a soft grey
-             track, three chevrons after the words. The fill follows the handle and the words turn
-             white where it has reached; let go early and it springs back; at the end the padlock
-             shuts, the handle turns white, "✓ Offer locked", phones that can give a short
+             On the offer page the button is "Slide to lock offer for ₹5,000" (V11's "Lock offer
+             for ₹5,000"; Wealthfront's "Drag to confirm", Swiggy's "Slide to Pay"): a red handle
+             with an open padlock on a soft grey track, three chevrons after the words (not on
+             phones under 400px, where the words need the room). The fill follows the handle and
+             the words turn white where it has reached; let go early and it springs back; at the
+             end the padlock shuts, the handle turns white, "✓ Almost there" (the details page's
+             own words; nothing is locked until the ₹5,000 is paid), phones that can give a short
              vibration, and the flow goes on as the button would. A tap, Enter or Space plays the
              slide. Once the receipt has printed the handle nudges right twice, to show the
-             gesture. On the details page the button is V11's (it waits for the details). After
-             the entrance nothing moves on its own but the countdown's digits, which roll on
-             desktop and change in place on phones, as V13's.
+             gesture. On the details page the button is V11's (it waits for the details), and the
+             fields have no green ticks. Nothing moves on its own after the entrance.
              With reduced motion, none of the motion.
 
 What V11 builds on (no longer in the switch):
