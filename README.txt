@@ -17,7 +17,7 @@ upGrad: keep this file internal. The UPI QR is a sample and cannot take a paymen
 
 For user testing, add ?test to the link (index.html?test): no Scenario bar, no version switch and
 no prototype notes; it opens on V11, option B, at the offer page, with the Full header on
-phones (add &v=11a or &v=11c for another coupon option, &pd=minimal, &pd=medium or &pd=full2 for
+phones (add &v=11a or &v=11c for another coupon option, &pd=minimal or &pd=full2 for
 another phone header). The code hint reads "For this test, enter any 6 digits as the code.", and Proceed to
 Pay ends with "That's the end of this test. No payment is taken."
 
@@ -26,8 +26,8 @@ Scenario bar), and the upGrad logo starts the flow again every time it is presse
 
 Preview: V11 only; V9 and V10 are out of the switch (an old ?v=9 or ?v=10a to ?v=10c link opens
 V11, with the same coupon option). The switch in the bottom-left corner has the coupon options A,
-B and C (or ?v=11a to ?v=11c) and, on phones, the details page's header: Min, Mid, Full and Full
-2 (or &pd=minimal, medium, full or full2). It opens on option B with the Full header. On phones the switch has
+B and C (or ?v=11a to ?v=11c) and, on phones, the details page's header: Min, Full and Full 2
+(or &pd=minimal, full or full2; an old &pd=medium opens Full). It opens on option B with the Full header. On phones the switch has
 no V11 button (there is one version), so it fits the screen. What V11 builds on
 (V10, V9, then V5 to V8) is described after it.
 
@@ -68,18 +68,15 @@ V11          V10, the final direction: the link names no centre or batch, and th
                   already says). It waits for the centre, name, email and mobile: pressed before
                   they are all in, it does not go on: it shows what is missing under each field,
                   moves to the first and shakes them. (V13 and V15 have the same.)
-                - Phones, how much of the offer the pinned header shows, in four versions
-                  (switch: Min, Mid, Full, Full 2; or &pd=minimal, medium, full or full2 in the
-                  link; Full unless another is picked, the recommended one). In all four the whole
+                - Phones, how much of the offer the pinned header shows, in three versions
+                  (switch: Min, Full, Full 2; or &pd=minimal, full or full2 in the link; Full
+                  unless another is picked, the recommended one). (A fourth, Medium, "Mid", is
+                  dropped: an old &pd=medium link or pick opens Full.) In all three the whole
                   header is pinned at the top, the course's name included. There is no title row ("‹ Your
                   Details"; the card under it is titled "Your details"): back is at the start of
                   the course row, so the header is 50px shorter and the room is the offer's.
                   Minimal: as before, the course, then the strip (the countdown, "Lock for
                   ₹5,000"); 106px.
-                  Medium: the course a little tighter, and the strip gets a second line, so the
-                  ₹5,000 reads as part of the course fee, not on top of it: the countdown and
-                  "Pay now ₹5,000", then "Course fee ₹90,000 ₹1,00,000" (struck) and "Remaining
-                  ₹85,000"; 122px.
                   Full: the course, then the offer, "Course fee ₹90,000 ₹1,00,000" with "You
                   save ₹10,000", over a box split in two, "Pay now ₹5,000" (the one strong
                   number) and "Remaining ₹85,000" (grey, regular, smaller), then the strip at the

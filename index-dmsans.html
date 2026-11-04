@@ -3582,7 +3582,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
 html[data-pvx] .vx-clock { display: inline; }
 html[data-pv13] .vx-tick { display: block; }
 html[data-pv13] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
-html:is([data-pv13], [data-pv15]) .pv-toggle :is([data-pv-pd="medium"], [data-pv-pd="full"]) { display: none !important; }
+html:is([data-pv13], [data-pv15]) .pv-toggle [data-pv-pd="full"] { display: none !important; }
 /* 1. the countdown, quiet and close to the button, in red (the coupon's own line stays for screen
    readers and once the offer ends). V12: one line under the button, "Offer ends in 01h 14m 33s"
    (Codecademy's sale clock). V13: "Offer ends in" and three small bordered tiles, [01] : [14] : [33],
@@ -3769,12 +3769,15 @@ html[data-pv15] .ck-app[data-ck4-root][data-ck-view="offer"] .v14-pass { border-
   if (params.has('v') && params.get('v') !== v) {
     try { params.set('v', v); history.replaceState(history.state, '', location.pathname + '?' + params + location.hash); } catch (e) {}
   }
-  // V11 on phones: how much of the offer the details page's header shows (?pd=minimal, medium, full
-  // or full2; else the last one picked; else full)
-  var pdOk = function (x) { return /^(minimal|medium|full|full2)$/.test(x || ''); };
+  // V11 on phones: how much of the offer the details page's header shows (?pd=minimal, full or
+  // full2; else the last one picked; else full)
+  // (Medium, "Mid", is dropped: an old pd=medium link or pick opens Full)
+  var pdOk = function (x) { return /^(minimal|full|full2)$/.test(x || ''); };
   var pd = params.get('pd');
   if (!pdOk(pd) && !test) { try { pd = localStorage.getItem('upi-v11-pd'); } catch (e) {} }
   document.documentElement.dataset.pv11Pd = pdOk(pd) ? pd : 'full';
+  // an old &pd=medium link is rewritten to the Full it opens, so a copied link says what it shows
+  if (params.get('pd') === 'medium') { try { params.set('pd', 'full'); history.replaceState(history.state, '', location.pathname + '?' + params + location.hash); } catch (e) {} }
   // V13 and V15 keep two of them, Minimal and Full 2 (Full 2 unless Minimal was picked)
   if (/^1[35]$/.test(v) && !/^(minimal|full2)$/.test(document.documentElement.dataset.pv11Pd)) document.documentElement.dataset.pv11Pd = 'full2';
   // V10 is V9 with an option on its coupon (?v=10a, 10b, 10c); the page runs as V9 under it. V11 is
@@ -6758,7 +6761,6 @@ html[data-pv15] .ck-app[data-ck4-root][data-ck-view="offer"] .v14-pass { border-
   <!-- phones: the details page's header, Minimal, Medium or Full -->
   <span class="pv-opts pv-pd" role="group" aria-label="Details page header on phones">
     <button type="button" data-pv-pd="minimal" aria-label="Minimal">Min</button>
-    <button type="button" data-pv-pd="medium" aria-label="Medium">Mid</button>
     <button type="button" data-pv-pd="full" aria-label="Full">Full</button>
     <button type="button" data-pv-pd="full2" aria-label="Full 2: what remains under Continue">Full 2</button>
   </span>
@@ -7212,7 +7214,7 @@ html[data-pv15] .ck-app[data-ck4-root][data-ck-view="offer"] .v14-pass { border-
       showPd('full2');
       try { var pdUrl = new URL(location.href); if (pdUrl.searchParams.has('pd')) { pdUrl.searchParams.set('pd', 'full2'); history.replaceState(history.state, '', pdUrl); } } catch (e) {}
     }
-    if (!copyOf && pds) { try { var savedPd = localStorage.getItem('upi-v11-pd'); if (/^(minimal|medium|full|full2)$/.test(savedPd || '') && savedPd !== root.dataset.pv11Pd) showPd(savedPd); } catch (e) {} }
+    if (!copyOf && pds) { try { var savedPd = localStorage.getItem('upi-v11-pd'); if (/^(minimal|full|full2)$/.test(savedPd || '') && savedPd !== root.dataset.pv11Pd) showPd(savedPd); } catch (e) {} }
     var ten = /^1[01][abc]$/.test(v);
     var major = ten ? v.slice(0, 2) : v;
     if (ten) root.dataset.pv10 = lastOpt = v.slice(2); else delete root.dataset.pv10;
