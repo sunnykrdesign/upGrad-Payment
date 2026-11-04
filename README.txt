@@ -7,10 +7,13 @@ index.html   V11, the final direction (described below): the offer link names no
              page, Figma 73:3744, with the payment-options tabs from 78:5054), a desktop layout
              (1512px wide) with upGrad's mobile checkout on phones.
 
-Open index.html in a browser. The "Scenario" menu at the top jumps to any state: logged in
-or out, last hour, under 10 minutes left, an offer that ends while the page is open, the
-payment page's review (and an offer that ends on the payment page), and the other link states. On the payment page, the upGrad logo
-starts the flow again.
+Open index.html in a browser. The "Scenario" menu at the top jumps to the offer page's states:
+logged out or in, under 10 minutes left, and an offer that ends while the page is open. The
+other states are no longer in the menu but still open from their links: index.html#v9-last-hour,
+#v9-options-review (the payment page's review, UPI), #v9-options-expiring and
+#v9-options-review-expiring (an offer that ends on the payment page), and the other link states,
+#v9-scheduled, #v9-enrolled, #v9-reserved and #v9-batch-closed. On the payment page, the upGrad
+logo starts the flow again.
 
 Text is set in upGrad's Circular, embedded in the page; Circular has no ₹ sign, so that
 one glyph comes from Inter (online) or a system font (offline). Circular is licensed to
@@ -18,8 +21,8 @@ upGrad: keep this file internal. The UPI QR is a sample and cannot take a paymen
 
 For user testing, add ?test to the link (index.html?test): no Scenario bar, no version switch and
 no prototype notes; it opens on V11, option B, at the offer page, with the Full header on
-phones. The code hint reads "For this test, enter any 6 digits as the code.", and Proceed to
-Pay ends with "That's the end of this test. No payment is taken."
+phones. The code hint reads "For this test, enter any 6 digits as the code.", and the
+confirmation after paying says "That's the end of this test. No payment is taken."
 
 On the payment page, the switch in the bottom-left corner also has Restart (that page has no
 Scenario bar), and the upGrad logo starts the flow again every time it is pressed.
@@ -79,6 +82,9 @@ V11          V10, the final direction: the link names no centre or batch, and th
                   the same however far the page is scrolled (the course fee line, with the
                   saving, used to fold away; it no longer does).
                   Once the offer has ended, the extra lines go (the strip shows the full price).
+                - No "Log in instead" on the card: a learner who arrives logged in gets the
+                  details filled in (below); anyone else types them, with no detour into a login
+                  in the middle of paying. (The Scenario menu's "Logged in" shows that state.)
                 - Logged in, the name, email and mobile come filled in from the account and can
                   be edited ("Filled in from your upGrad account. You can edit them."; the heading
                   says "Confirm your details."). The mobile shows "Verified": kept, Continue goes
@@ -99,6 +105,35 @@ V11          V10, the final direction: the link names no centre or batch, and th
                 and when the page opens after the offer has ended, the card shows the course fee
                 as before. (A learner who reached the page while the offer was live keeps the
                 offer price, so the ₹5,000 stays.)
+                On phones the review (once an option is picked) is upGrad's mobile checkout,
+                Figma 129:373, in place of the desktop review, which ran off a phone's screen.
+                Under the options page's header (back returns to the options; the bar at 87.5%):
+                Program (the logo, the course, the centre picked, "4 months | Starts from: Nov 21,
+                2026"); Payment Details (Course Fee, Offer, Total, as the desktop summary has
+                them); Payment Options (the option, Change); Payment Method (e.g. "Custom Amount
+                Details", Paying Now INR 5,000, Change); Billing Address (the name and the PIN
+                code's place, Change goes to the PIN code); then how to pay: for UPI, "Pay via
+                UPI app" with Google Pay, PhonePe, Paytm and BHIM (a tap pays in the app; a
+                phone can't scan a QR on its own screen; here it says the prototype ends), for
+                the other options Proceed to Pay; then Please Note and the Terms and Conditions.
+                The second line under the course is the centre picked, where Figma names the
+                institute (the logo already says upGrad).
+                Paying (a UPI app or Proceed to Pay on phones; Proceed to Pay on desktop, or on
+                desktop's UPI QR, a few seconds after Show Code, under "Waiting for your
+                payment…") goes on to the confirmation: upGrad's application page, Figma 131:1015
+                (desktop) and 130:676 (phones). The green tick badge; "Your Profile is a 100%
+                match for" the course (the centre, "4 months | Starts at: 21 November 2026");
+                Admission Process with both steps done, Screening Round and Block payment
+                ("Payment" when paid in full); then the sheet: "Your seat is reserved!",
+                "Congratulations!", "Your seat is locked at ₹90,000", "Pay the remaining ₹85,000
+                before 21 November 2026", PAY REMAINING ₹85,000 (paid in full: "You're
+                enrolled!", "Your seat is confirmed", "The receipt is on its way to your email.",
+                DOWNLOAD RECEIPT). Figma's frames are the page before paying ("You're just one
+                step away!", RESERVE A SEAT); here both steps are done. On phones the sheet is
+                pinned to the foot of the screen (on phones under 700px tall it follows the
+                steps, so it doesn't cover them), and the illustration is the desktop's at two
+                thirds (the phone frame caught its animation before the badge). Back starts the
+                flow again.
                 On phones the billing postal code / PIN code is now shown too, in a card over
                 "Choose a payment option" (desktop has it as step 1): filled in, editable, with
                 the place it finds under it. It is the same code as desktop's field. Tapping an
@@ -118,7 +153,7 @@ V11          V10, the final direction: the link names no centre or batch, and th
              Mangalore, Chhatrapati Sambhaji Nagar, Bhopal, Jabalpur, Raipur, Rajkot) are left
              out. Their batch dates are samples (Nov 21 to Dec 12, 2026); Bangalore – Jayanagar is
              given no batch coming up, to show how such a centre is left out, so the list shows
-             11. Every centre has the course's 4 months. Opened straight from the Scenario menu,
+             11. Every centre has the course's 4 months. Opened straight from a link (#v9-options-review),
              the payment page shows Bangalore – Marathahalli. Paying the balance
              of a reserved seat asks for no centre.
 
@@ -170,7 +205,7 @@ V9           V7, and the offer link takes the block amount only, ₹5,000 (never
                 pinned header, the cards stack, and the button stays at the foot of the screen.
              4. Confirmation: "Your seat is locked at ₹90,000", what was paid and the balance
                 row; Pay balance opens the regular payment page (all options) for ₹85,000.
-             5. "Your seat is already reserved" (Scenario: Seat already reserved): when the block
+             5. "Your seat is already reserved" (#v9-reserved): when the block
                 was paid and the balance (₹85,000) is due before Oct 31; "Pay remaining ₹85,000"
                 opens the regular payment page. "You're already enrolled" stays for learners who
                 paid in full.
@@ -248,7 +283,7 @@ V7           V6, and the offer does not run out on the payment page: a learner w
              desktop the course card shows the price and the saving; on phones the pinned strip
              shows the price, and "You save ₹10,000" where the countdown was. The offer and details pages keep their
              countdown, and a learner who reaches checkout after the offer has ended pays the full
-             price, as before. (Try "Offer ends in 10 seconds" under Payment page.)
+             price, as before. (Try index.html#v9-options-expiring.)
 
 V8           V7, and the offer page's button reads "Reserve seat for ₹5,000" (it was "Claim now").
              To match it, the payment page reserves the seat for ₹5,000: "Pay minimum INR 5,000
