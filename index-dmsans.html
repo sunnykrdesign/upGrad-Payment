@@ -3319,6 +3319,20 @@ html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-
   margin-top: 0; padding-top: 16px; padding-bottom: calc(var(--cp-pad) - var(--cp-notch));
 }
 html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket:not(:has(.lk3-ends.is-ended)) > .ck-offer > [data-ck-countdown] { margin-top: 0; }
+/* option B: the countdown, one short line between the full-width box and the full-width button,
+   centred on the card, so it reads as the whole offer's deadline (and the line's right side isn't
+   left empty). A and C keep it at the left edge, with their left-set prices */
+html[data-pv11][data-pv10="b"] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .ck-offer > .lk3-ends { justify-self: center; justify-content: center; }
+/* narrow phones: on a 360px phone the line is a little tighter so it stays on one line (it was 8px
+   too wide, and wrapped after the dot); under 340px "9:00 PM today" takes a line of its own, without
+   the dot */
+@media (max-width: 370px) {
+  html[data-pv11] .ck-app--coupon .ck-summary .cp-ticket > .ck-offer > .lk3-ends:not(.is-ended) { gap: 4px; }
+  html[data-pv11] .ck-app--coupon .ck-summary .cp-ticket > .ck-offer > .lk3-ends:not(.is-ended) strong { font-size: 16px; }
+}
+@media (max-width: 340px) {
+  html[data-pv11] .ck-app--coupon .ck-summary .cp-ticket > .ck-offer > .lk3-ends:not(.is-ended) > .lk3-ends__sep { display: none; }
+}
 /* once the offer has ended, the price (V9's) is the first part under the dashed line: the same insets */
 html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-ticket:has(.lk3-ends.is-ended) > .ck-offer {
   margin-top: 0; padding-top: var(--cp-pad); padding-bottom: calc(var(--cp-pad) - var(--cp-notch));
@@ -3329,15 +3343,16 @@ html[data-pv11] .ck-app--coupon[data-ck4-root][data-ck-handoff] .ck-summary .cp-
 }
 html[data-pv11] .ck-app--coupon[data-ck4-root] .cp-stub > .lk3-action__hint:empty { display: none; }
 
-/* V11, the payment page, choosing how to pay: the least that locks the offer (₹5,000) leads, ahead
-   of the course fee, as on the coupon (the fee small, what is paid now large). On desktop the
-   course card's price column says "Minimum to lock your offer", ₹5,000 large, then the course fee
-   under it, smaller; Reserve a Seat (the ₹5,000 option) is open first. On phones the pinned strip
-   puts the ₹5,000 first and the fee after it, smaller. On the review (an option is picked, maybe
-   the full fee), for a seat's balance, and once the offer has ended, the card shows the course fee
-   as before. Phones also get the billing postal code / PIN code over the options, as desktop has it
+/* V11, the payment page, choosing how to pay: the least that locks the offer (₹5,000) leads, and
+   what remains after it (₹85,000) follows, small; the summary beside the options already shows how
+   the fee comes to ₹90,000, so the card doesn't repeat it. On desktop the course card's price
+   column says "Minimum to lock your offer", ₹5,000 large, then "Remaining ₹85,000 later" under it,
+   smaller; Reserve a Seat (the ₹5,000 option) is open first. On phones the pinned strip puts the
+   ₹5,000 first and "Remaining ₹85,000 later" after it, smaller. On the review (an option is picked,
+   maybe the full fee), for a seat's balance, and once the offer has ended, the card shows the
+   course fee as before. Phones also get the billing postal code / PIN code over the options, as desktop has it
    first (one code: what is typed in one field is in the other) */
-.v11-lock, .pm-strip__min, .pm-zip { display: none; }
+.v11-lock, .pm-strip__min, .pm-strip__rest, .pm-zip { display: none; }
 html[data-pv11] .v8[data-v8-view="choose"]:not([data-v8-balance]) .v8-course__price > .v11-lock:not([hidden]) { display: grid; gap: 6px; }
 html[data-pv11] .v8[data-v8-view="choose"]:not([data-v8-balance]) .v8-course__price:has(> .v11-lock:not([hidden])) > :is(.v8-course__row, .v8-price) { display: none; }
 .v11-lock p { margin: 0; }
@@ -3346,16 +3361,20 @@ html[data-pv11] .v8[data-v8-view="choose"]:not([data-v8-balance]) .v8-course__pr
   font-size: 40px; line-height: 44px; font-weight: 600; letter-spacing: -1.4px; white-space: nowrap;
   font-variant-numeric: normal; /* the comma at its own width, not a digit's */
 }
-.v11-lock__fee { color: #63636B; font-size: 14px; line-height: 21px; white-space: nowrap; }
-.v11-lock__fee strong { color: #121214; font-weight: 600; }
-.v11-lock__fee s { margin-left: 2px; color: #A0A0A8; }
+.v11-lock__rest { color: #63636B; font-size: 14px; line-height: 21px; white-space: nowrap; }
+.v11-lock__rest strong { color: #121214; font-weight: 600; }
 @media (max-width: 860px) {
   html[data-pv11] .v8[data-v8-locked]:not([data-v8-balance]) .pm-strip:not(.is-ended) .pm-strip__save { display: none; }
   html[data-pv11] .v8[data-v8-locked]:not([data-v8-balance]) .pm-strip:not(.is-ended) .pm-strip__min {
     order: -2; display: block; margin: 0; color: var(--co-text-primary); font-size: 13px; line-height: 20px; white-space: nowrap;
   }
   .pm-strip__min strong { margin-right: 2px; font-size: 16px; font-weight: 700; }
-  html[data-pv11] .v8[data-v8-locked]:not([data-v8-balance]) .pm-strip:not(.is-ended) .pm-strip__price { font-size: 12px; }
+  html[data-pv11] .v8[data-v8-locked]:not([data-v8-balance]) .pm-strip:not(.is-ended) .pm-strip__price { display: none; }
+  html[data-pv11] .v8[data-v8-locked]:not([data-v8-balance]) .pm-strip:not(.is-ended) .pm-strip__rest {
+    display: block; margin: 0; color: var(--co-text-muted); font-size: 12px; line-height: 20px; white-space: nowrap;
+  }
+  .pm-strip__rest strong { color: var(--co-text-primary); font-size: 13px; font-weight: 600; }
+  @media (max-width: 359px) { .pm-strip__rest-k { display: none; } } /* "₹85,000 later", to fit beside the ₹5,000 */
   .pm-strip__fee { color: var(--co-text-muted); font-weight: 400; }
   html[data-pv11] .v8[data-v8-view="choose"]:not([data-v8-balance]) .pm-zip {
     display: block; margin-bottom: 24px; padding: 20px 16px; border-radius: 16px;
@@ -3532,12 +3551,13 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
    are V11's; on phones the details page's header keeps two of V11's four, Minimal and Full 2 (Full 2
    unless Minimal is picked). (V12, V11's coupon with the changes below, and V14 are dropped.)
    Both:
-   1. "You save ₹10,000" reads "Save ₹10,000": as the coupon lands it wipes in from its left edge
-      and its tick draws itself (it keeps its width, so nothing around it moves).
+   1. (V13 only) "You save ₹10,000" reads "Save ₹10,000": as the coupon lands it wipes in from its
+      left edge and its tick draws itself (it keeps its width, so nothing around it moves).
    2. The button gives under a press and its arrow nudges forward on hover.
    3. From the offer page to the details page (and back) the coupon glides to its new place (a
       view transition, where the browser has them).
-   4. On the details page a field draws a green tick once it is right; the centre list unfolds.
+   4. On the details page the centre list unfolds; in V13 a field also draws a green tick once it
+      is right.
    5. On phones the strip's countdown changes in place, as in V11.
    V13: the ₹5,000 leads, as the offer: "Lock this offer with" over ₹5,000, large, which rolls up
       from ₹0 as the coupon lands; "₹85,000 later, before your batch starts" under it; then the
@@ -3551,18 +3571,18 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
    ============================================================================================ */
 .vx-clock, .vx-tick, .v13-hero { display: none; }
 html[data-pvx] .vx-clock { display: inline; }
-html[data-pvx] .vx-tick { display: block; }
+html[data-pv13] .vx-tick { display: block; }
 html[data-pv13] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
 html:is([data-pv13], [data-pv15]) .pv-toggle :is([data-pv-pd="medium"], [data-pv-pd="full"]) { display: none !important; }
 /* 1. the countdown, quiet and close to the button, in red (the coupon's own line stays for screen
    readers and once the offer ends). V12: one line under the button, "Offer ends in 01h 14m 33s"
-   (Codecademy's sale clock). V13 and V15: "Offer ends in" and three small bordered tiles,
-   [01] : [14] : [33], under the button (Uxcel's offer timer); in V15 under the slider */
+   (Codecademy's sale clock). V13: "Offer ends in" and three small bordered tiles, [01] : [14] : [33],
+   under the button (Uxcel's offer timer). V15: V11's own line, in V11's place */
 html[data-pvx] .vx-hide { display: none !important; }
-html[data-pvx] .cp-ticket .lk3-ends:not(.is-ended) { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-html[data-pvx] .cp-ticket .ck-offer:has(.lk3-ends:not(.is-ended)) { padding-top: 0 !important; padding-bottom: 0 !important; }
+html[data-pvx]:not([data-pv15]) .cp-ticket .lk3-ends:not(.is-ended) { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+html[data-pvx]:not([data-pv15]) .cp-ticket .ck-offer:has(.lk3-ends:not(.is-ended)) { padding-top: 0 !important; padding-bottom: 0 !important; }
 .vx-tiles { display: none; }
-html:is([data-pv13], [data-pv15]) .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-tiles { display: flex; }
+html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) .vx-tiles { display: flex; }
 .vx-tiles { align-items: center; justify-content: center; gap: 8px; margin: 4px 0 0; color: #C21F2E; font-size: 13px; line-height: 18px; font-weight: 500; }
 .vx-tiles__t { display: inline-flex; align-items: center; gap: 4px; }
 .vx-tiles__t b { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 24px; padding: 0 4px; border-radius: 6px; box-shadow: inset 0 0 0 1px #F4C7CC; font-size: 13px; line-height: 24px; font-weight: 700; font-variant-numeric: tabular-nums; overflow: hidden; }
@@ -3601,8 +3621,8 @@ html[data-pvx] .ck-app[data-ck4-root][data-ck-view="details"] .ck-phone-field.v4
 .vx-ok > .vx-tick { opacity: 1; }
 .vx-ok > .vx-tick circle { transform: scale(1); }
 .vx-ok > .vx-tick path { stroke-dashoffset: 0; }
-html[data-pvx] .v11-combo__box.vx-ok:not(:focus-within) .v11-combo__toggle { display: none; }
-html[data-pvx] .v11-combo__box.vx-ok:focus-within > .vx-tick { opacity: 0; }
+html[data-pv13] .v11-combo__box.vx-ok:not(:focus-within) .v11-combo__toggle { display: none; }
+html[data-pv13] .v11-combo__box.vx-ok:focus-within > .vx-tick { opacity: 0; }
 html[data-pvx] .v11-combo__list:not([hidden]) { transform-origin: top; animation: vx-unfold 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes vx-unfold { from { opacity: 0; transform: translateY(-6px) scaleY(0.96); } }
 /* V13: the ₹5,000 leads */
@@ -3628,32 +3648,33 @@ html[data-pv13] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v13-hero { display: 
 
 /* ============================================================================================
    Preview V15: "Seat pass + slide to lock", as V11's receipt (html[data-pv15], with html[data-pv-pass]
-   for the pass and html[data-pvx], so it shares V13's Save ₹10,000, field ticks and coupon glide).
+   for the pass and html[data-pvx], so it shares V13's button and coupon glide; not V13's Save
+   ₹10,000 or its field ticks).
    Only the offer page and the details page change; after them it is V11. (V14 was the same pass
    standing alone, without the receipt; it is dropped.) While the offer is live the coupon's content
    gives way to:
    - A pass, as in a wallet (Marriott's and CLEAR's member passes): a red upGrad band with "Seat
-     pass" and the course; then, in V11's order, the price and the saving first and what to pay to
-     keep it after: as V11's coupon, "Course fee ₹90,000 ₹1,00,000 (struck)" on the left and the
-     "You save ₹10,000" pill on the right of the same line; below a dashed rule, centred, "Pay now
-     to lock this price" over ₹5,000, large (the ₹ smaller, its top on the digits' top), and
-     "Remaining ₹85,000 before your batch starts". Under the action, V13's countdown: "Offer ends
-     in" and three small bordered tiles, [01] : [14] : [33], in red.
+     pass" and the course, in place of V11's course row; under it V11's own content, as it is:
+     "Course fee ₹90,000 ₹1,00,000 (struck)" with the "You save ₹10,000" pill, then the box with
+     "Pay now ₹5,000" over "Remaining amount ₹85,000". Under the box, V11's countdown line, "Offer ends
+     in 17:59:44 · 9:00 PM today", centred on the card, as V11's.
    - V11's receipt around it: it prints out of the printer, its corners near-square on the offer
      page, a perforation with notches over the slider, and the scalloped bottom edge.
-   - On the offer page, "Slide to lock ₹5,000" in place of the button (Wealthfront's "Drag to
+   - On the offer page, "Slide to lock offer for ₹5,000" (V11's "Lock offer for ₹5,000") in place
+     of the button (Wealthfront's "Drag to
      confirm", Swiggy's "Slide to Pay"). The red handle carries an open padlock; the fill follows
      it and the label turns white where the fill has reached; let go early and it springs back; at
-     the end the padlock shuts, the handle turns white, "Offer locked", and the flow goes on as the
+     the end the padlock shuts, the handle turns white, "Almost there" (the details page's own
+     words: nothing is locked until the ₹5,000 is paid), and the flow goes on as the
      button would (phones that can, give a short tap of vibration). A tap, Enter or Space plays the
      slide. Once the receipt has printed, the handle nudges right twice to show the gesture. On the
      details page the button is V11's (it waits for the details).
-   After the entrance nothing moves on its own but the countdown's digits, which roll on desktop
-   and change in place on phones, as V13's. With reduced motion, none of it.
+   No motion runs on its own after the entrance (the countdown changes in place, as V11's). With
+   reduced motion, none of it.
    ============================================================================================ */
 .v14-pass, .v14-slide { display: none; }
 html[data-pv-pass] .pv-toggle .pv-opts:not(.pv-pd) { display: none !important; }
-html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) > :is(.cp-head, .v10-offer, .ck-offer, .cp-tear, .v13-hero) { display: none !important; }
+html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) > :is(.cp-head, .cp-tear, .v13-hero) { display: none !important; }
 html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .v14-pass { display: grid; }
 html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) :is(.v8-cta-timer, .lk3-action__hint) { display: none !important; }
 html[data-pv-pass] .ck-app[data-ck4-root][data-ck-view="offer"] .cp-ticket:not(:has(.lk3-ends.is-ended)) .v14-slide { display: block; }
@@ -3663,12 +3684,10 @@ html[data-pv-pass] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { backgro
 html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-tear.cp-tear--stub { display: block !important; }
 html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-tear.cp-tear--stub { background: #fff !important; } /* white on both sides of the perforation, as the pass is */
 html[data-pv15] .ck-app[data-ck4-root][data-ck-view="offer"] .v14-pass { border-radius: 4px 4px 0 0; }
-/* the slider on the same 20px side margins as the pass above it (the receipt's stub is wider set) */
-html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-left: 20px !important; padding-right: 20px !important; }
 
 /* the pass */
 .v14-pass { gap: 0; padding: 0 !important; background: transparent !important; overflow: hidden; border-radius: 24px 24px 0 0; }
-.v14-band { position: relative; display: grid; gap: 12px; padding: 16px 20px 20px; color: #fff; overflow: hidden;
+.v14-band { position: relative; display: grid; gap: 12px; padding: 16px var(--cp-pad, 20px) 20px; color: #fff; overflow: hidden;
   background: radial-gradient(120% 140% at 100% 0%, #FF5A68 0%, transparent 55%), linear-gradient(135deg, #EE2C3C 0%, #C8162B 100%); }
 .v14-band::before { content: ""; position: absolute; inset: 0; opacity: 0.16; pointer-events: none;
   background: repeating-linear-gradient(-18deg, transparent 0 9px, rgba(255, 255, 255, 0.9) 9px 10px); -webkit-mask: linear-gradient(90deg, transparent 25%, #000 80%); mask: linear-gradient(90deg, transparent 25%, #000 80%); }
@@ -3677,22 +3696,6 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
 .v14-logo img { display: block; height: 16px; width: auto; }
 .v14-tag { font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.88); }
 .v14-course { position: relative; margin: 0; font-size: 17px; line-height: 24px; font-weight: 600; letter-spacing: -0.01em; }
-.v14-body { display: grid; justify-items: center; padding: 20px 20px 0; background: #fff; text-align: center; }
-.v14-k { margin: 0 0 8px; font-size: 13px; line-height: 16px; font-weight: 500; color: var(--ck-text-2); }
-.v14-amt { margin: 0; font-size: 56px; line-height: 56px; font-weight: 700; letter-spacing: -0.03em; color: var(--ck-text); font-variant-numeric: normal; font-feature-settings: normal; white-space: nowrap; }
-.v14-cur { display: inline-block; margin-right: 3px; font-size: 26px; line-height: 1; font-weight: 600; letter-spacing: 0; color: var(--ck-text-2); vertical-align: 0.7em; }
-/* V11's order: the price and the saving first, then what to pay to keep it */
-.v14-fee { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; text-align: left; }
-/* as V11's coupon (option B): "Course fee ₹90,000 ₹1,00,000" and the You save pill on one line */
-.v14-fee__l { font-size: 14px; line-height: 20px; color: var(--ck-text-2); }
-.v14-fee__l strong { font-weight: 700; color: var(--ck-text); }
-.v14-fee__l s { color: var(--ck-text-3); }
-.v14-fee__v { white-space: nowrap; }
-/* phones, as V11: "Course fee" over the two prices, the pill beside them */
-@media (max-width: 420px) { .v14-fee__k { display: block; } }
-.v14-lock { display: grid; justify-items: center; width: 100%; margin: 18px 0 0; padding: 18px 0 16px; border-top: 1.5px dashed #E6E6EA; }
-.v14-later { margin: 10px 0 0; font-size: 13px; line-height: 18px; color: var(--ck-text-2); }
-.v14-later strong { color: var(--ck-text); font-weight: 600; }
 
 /* slide to lock */
 .v14-slide { position: relative; height: 60px; border-radius: 999px; background: #F2F2F4; box-shadow: inset 0 1px 2px rgba(18, 18, 20, 0.07), inset 0 0 0 1px rgba(18, 18, 20, 0.04); overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; cursor: grab; outline: none; }
@@ -3703,6 +3706,11 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
 .v14-label--on { color: #fff; clip-path: inset(0 calc(100% - var(--x, 0px) - 30px) 0 0); }
 .v14-chev { display: inline-flex; color: #EE2C3C; }
 .v14-label--on .v14-chev { color: #fff; }
+/* "Slide to lock offer for ₹5,000" on one line beside the handle: on narrow phones without the
+   chevrons (the handle and the words already say slide), and smaller and clear of the handle under
+   340px */
+@media (max-width: 400px) { .v14-chev { display: none; } }
+@media (max-width: 340px) { .v14-label { padding-left: 60px; font-size: 14px; } }
 .v14-chev svg { width: 9px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .v14-chev svg:nth-child(1) { opacity: 0.3; } .v14-chev svg:nth-child(2) { opacity: 0.6; margin-left: -2px; } .v14-chev svg:nth-child(3) { margin-left: -2px; }
 .v14-done { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 8px; padding-right: 52px; font-size: 16px; line-height: 20px; font-weight: 600; color: #fff; opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
@@ -3729,11 +3737,6 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
 .v14-slide.is-hint .v14-handle { animation: v14-hint 1.3s cubic-bezier(0.45, 0, 0.25, 1); }
 @keyframes v14-hint { 0%, 100% { translate: 0 0; } 22% { translate: 16px 0; } 44% { translate: 0 0; } 64% { translate: 9px 0; } 82% { translate: 0 0; } }
 
-@media (max-width: 860px) {
-  .v14-amt { font-size: 50px; line-height: 50px; }
-  .v14-cur { font-size: 23px; }
-}
-}
 @media (prefers-reduced-motion: reduce) {
   .v14-slide *, .v14-slide.is-locked .v14-handle, .v14-slide.is-hint .v14-handle { animation: none !important; transition: none !important; }
 }
@@ -4303,6 +4306,7 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
       <div class="pm-strip__in" aria-hidden="true">
         <p class="pm-strip__save">You save ₹10,000</p>
         <p class="pm-strip__min v11-only"><strong>₹5,000</strong> minimum to lock</p>
+        <p class="pm-strip__rest v11-only"><span class="pm-strip__rest-k">Remaining </span><strong>₹85,000</strong> later</p>
         <p class="pm-strip__balance"><span>Balance due before Oct 31</span><strong>₹85,000</strong></p>
         <p class="pm-strip__ends"><svg class="pm-strip__clock" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9.5V13l2 2M10 2.75h4"/></svg><span data-pm-strip-ends>Offer ends in <strong>00:00:00</strong></span></p>
         <p class="pm-strip__price"><span class="pm-strip__fee v11-only">Fee</span><span data-pm-strip-price>₹90,000</span><s data-pm-strip-was>₹1,00,000</s></p>
@@ -4327,12 +4331,12 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
           </div>
         </div>
         <div class="v8-course__price">
-          <!-- preview V11, choosing how to pay: the least that locks the offer leads, the course fee
-               under it, smaller (as on the coupon) -->
+          <!-- preview V11, choosing how to pay: the least that locks the offer leads, what remains
+               under it, smaller (the summary shows how the fee comes to ₹90,000) -->
           <div class="v11-lock v11-only" data-v11-min>
             <p class="v8-course__eyebrow">Minimum to lock your offer</p>
             <p class="v11-lock__amount"><span class="v8-price__unit">₹</span>5,000</p>
-            <p class="v11-lock__fee">Course fee <strong>₹90,000</strong> <s><span class="v8-sr">instead of </span>₹1,00,000</s></p>
+            <p class="v11-lock__rest">Remaining <strong>₹85,000</strong> later</p>
           </div>
           <div class="v8-course__row" data-v8-was-row>
             <p class="v8-was"><span class="v8-pct" data-v8-pct>↓10%</span><span class="v8-sr">List price </span><s>₹1,00,000</s></p>
@@ -7358,7 +7362,7 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
       }
       // V11: the payment page's strip names the least that locks the offer, in place of the saving
       if (label && p.locked && !p.balance && document.documentElement.hasAttribute('data-pv11') && strip.querySelector('.pm-strip__min') && !strip.classList.contains('is-ended')) {
-        label = 'Pay a minimum of ₹5,000 to lock your offer. Course fee ' + p.price + (p.list ? ', down from ' + p.list : '') + '.';
+        label = 'Pay a minimum of ₹5,000 to lock your offer. Remaining ₹85,000 later.';
       }
       if (label && strip.getAttribute('aria-label') !== label) strip.setAttribute('aria-label', label);
     };
@@ -7519,11 +7523,7 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
   pass.className = 'cp-part v14-pass';
   pass.innerHTML =
     '<div class="v14-band"><div class="v14-band__top"><span class="v14-logo"><img src="' + logo + '" alt="upGrad"></span><span class="v14-tag">Seat pass</span></div>' +
-      '<p class="v14-course">Advance Certificate in Digital Marketing</p></div>' +
-    '<div class="v14-body">' +
-      '<div class="v14-fee"><span class="v14-fee__l"><span class="v14-fee__k">Course fee</span> <span class="v14-fee__v"><strong>₹90,000</strong> <s><span class="ck-sr">instead of </span>₹1,00,000</s></span></span><span class="cp-save">You save ₹10,000</span></div>' +
-      '<div class="v14-lock"><p class="v14-k">Pay now to lock this price</p><p class="v14-amt"><span class="v14-cur">₹</span>5,000</p>' +
-        '<p class="v14-later">Remaining <strong>₹85,000</strong> before your batch starts</p></div></div>';
+      '<p class="v14-course">Advance Certificate in Digital Marketing</p></div>';
   ticket.insertBefore(pass, optA || ticket.firstChild);
 
   // slide to lock, in place of the offer page's button
@@ -7533,11 +7533,11 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
   slide.className = 'v14-slide';
   slide.setAttribute('role', 'button');
   slide.setAttribute('tabindex', '0');
-  slide.setAttribute('aria-label', 'Slide to lock the offer for ₹5,000');
+  slide.setAttribute('aria-label', 'Slide to lock offer for ₹5,000');
   slide.innerHTML = '<span class="v14-fill"></span>' +
-    '<span class="v14-label" aria-hidden="true">Slide to lock ₹5,000' + chev + '</span>' +
-    '<span class="v14-label v14-label--on" aria-hidden="true">Slide to lock ₹5,000' + chev + '</span>' +
-    '<span class="v14-done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Offer locked</span>' +
+    '<span class="v14-label" aria-hidden="true">Slide to lock offer for ₹5,000' + chev + '</span>' +
+    '<span class="v14-label v14-label--on" aria-hidden="true">Slide to lock offer for ₹5,000' + chev + '</span>' +
+    '<span class="v14-done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Almost there</span>' +
     '<span class="v14-handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="v14-shackle" d="M8.5 11V8.3a3.5 3.5 0 0 1 7 0V11"/>' +
       '<rect class="v14-body-lock" x="5.5" y="10.5" width="13" height="10" rx="2.6"/><circle class="v14-keyhole" cx="12" cy="15.3" r="1.5"/></svg></span>';
   if (btn) btn.parentNode.insertBefore(slide, btn);
@@ -7712,15 +7712,16 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
   // 2. "Save ₹10,000": the chips read so, spring in and count up as the coupon lands
   var chips = Array.prototype.slice.call(document.querySelectorAll('.v10-offer--b .cp-save, .v10-offer--a .cp-save, .v10-offer--c .cp-save, [data-vx-save], .pm-offer__save'));
   chips.forEach(function (el) { el.dataset.vxAsBuilt = el.textContent; });
+  var saves = function () { return root.hasAttribute('data-pv13'); }; // V15 keeps V11's "You save ₹10,000"
   function dress(el) {
-    if (on()) {
+    if (saves()) {
       if (!el.querySelector('.vx-save')) el.innerHTML = '<span class="vx-save">' + check + '<span>Save ₹10,000</span></span>';
     } else if (el.querySelector('.vx-save')) el.textContent = el.dataset.vxAsBuilt;
   }
   function chipsIn(delay) {
     chips.forEach(dress);
     chips.forEach(function (el) { el.classList.remove('vx-chip-in'); });
-    if (!on() || still) return;
+    if (!saves() || still) return;
     setTimeout(function () {
       chips.forEach(function (el) {
         if (!el.offsetParent) return;
@@ -7751,7 +7752,7 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
     vt.finished.then(function () { root.classList.remove('vx-gliding'); }, function () { root.classList.remove('vx-gliding'); });
   }, true);
 
-  // 5. the fields tick once right
+  // 5. the fields tick once right (V13)
   var batchEl = app.querySelector('[data-ck-batch]');
   var rules = {
     centre: function () { return !!(batchEl && batchEl.textContent.trim()); },
@@ -7766,7 +7767,7 @@ html[data-pv15] .cp-ticket:not(:has(.lk3-ends.is-ended)) > .cp-stub { padding-le
     var input = field && field.querySelector('input');
     if (!box || !input) return;
     box.insertAdjacentHTML('beforeend', '<svg class="vx-tick" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="m6 10.2 2.6 2.6L14 7.4"/></svg>');
-    var upd = function () { box.classList.toggle('vx-ok', on() && rules[k](input.value)); };
+    var upd = function () { box.classList.toggle('vx-ok', root.hasAttribute('data-pv13') && rules[k](input.value)); };
     checks.push(upd);
     ['input', 'change'].forEach(function (t) { input.addEventListener(t, upd); });
     input.addEventListener('blur', function () { setTimeout(upd, 0); });
