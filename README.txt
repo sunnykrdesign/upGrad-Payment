@@ -22,14 +22,20 @@ in the switch at the bottom left; in the Fee Waiver console, at the start of its
                band, Pay in Full, No Cost EMI with a loan partner and Reserve a Seat, the Summary with
                the breakup); then the review (UPI code and "Waiting for your payment…", Proceed to
                Pay, or the loan partner) and the confirmation; phones get upGrad's mobile checkout.
-               The original learner design is kept: the Design switch in the learner's bar flips
-               between "LC Payment design" (the default) and "Original". The other roles are as
-               they were.
+               The Design switch in the learner's bar has three: "V1 · Printed bill" (the
+               default, above), "V2 · Checkout first" and "Original" (the learner design as it
+               was). V2 has no printer: the learner lands straight on the payment page, as LC
+               Payment's: Welcome, the course card with the balance to pay, then 1. Billing
+               Postal Code / PIN Code (560037, Bengaluru, Karnataka; ZIP in the US) and
+               2. Payment Options, with the Summary beside them; phones get the same two steps.
+               A bill with nothing left to pay shows its bill, standing still. The other roles
+               are as they were.
                Preview (in the learner's bar) shows only the learner's screen: the console's
                header, demo bar, intro and controls go, and so do the prototype-only notes. A
-               small toolbar at the foot (Desktop/Mobile, Print again or Start over, Exit) fades
-               while the pointer rests; Esc exits. index.html?project=fee-waiver&preview (or
-               fee-waiver.html?preview) opens straight into it.
+               small toolbar at the foot (Logged in as, V1/V2, Desktop/Mobile, Print again or
+               Start over, Exit) fades while the pointer rests; Esc exits.
+               index.html?project=fee-waiver&preview (or fee-waiver.html?preview) opens straight
+               into it; add &design=v2 (or v1, original) to pick the design.
                index.html?project=fee-waiver opens it directly; a ?test link always opens LC
                Payment, with no menu. fee-waiver.html also opens on its own, without the menu.
 Keep the two files side by side.
