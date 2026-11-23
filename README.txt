@@ -16,26 +16,22 @@ in the switch at the bottom left; in the Fee Waiver console, at the start of its
                waivers, find learner) and Learner (the learner's checkout, desktop and mobile). It
                opens over index.html in a frame and keeps its state while you switch back and forth.
                The Learner role is redesigned in LC Payment's design language (V11), from the
-               Fee Waiver Automation concept note: the billing summary prints as V11's coupon (the
-               course, the course fee and saving, the balance to pay, one countdown naming the
-               scholarship); checkout is V11's payment page (the countdown on the course card's grey
-               band, Pay in Full, No Cost EMI with a loan partner and Reserve a Seat, the Summary with
-               the breakup); then the review (UPI code and "Waiting for your payment…", Proceed to
-               Pay, or the loan partner) and the confirmation; phones get upGrad's mobile checkout.
-               The Design switch in the learner's bar has three: "V1 · Printed bill" (the
-               default, above), "V2 · Checkout first" and "Original" (the learner design as it
-               was). V2 has no printer: the learner lands straight on the payment page, as LC
-               Payment's: Welcome, the course card with the balance to pay, then Payment
-               Options, with the Summary beside them (no postal code step); phones get upGrad's
-               mobile checkout.
-               A bill with nothing left to pay shows its bill, standing still. The other roles
-               are as they were.
+               Fee Waiver Automation concept note. The Design switch in the learner's bar has two:
+               "V2 · Checkout first" (the default) and "Original" (the learner design as it was).
+               V2 lands the learner straight on V11's payment page, with no printed bill: Welcome,
+               the course card (the countdown on its grey band; the balance to pay, the
+               scholarship and what's paid so far, flush right), then Payment Options (Pay in
+               Full, No Cost EMI with a loan partner and Reserve a Seat) with the Summary beside
+               them; then the review (UPI code and "Waiting for your payment…", Proceed to Pay, or
+               the loan partner) and the confirmation; phones get upGrad's mobile checkout. A bill
+               with nothing left to pay shows its bill, standing still. The printed bill (V1) is
+               retired; its old links open V2. The other roles are as they were.
                Preview (in the learner's bar) shows only the learner's screen: the console's
                header, demo bar, intro and controls go, and so do the prototype-only notes. A
-               small toolbar at the foot (Logged in as, V1/V2, Desktop/Mobile, Print again or
-               Start over, Exit) fades while the pointer rests; Esc exits.
+               small toolbar at the foot (Logged in as, V2/Original, Desktop/Mobile, Start over,
+               Exit) fades while the pointer rests; Esc exits.
                index.html?project=fee-waiver&preview (or fee-waiver.html?preview) opens straight
-               into it; add &design=v2 (or v1, original) to pick the design.
+               into it; add &design=original for the original design.
                index.html?project=fee-waiver opens it directly; a ?test link always opens LC
                Payment, with no menu. fee-waiver.html also opens on its own, without the menu.
 Keep the two files side by side.
