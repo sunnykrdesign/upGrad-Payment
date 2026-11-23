@@ -630,8 +630,13 @@ html[data-preview] .lx2-sum__proto,html[data-preview] .lx2-paid__proto,html[data
 .pvw-bar button[aria-pressed="true"]{color:#121214;background:#fff}
 .pvw-bar button:focus-visible{outline:2px solid #4F8AFB;outline-offset:2px}
 .pvw-seg{display:flex;gap:2px;padding-right:4px;margin-right:2px;border-right:1px solid rgba(255,255,255,.14)}
+.pvw-who{display:flex;align-items:center;gap:8px;padding:0 6px 0 12px;margin-right:2px;border-right:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.56);white-space:nowrap}
+.pvw-who select{height:32px;max-width:320px;padding:0 28px 0 12px;border:0;border-radius:999px;background:rgba(255,255,255,.1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 11px center;color:#fff;font:inherit;text-overflow:ellipsis;-webkit-appearance:none;appearance:none;cursor:pointer}
+.pvw-who select:hover{background-color:rgba(255,255,255,.16)}
+.pvw-who select:focus-visible{outline:2px solid #4F8AFB;outline-offset:2px}
+.pvw-who option{color:#121214;background:#fff}
 .pvw-bar kbd{padding:2px 6px;border-radius:5px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);font:500 11px/1.2 "IBM Plex Sans",system-ui,sans-serif}
-@media (max-width:500px){.pvw-bar{bottom:12px}.pvw-bar kbd{display:none}.pvw-bar button{padding:0 11px}
+@media (max-width:500px){.pvw-bar{bottom:12px}.pvw-bar{flex-wrap:wrap;justify-content:center;width:max-content;max-width:calc(100vw - 24px);box-sizing:border-box;border-radius:22px}.pvw-who{flex:1 0 100%;padding:0 0 0 10px;margin:0 0 4px;border-right:0}.pvw-who select{flex:1;min-width:0;max-width:none}.pvw-bar kbd{display:none}.pvw-bar button{padding:0 11px}
   html[data-preview] .lx-device{display:block;min-height:0;padding:0}
   html[data-preview] .lx-phone{height:auto}
   html[data-preview] .lx2.m{min-height:100vh;min-height:100dvh}}
@@ -2104,7 +2109,10 @@ function pvwBar(){
   const again = neu && screen === 'summary'
     ? `<button type="button" data-act="l2replay">Print again</button>`
     : screen !== 'summary' ? `<button type="button" data-act="${neu ? 'l2go' : 'lgo'}" data-v="summary">Start over</button>` : '';
+  const cur = lvBill()[1].id;
+  const who = allBills().map(([l, x]) => `<option value="${x.id}" ${x.id === cur ? 'selected' : ''}>${esc(l.name)}: ${x.ppk}, ${esc(x.batch)}</option>`).join('');
   return `<div class="pvw-bar${neu ? ' pvw-bar--auto' : ''}" role="toolbar" aria-label="Preview">
+    <label class="pvw-who"><span>Logged in as</span><select id="pvw-bill">${who}</select></label>
     <div class="pvw-seg" role="group" aria-label="Device">${[['desktop', 'Desktop'], ['mobile', 'Mobile']].map(([k, l]) => `<button type="button" data-act="ldevice" data-v="${k}" aria-pressed="${S.lv.device === k}">${l}</button>`).join('')}</div>
     ${again}<button type="button" data-act="lpreview" data-v="off" aria-label="Exit preview">Exit preview <kbd aria-hidden="true">Esc</kbd></button>
   </div>`;
@@ -2268,7 +2276,7 @@ document.addEventListener('change', e => {
   if (e.target.id === 'f-ppk' || e.target.id === 'f-region'){ S.draft = readDraft(); if (e.target.id === 'f-ppk') S.draft.region = prog(S.draft.ppk).regions[0]; render(); }
   if (e.target.id === 'cf-region'){ S.capFilter.region = e.target.value; render(); }
   if (e.target.id === 'pv-proj' && e.target.value !== 'fee-waiver'){ parent.postMessage({ pvProject: e.target.value }, '*'); e.target.value = 'fee-waiver'; }
-  if (e.target.id === 'lv-bill'){ S.lv.billId = e.target.value; S.lv.screen = 'summary'; S.lv.done = null; render(); }
+  if (e.target.id === 'lv-bill' || e.target.id === 'pvw-bill'){ S.lv.billId = e.target.value; S.lv.screen = 'summary'; S.lv.done = null; render(); }
   if (e.target.id === 'sel-all') document.querySelectorAll('.sel').forEach(x => x.checked = e.target.checked);
   if (e.target.id === 'sel-all' || (e.target.classList && e.target.classList.contains('sel'))){
     const n = document.querySelectorAll('.sel:checked').length, lab = $('sel-count'); if (lab) lab.textContent = n ? `${n} selected` : 'Select requests to approve or reject';
