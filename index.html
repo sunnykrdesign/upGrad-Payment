@@ -3850,11 +3850,13 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
 })();
 </script>
 <script>
-/* project before the first paint: ?project=fee-waiver opens the Fee Waiver console (fee-waiver.html,
-   in a frame over this page); anything else, and every ?test link, opens LC Payment (this page, V11) */
+/* project before the first paint: the Fee Waiver console (fee-waiver.html, in a frame over this page)
+   by default; LC Payment (this page, V11) with ?project=lc-payment, from the Project menu, and for
+   every ?test link and LC Payment's own links (?v=, ?pd=, #v9-…) */
 (function () {
   var params = new URLSearchParams(location.search);
-  document.documentElement.dataset.pvProject = !params.has('test') && params.get('project') === 'fee-waiver' ? 'fee-waiver' : 'lc-payment';
+  var lc = params.has('test') || params.get('project') === 'lc-payment' || params.has('v') || params.has('pd') || /^#v\d/.test(location.hash);
+  document.documentElement.dataset.pvProject = lc ? 'lc-payment' : 'fee-waiver';
 })();
 </script>
 <style>
@@ -7808,10 +7810,10 @@ html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hid
     selects.forEach(function (s) { s.value = 'lc-payment'; }); // LC Payment's menus, for when it is back
     document.title = fw ? 'Fee waiver console \u2013 prototype' : lcTitle;
     if (write) {
-      // the link says which project, so it can be shared (?project=fee-waiver)
+      // the link says which project, so it can be shared (Fee Waiver is the default; ?project=lc-payment)
       try {
         var params = new URLSearchParams(location.search);
-        if (fw) params.set('project', 'fee-waiver'); else params.delete('project');
+        if (fw) params.delete('project'); else params.set('project', 'lc-payment');
         var q = params.toString();
         history.replaceState(history.state, '', location.pathname + (q ? '?' + q : '') + location.hash);
       } catch (e) {}

@@ -10,7 +10,8 @@ index.html   V11, the final direction (described below): the offer link names no
 Projects: the prototype holds two, picked from the Project menu. The menu takes no room of its
 own: it opens the Scenario bar at the top; on the payment page, which has no Scenario bar, it sits
 in the switch at the bottom left; in the Fee Waiver console, at the start of its demo bar.
-  LC Payment   index.html, V11, described below. It opens by default.
+  LC Payment   index.html, V11, described below. index.html?project=lc-payment opens it, as
+               do its own links (?v=…, #v9-…) and every ?test link.
   Fee Waiver   fee-waiver.html, the fee waiver console: Revenue Ops (discount caps, new cap request,
                bulk upload), Revenue Head (approvals, discount caps, BU settings), Counsellor (my fee
                waivers, find learner) and Learner (the learner's checkout, desktop and mobile). It
@@ -30,10 +31,10 @@ in the switch at the bottom left; in the Fee Waiver console, at the start of its
                header, demo bar, intro and controls go, and so do the prototype-only notes. A
                small toolbar at the foot (Logged in as, V2/Original, Desktop/Mobile, Start over,
                Exit) fades while the pointer rests; Esc exits.
-               index.html?project=fee-waiver&preview (or fee-waiver.html?preview) opens straight
+               index.html?preview (or fee-waiver.html?preview) opens straight
                into it; add &design=original for the original design.
-               index.html?project=fee-waiver opens it directly; a ?test link always opens LC
-               Payment, with no menu. fee-waiver.html also opens on its own, without the menu.
+               Fee Waiver opens by default (index.html with no project in the link).
+               fee-waiver.html also opens on its own, without the menu.
 Keep the two files side by side.
 
 Open index.html in a browser. The "Scenario" menu at the top jumps to the offer page's states:
