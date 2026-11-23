@@ -10,28 +10,36 @@ index.html   V11, the final direction (described below): the offer link names no
 Projects: the prototype holds two, picked from the Project menu. The menu takes no room of its
 own: it opens the Scenario bar at the top; on the payment page, which has no Scenario bar, it sits
 in the switch at the bottom left; in the Fee Waiver console, at the start of its demo bar.
-  LC Payment   index.html, V11, described below. It opens by default.
+  LC Payment   index.html, V11, described below. index.html?project=lc-payment opens it, as
+               do its own links (?v=…, #v9-…) and every ?test link.
   Fee Waiver   fee-waiver.html, the fee waiver console: Revenue Ops (discount caps, new cap request,
                bulk upload), Revenue Head (approvals, discount caps, BU settings), Counsellor (my fee
                waivers, find learner) and Learner (the learner's checkout, desktop and mobile). It
                opens over index.html in a frame and keeps its state while you switch back and forth.
                The Learner role is redesigned in LC Payment's design language (V11), from the
-               Fee Waiver Automation concept note: the billing summary prints as V11's coupon (the
-               course, the course fee and saving, the balance to pay, one countdown naming the
-               scholarship); checkout is V11's payment page (the countdown on the course card's grey
-               band, Pay in Full, No Cost EMI with a loan partner and Reserve a Seat, the Summary with
-               the breakup); then the review (UPI code and "Waiting for your payment…", Proceed to
-               Pay, or the loan partner) and the confirmation; phones get upGrad's mobile checkout.
-               The original learner design is kept: the Design switch in the learner's bar flips
-               between "LC Payment design" (the default) and "Original". The other roles are as
-               they were.
+               Fee Waiver Automation concept note. The Design switch in the learner's bar has three:
+               "Checkout first" (V2, the default, so every shared link opens on it), "Printed
+               bill" (V1) (the bill prints out of the printer as V11's coupon, then the checkout) and
+               "Original" (the learner design as it was).
+               V2 lands the learner straight on V11's payment page, with no printed bill: Welcome,
+               the course card (the countdown on its grey band; the balance to pay, the
+               scholarship and what's paid so far, flush right), then Payment Options (Pay in
+               Full, No Cost EMI with a loan partner and Reserve a Seat) with the Summary beside
+               them; then the review (UPI code and "Waiting for your payment…", Proceed to Pay, or
+               the loan partner) and the confirmation; phones get upGrad's mobile checkout. A bill
+               with nothing left to pay shows its bill, standing still. Once a scholarship ends (the
+               discount window still open), the countdown's place reads "Your ₹30,000 scholarship
+               ended at 11:59 pm IST, 21 Nov", with the amount, time and date from the learner's own
+               bill (the course card's band; the strip on phones; the bill in Printed bill). The
+               other roles are as they were.
                Preview (in the learner's bar) shows only the learner's screen: the console's
                header, demo bar, intro and controls go, and so do the prototype-only notes. A
-               small toolbar at the foot (Desktop/Mobile, Print again or Start over, Exit) fades
-               while the pointer rests; Esc exits. index.html?project=fee-waiver&preview (or
-               fee-waiver.html?preview) opens straight into it.
-               index.html?project=fee-waiver opens it directly; a ?test link always opens LC
-               Payment, with no menu. fee-waiver.html also opens on its own, without the menu.
+               small toolbar at the foot (Logged in as, Checkout first/Printed bill/Original, Desktop/Mobile, Print
+               again or Start over, Exit) fades while the pointer rests; Esc exits.
+               index.html?preview (or fee-waiver.html?preview) opens straight
+               into it; add &design=v1 or &design=original to open on those.
+               Fee Waiver opens by default (index.html with no project in the link).
+               fee-waiver.html also opens on its own, without the menu.
 Keep the two files side by side.
 
 Open index.html in a browser. The "Scenario" menu at the top jumps to the offer page's states:
