@@ -7,6 +7,33 @@ index.html   V11, the final direction (described below): the offer link names no
              page, Figma 73:3744, with the payment-options tabs from 78:5054), a desktop layout
              (1512px wide) with upGrad's mobile checkout on phones.
 
+Projects: the prototype holds two, picked from the Project menu. The menu takes no room of its
+own: it opens the Scenario bar at the top; on the payment page, which has no Scenario bar, it sits
+in the switch at the bottom left; in the Fee Waiver console, at the start of its demo bar.
+  LC Payment   index.html, V11, described below. It opens by default.
+  Fee Waiver   fee-waiver.html, the fee waiver console: Revenue Ops (discount caps, new cap request,
+               bulk upload), Revenue Head (approvals, discount caps, BU settings), Counsellor (my fee
+               waivers, find learner) and Learner (the learner's checkout, desktop and mobile). It
+               opens over index.html in a frame and keeps its state while you switch back and forth.
+               The Learner role is redesigned in LC Payment's design language (V11), from the
+               Fee Waiver Automation concept note: the billing summary prints as V11's coupon (the
+               course, the course fee and saving, the balance to pay, one countdown naming the
+               scholarship); checkout is V11's payment page (the countdown on the course card's grey
+               band, Pay in Full, No Cost EMI with a loan partner and Reserve a Seat, the Summary with
+               the breakup); then the review (UPI code and "Waiting for your payment…", Proceed to
+               Pay, or the loan partner) and the confirmation; phones get upGrad's mobile checkout.
+               The original learner design is kept: the Design switch in the learner's bar flips
+               between "LC Payment design" (the default) and "Original". The other roles are as
+               they were.
+               Preview (in the learner's bar) shows only the learner's screen: the console's
+               header, demo bar, intro and controls go, and so do the prototype-only notes. A
+               small toolbar at the foot (Desktop/Mobile, Print again or Start over, Exit) fades
+               while the pointer rests; Esc exits. index.html?project=fee-waiver&preview (or
+               fee-waiver.html?preview) opens straight into it.
+               index.html?project=fee-waiver opens it directly; a ?test link always opens LC
+               Payment, with no menu. fee-waiver.html also opens on its own, without the menu.
+Keep the two files side by side.
+
 Open index.html in a browser. The "Scenario" menu at the top jumps to the offer page's states:
 logged out or in, under 10 minutes left, and an offer that ends while the page is open. The
 other states are no longer in the menu but still open from their links: index.html#v9-last-hour,

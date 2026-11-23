@@ -3849,6 +3849,40 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
   if (!still) document.documentElement.dataset.pvPrint = 'pending';
 })();
 </script>
+<script>
+/* project before the first paint: ?project=fee-waiver opens the Fee Waiver console (fee-waiver.html,
+   in a frame over this page); anything else, and every ?test link, opens LC Payment (this page, V11) */
+(function () {
+  var params = new URLSearchParams(location.search);
+  document.documentElement.dataset.pvProject = !params.has('test') && params.get('project') === 'fee-waiver' ? 'fee-waiver' : 'lc-payment';
+})();
+</script>
+<style>
+/* Projects: LC Payment (this page, V11) and Fee Waiver (fee-waiver.html). The switch takes no room
+   of its own: on the offer and details pages it opens the Scenario bar at the top; on the payment
+   page, which has no Scenario bar, it sits in the switch at the bottom left (as Restart does); and the
+   Fee Waiver console has it at the start of its own demo bar */
+.pv-project { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
+.v4-proto .pv-project { padding-right: 10px; box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.18); }
+.ck-app .v4-proto .pv-project select { flex: 0 0 auto; min-width: 116px; } /* "LC Payment" in full, with a phone's wider arrow */
+/* phones: the bar stays one row; its menus say what they are ("LC Payment", "Logged out"), so the
+   labels go */
+@media (max-width: 560px) { .v4-proto .v4-proto__label { display: none; } }
+.pv-toggle .pv-project { display: none; margin-right: 2px; padding-right: 3px; box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.18); }
+html:has([data-v8-root]:not([hidden])) .pv-toggle .pv-project { display: inline-flex; }
+.pv-toggle .pv-project select {
+  height: 26px; padding: 0 6px 0 10px; border: 0; border-radius: 999px;
+  background: transparent; color: #fff; font: inherit; letter-spacing: 0.02em; cursor: pointer;
+}
+.pv-toggle .pv-project select option { color: #121214; }
+.pv-toggle .pv-project select:focus-visible { outline: 2px solid #3D7BF0; outline-offset: 2px; }
+/* Fee Waiver: the console fills the window; this page waits under it, as it was */
+.pv-fw { position: fixed; inset: 0; z-index: 2147483001; background: #F2F4F3; }
+.pv-fw iframe { display: block; width: 100%; height: 100%; border: 0; }
+html[data-pv-project="fee-waiver"] body > :not(.pv-fw) { display: none !important; }
+html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hidden; }
+@media (prefers-color-scheme: dark) { .pv-fw { background: #11161B; } }
+</style>
 </head>
 <body>
 
@@ -3863,6 +3897,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
        states; the others (the last hour, the payment page's, the other link states) still open from
        their links (#v9-last-hour, #v9-options-review, #v9-reserved, …) -->
   <div class="v4-proto" role="group" aria-label="Prototype scenario">
+    <span class="pv-project"><label class="v4-proto__label" for="pv-project">Project</label><select class="v4-proto__select" id="pv-project" data-pv-project-select><option value="lc-payment" selected>LC Payment</option><option value="fee-waiver">Fee Waiver</option></select></span>
     <label class="v4-proto__label" for="ck9-scenario">Scenario</label>
     <select class="v4-proto__select" id="ck9-scenario" data-ck-scenario>
       <optgroup label="Offer page">
@@ -7006,6 +7041,7 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
      V8 with "Reserve seat for ₹5,000" on the offer page's button, V9 with the block amount only
      (₹10,000 at a Microsoft-style checkout; "Seat already reserved"; Pay balance) -->
 <div class="pv-toggle" role="group" aria-label="Preview version">
+  <span class="pv-project"><select data-pv-project-select aria-label="Project"><option value="lc-payment" selected>LC Payment</option><option value="fee-waiver">Fee Waiver</option></select></span>
   <button type="button" data-pv="11">V11</button>
   <button type="button" class="pv-replay" data-pv-replay>Replay</button>
   <button type="button" class="pv-restart" data-pv-restart>Restart</button>
@@ -7753,5 +7789,56 @@ html[data-pv10] .pm-head--flow .pm-strip:not(.is-ended) .pm-strip__v10 { display
 
 
 
+<!-- Projects: LC Payment (this page) and Fee Waiver (fee-waiver.html), opened over it in a frame the
+     first time it is picked, and kept as it was left -->
+<div class="pv-fw" hidden><iframe title="Fee waiver console" data-src="fee-waiver.html?in=prototype"></iframe></div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var box = document.querySelector('.pv-fw');
+  var frame = box.querySelector('iframe');
+  var selects = Array.prototype.slice.call(document.querySelectorAll('[data-pv-project-select]'));
+  var lcTitle = document.title;
+  function open(project, write) {
+    var fw = project === 'fee-waiver';
+    var from = document.activeElement;
+    root.dataset.pvProject = fw ? 'fee-waiver' : 'lc-payment';
+    box.hidden = !fw;
+    if (fw && !frame.getAttribute('src')) frame.src = frame.dataset.src + (/[?&]preview(=|&|$)/.test(location.search) ? '&preview' : '');
+    selects.forEach(function (s) { s.value = 'lc-payment'; }); // LC Payment's menus, for when it is back
+    document.title = fw ? 'Fee waiver console \u2013 prototype' : lcTitle;
+    if (write) {
+      // the link says which project, so it can be shared (?project=fee-waiver)
+      try {
+        var params = new URLSearchParams(location.search);
+        if (fw) params.set('project', 'fee-waiver'); else params.delete('project');
+        var q = params.toString();
+        history.replaceState(history.state, '', location.pathname + (q ? '?' + q : '') + location.hash);
+      } catch (e) {}
+      // keyboard focus follows: into the console, or back to the menu that is showing
+      if (fw) frame.focus();
+      else if (!from || from === frame || from === document.body) {
+        var shown = selects.filter(function (s) { return s.offsetParent !== null; })[0];
+        if (shown) shown.focus();
+      }
+    }
+  }
+  selects.forEach(function (s) { s.addEventListener('change', function () { open(s.value, true); }); });
+  // the console's own menu (in its demo bar) asks for LC Payment
+  addEventListener('message', function (event) {
+    if (event.source === frame.contentWindow && event.data && event.data.pvProject) open(event.data.pvProject, true);
+    // the console's preview mode: the link says so, so it can be shared (?project=fee-waiver&preview)
+    if (event.source === frame.contentWindow && event.data && typeof event.data.pvPreview === 'boolean') {
+      try {
+        var params = new URLSearchParams(location.search);
+        if (event.data.pvPreview) params.set('preview', ''); else params.delete('preview');
+        var q = params.toString().replace(/=(&|$)/g, '$1');
+        history.replaceState(history.state, '', location.pathname + (q ? '?' + q : '') + location.hash);
+      } catch (e) {}
+    }
+  });
+  open(root.dataset.pvProject, false);
+})();
+</script>
 </body>
 </html>
