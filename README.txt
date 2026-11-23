@@ -27,8 +27,11 @@ in the switch at the bottom left; in the Fee Waiver console, at the start of its
                Full, No Cost EMI with a loan partner and Reserve a Seat) with the Summary beside
                them; then the review (UPI code and "Waiting for your payment…", Proceed to Pay, or
                the loan partner) and the confirmation; phones get upGrad's mobile checkout. A bill
-               with nothing left to pay shows its bill, standing still. The other roles are as they
-               were.
+               with nothing left to pay shows its bill, standing still. Once a scholarship ends (the
+               discount window still open), the countdown's place reads "Your ₹30,000 scholarship
+               ended at 11:59 pm IST, 21 Nov", with the amount, time and date from the learner's own
+               bill (the course card's band; the strip on phones; the bill in Printed bill). The
+               other roles are as they were.
                Preview (in the learner's bar) shows only the learner's screen: the console's
                header, demo bar, intro and controls go, and so do the prototype-only notes. A
                small toolbar at the foot (Logged in as, Checkout first/Printed bill/Original, Desktop/Mobile, Print

@@ -433,6 +433,9 @@ table.sample td,table.sample th{font-family:ui-monospace,SFMono-Regular,Menlo,mo
 .lx2-locked{display:flex;align-items:center;justify-content:center;gap:6px;color:var(--save);font-size:13px;font-weight:500;line-height:20px;text-align:center}
 .lx2-ended{display:flex;align-items:center;justify-content:center;gap:6px;color:var(--t2);font-size:13px;line-height:20px;text-align:center}
 .lx2-ended .lx2-i{color:var(--t3)}
+.lx2-ended--band{font-size:15px;line-height:22px}
+.lx2-ended--band .lx2-i,.lx2-ended--strip .lx2-i{width:16px;height:16px}
+.lx2-ended--strip{justify-content:flex-start;min-height:38px;margin:0;padding:9px 0;text-align:left}
 .lx2-note-line{padding:10px 12px;border-radius:10px;background:#FFF6E5;color:#7A4A00;font-size:13px;line-height:19px;text-align:center}
 /* perforation: notches at both edges, dashes between; the stub's grey starts on the dashes */
 .lx2-tear{position:relative;z-index:1;height:calc(var(--notch)*2 + 2px);margin:-1px 0;background:linear-gradient(#fff 50%,#FAFAFB 50%);
@@ -1854,7 +1857,7 @@ function l2Summary(L, b){
   } else {
     bill = lines(true) + total('Balance to pay', balance, st === 'timer' && b.waiver ? balance + b.waiver : 0);
     if (st === 'timer') line = l2ends(b);
-    else if (st === 'ended') line = `<p class="lx2-ended">${L2_CLOCK}Your ${m(b.revokedWaiver || 0)} scholarship ended at ${l2when(b.revokedAt, b.region)}</p>`;
+    else if (st === 'ended') line = l2endedLine(b);
     stub = `<div class="lx2-tear" aria-hidden="true"></div>
       <div class="lx2-part lx2-stub lx2-last"><button class="lx2-cta" data-act="l2go" data-v="checkout">Pay ${m(balance)}${L2_ARROW}</button>
       ${st === 'timer' ? `<p class="lx2-hint">Pay the balance before your scholarship ends to keep it.</p>` : st === 'ended' ? `<p class="lx2-hint">Need more time? Talk to your counsellor.</p>` : ''}</div>`;
@@ -1880,8 +1883,13 @@ function l2Summary(L, b){
 }
 
 /* ---------- 2. Checkout: upGrad's payment page ---------- */
+/* once the scholarship has ended (the discount window still open): "Your ₹8,000 scholarship ended at
+   11:59 pm IST, 24 Nov", the amount, time and date from the learner's own bill */
+const l2endedLine = (b, cls) => `<p class="lx2-ended${cls ? ' ' + cls : ''}">${L2_CLOCK}<span>Your ${money(b.revokedWaiver || 0, b.region)} scholarship ended at <span class="lx2-nw">${endLabel(b.revokedAt, b.region)}</span></span></p>`;
 function l2band(b){ // the countdown on the course card's grey band (V9's scenario 2)
-  return l2state(b) === 'timer' ? `<div class="lx2-band">${l2ends(b, 'lx2-ends--band')}</div>` : '';
+  const st = l2state(b);
+  return st === 'timer' ? `<div class="lx2-band">${l2ends(b, 'lx2-ends--band')}</div>`
+    : st === 'ended' ? `<div class="lx2-band is-ended">${l2endedLine(b, 'lx2-ended--band')}</div>` : '';
 }
 function l2userHead(L){
   const parts = L.name.split(' ');
@@ -1970,7 +1978,7 @@ function l2pmHead(L, b, title, pct){
   return `<div class="lx2-pmhead"><div class="lx2-prog"><span style="width:${pct}%"></span></div>
     <div class="lx2-pmhead__nav">${title !== 'Review' && l2v2() ? '' : `<button class="lx2-pmhead__back" type="button" aria-label="Back" data-act="l2go" data-v="${title === 'Review' ? 'checkout' : 'summary'}">${L2_BACK}</button>`}<p class="lx2-pmhead__title">${title}</p></div>
     ${title === 'Review' ? '' : `<div class="lx2-pmcourse"><span class="lx2-pmcourse__logo">${l2img('course-logo', 120, 40)}</span><div><p class="lx2-pmcourse__name">${esc(p.name)}</p><p class="lx2-pmcourse__facts">${esc(l2facts(p, b))}</p></div></div>
-    <div class="lx2-strip${on ? '' : ' is-plain'}">${on ? l2ends(b, 'lx2-ends--strip') : `<p class="lx2-strip__bal">Balance to pay <strong>${m(bal(b))}</strong></p>`}</div>`}
+    <div class="lx2-strip${on ? '' : ' is-plain'}">${on ? l2ends(b, 'lx2-ends--strip') : l2state(b) === 'ended' ? l2endedLine(b, 'lx2-ended--strip') : `<p class="lx2-strip__bal">Balance to pay <strong>${m(bal(b))}</strong></p>`}</div>`}
   </div>`;
 }
 
