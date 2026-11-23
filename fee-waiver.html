@@ -645,8 +645,11 @@ html[data-preview] .lx2-sum__proto,html[data-preview] .lx2-paid__proto,html[data
 .pvw-who select:hover{background-color:rgba(255,255,255,.16)}
 .pvw-who select:focus-visible{outline:2px solid #4F8AFB;outline-offset:2px}
 .pvw-who option{color:#121214;background:#fff}
+.pvw-who,.pvw-who select{flex-shrink:0}.pvw-who select{width:240px}
+.pvw-bar{max-width:calc(100vw - 32px);box-sizing:border-box}
+.pvw-exit svg{display:none;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .pvw-bar kbd{padding:2px 6px;border-radius:5px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);font:500 11px/1.2 "IBM Plex Sans",system-ui,sans-serif}
-@media (max-width:500px){.pvw-bar{bottom:12px}.pvw-bar{flex-wrap:wrap;justify-content:center;width:max-content;max-width:calc(100vw - 24px);box-sizing:border-box;border-radius:22px}.pvw-who{flex:1 0 100%;padding:0 0 0 10px;margin:0 0 4px;border-right:0}.pvw-who select{flex:1;min-width:0;max-width:none}.pvw-bar kbd{display:none}.pvw-bar button{padding:0 11px}
+@media (max-width:500px){.pvw-bar{bottom:12px}.pvw-bar{flex-wrap:wrap;justify-content:center;width:max-content;max-width:calc(100vw - 24px);box-sizing:border-box;border-radius:22px}.pvw-who{flex:1 0 100%;padding:0 0 0 10px;margin:0 0 4px;border-right:0}.pvw-who{flex-shrink:1}.pvw-who select{flex:1;width:0;min-width:0;max-width:none}.pvw-exit{padding:0 10px}.pvw-exit__t{display:none}.pvw-exit svg{display:block}.pvw-bar kbd{display:none}.pvw-bar button{padding:0 11px}
   html[data-preview] .lx-device{display:block;min-height:0;padding:0}
   html[data-preview] .lx-phone{height:auto}
   html[data-preview] .lx2.m{min-height:100vh;min-height:100dvh}}
@@ -1817,7 +1820,7 @@ function viewLearn2(){
 /* the original learner design or this one, from the learner's bar (both designs show it) */
 function l2designSwitch(){
   const d = l2design();
-  return `<div class="roles" role="group" aria-label="Learner design">${[['v2', 'V2 · Checkout first'], ['new', 'V1 · Printed bill'], ['original', 'Original']].map(([k, l]) => `<button data-act="ldesign" data-v="${k}" aria-pressed="${d === k}">${l}</button>`).join('')}</div>
+  return `<div class="roles" role="group" aria-label="Learner design">${[['v2', 'Checkout first'], ['new', 'Printed bill'], ['original', 'Original']].map(([k, l]) => `<button data-act="ldesign" data-v="${k}" aria-pressed="${d === k}">${l}</button>`).join('')}</div>
   <button class="btn sm pvw-open" type="button" data-act="lpreview" data-v="on" title="Show only the learner's screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg>Preview</button>`;
 }
 
@@ -2127,13 +2130,13 @@ function pvwBar(){
   const again = v2 ? (screen !== 'summary' && screen !== 'checkout' ? `<button type="button" data-act="l2go" data-v="checkout">Start over</button>` : '')
     : neu && screen === 'summary' ? `<button type="button" data-act="l2replay">Print again</button>`
     : screen !== 'summary' ? `<button type="button" data-act="${neu ? 'l2go' : 'lgo'}" data-v="summary">Start over</button>` : '';
-  const ver = `<div class="pvw-seg" role="group" aria-label="Design">${[['v2', 'V2'], ['new', 'V1'], ['original', 'Original']].map(([k, l]) => `<button type="button" data-act="ldesign" data-v="${k}" aria-pressed="${l2design() === k}">${l}</button>`).join('')}</div>`;
+  const ver = `<div class="pvw-seg" role="group" aria-label="Design">${[['v2', 'Checkout first'], ['new', 'Printed bill'], ['original', 'Original']].map(([k, l]) => `<button type="button" data-act="ldesign" data-v="${k}" aria-pressed="${l2design() === k}">${l}</button>`).join('')}</div>`;
   const cur = lvBill()[1].id;
   const who = allBills().map(([l, x]) => `<option value="${x.id}" ${x.id === cur ? 'selected' : ''}>${esc(l.name)}: ${x.ppk}, ${esc(x.batch)}</option>`).join('');
   return `<div class="pvw-bar${neu ? ' pvw-bar--auto' : ''}" role="toolbar" aria-label="Preview">
     <label class="pvw-who"><span>Logged in as</span><select id="pvw-bill">${who}</select></label>
     ${ver}    <div class="pvw-seg" role="group" aria-label="Device">${[['desktop', 'Desktop'], ['mobile', 'Mobile']].map(([k, l]) => `<button type="button" data-act="ldevice" data-v="${k}" aria-pressed="${S.lv.device === k}">${l}</button>`).join('')}</div>
-    ${again}<button type="button" data-act="lpreview" data-v="off" aria-label="Exit preview">Exit preview <kbd aria-hidden="true">Esc</kbd></button>
+    ${again}<button type="button" class="pvw-exit" data-act="lpreview" data-v="off" aria-label="Exit preview"><span class="pvw-exit__t">Exit preview</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><kbd aria-hidden="true">Esc</kbd></button>
   </div>`;
 }
 let pvwIdle = 0;
