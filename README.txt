@@ -25,9 +25,9 @@ in the switch at the bottom left; in the Fee Waiver console, at the start of its
                The Design switch in the learner's bar has three: "V1 · Printed bill" (the
                default, above), "V2 · Checkout first" and "Original" (the learner design as it
                was). V2 has no printer: the learner lands straight on the payment page, as LC
-               Payment's: Welcome, the course card with the balance to pay, then 1. Billing
-               Postal Code / PIN Code (560037, Bengaluru, Karnataka; ZIP in the US) and
-               2. Payment Options, with the Summary beside them; phones get the same two steps.
+               Payment's: Welcome, the course card with the balance to pay, then Payment
+               Options, with the Summary beside them (no postal code step); phones get upGrad's
+               mobile checkout.
                A bill with nothing left to pay shows its bill, standing still. The other roles
                are as they were.
                Preview (in the learner's bar) shows only the learner's screen: the console's

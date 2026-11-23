@@ -476,8 +476,7 @@ table.sample td,table.sample th{font-family:ui-monospace,SFMono-Regular,Menlo,mo
 .lx2-card__title{font-size:24px;line-height:36px;font-weight:400;color:var(--co1)}
 .lx2-card__title.is-done{opacity:.5}
 .lx2-options{display:flex;padding-top:24px}
-/* V2 (checkout first): the payment page's first step, the billing postal code / PIN code */
-/* V2: a tighter course card, so its two sides balance */
+/* V2: a tighter course card, so its two sides balance; and no printer anywhere */
 .lx2--v2 .lx2-ccard{padding:20px 32px;column-gap:32px}
 .lx2--v2 .lx2-band{margin:-20px -32px 18px;padding:10px 32px}
 .lx2--v2 .lx2-ccard__logo{width:64px;height:64px}
@@ -487,21 +486,6 @@ table.sample td,table.sample th{font-family:ui-monospace,SFMono-Regular,Menlo,mo
 .lx2--v2 .lx2-ccard__price .lx2-save{margin-top:2px}
 .lx2--v2 .lx2-housing,.lx2--v2 .lx2-back,.lx2--v2 .lx2-shade{display:none}
 .lx2--v2 .lx2-ticket{box-shadow:0 1px 2px rgba(9,30,66,.06),0 12px 32px rgba(9,30,66,.08)}
-.lx2-zip{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid var(--cob)}
-.lx2-zip__box{flex:0 0 290px;max-width:100%}
-.lx2-zip__field{position:relative}
-.lx2-zip__field input{display:block;width:100%;box-sizing:border-box;height:62px;padding:0 52px 0 20px;border:1px solid var(--cob);border-radius:8px;background:#fff;color:var(--co1);font:inherit;font-size:20px;letter-spacing:.06em}
-.lx2-zip__field input:focus{outline:none;border-color:var(--cofocus);box-shadow:0 0 0 3px rgba(79,138,251,.16)}
-.lx2-zip__edit{position:absolute;top:50%;right:10px;display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:6px;background:none;color:var(--co2);cursor:pointer;transform:translateY(-50%)}
-.lx2-zip__edit:hover{background:var(--comuted)}
-.lx2-zip__edit .lx2-i{width:18px;height:18px}
-.lx2-zip__ok{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:12px 0 0;font-size:16px;line-height:24px;color:var(--co1)}
-.lx2-zip__ok .lx2-i{width:20px;height:20px;color:var(--cosel)}
-.lx2-zip.is-bad .lx2-zip__ok{visibility:hidden}
-.lx2-zip.m{display:block;margin:20px 0 4px;padding:0 0 20px}
-.lx2-zip.m .lx2-card__title{font-size:22px;line-height:28px;margin:0 0 14px}
-.lx2-zip.m .lx2-zip__field input{height:52px;font-size:18px}
-.lx2-zip.m .lx2-zip__ok{justify-content:flex-start;margin-top:8px;font-size:14px}
 .lx2-tabs{flex:0 0 220px;display:flex;flex-direction:column;gap:16px}
 .lx2-tab{position:relative;display:flex;flex-direction:column;align-items:flex-start;width:200px;min-height:118px;padding:24px 20px;border:0;border-radius:8px;background:var(--comuted);color:var(--cotab) !important;text-align:left;cursor:pointer}
 .lx2-tab__label{display:flex;align-items:center;gap:10px;font-size:16px;line-height:25.6px;white-space:nowrap}
@@ -1939,15 +1923,6 @@ function l2cardForm(L){ // display only: autocomplete off, so no saved card is e
     <label class="lx2-field lx2-field--full"><span>Name on card</span><input autocomplete="off" value="${esc(L.name)}"></label>
   </div><p class="lx2-pnote lx2-proto">${L2_LOCK}Prototype: card details aren’t saved or sent.</p>`;
 }
-const L2_ZIP = { IN: ['Billing Postal Code / PIN Code', '560037', 'Bengaluru, Karnataka', /^\d{6}$/, 6], AE: ['Billing Postal Code', '00000', 'Dubai, UAE', /^\d{5}$/, 5], US: ['Billing ZIP Code', '10001', 'New York, NY', /^\d{5}$/, 5] };
-const L2_PEN = `<svg class="lx2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19.5 8.5a2.12 2.12 0 0 0-3-3L5 17v3Z"/><path d="m14.5 7.5 2 2"/></svg>`;
-const L2_OK = `<svg class="lx2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.2 2.4 2.4 4.6-4.8"/></svg>`;
-function l2zip(b, mob){ // V2's first step; the code is kept as typed, and the place shows once it's whole
-  const s = L2(), [title, def, place, ok, len] = L2_ZIP[b.region] || L2_ZIP.IN, v = s.zip == null ? def : s.zip;
-  return `<div class="lx2-zip${mob ? ' m' : ''}${ok.test(v) ? '' : ' is-bad'}"><h2 class="lx2-card__title">1. ${title}</h2>
-    <div class="lx2-zip__box"><div class="lx2-zip__field"><input id="lx2-zip" inputmode="numeric" autocomplete="off" maxlength="${len}" data-len="${len}" aria-label="${title}" value="${esc(v)}"><button class="lx2-zip__edit" type="button" data-zip-edit aria-label="Edit ${title.toLowerCase()}">${L2_PEN}</button></div>
-    <p class="lx2-zip__ok">${L2_OK}${esc(place)}</p></div></div>`;
-}
 function l2ready(){ const s = L2(); return s.tab === 'emi' ? !!s.partner : !!s.method; }
 function l2Checkout(L, b){
   const s = L2(), p = prog(b.ppk), m = n => money(n, b.region), balance = bal(b), tabs = l2tabs(b), on = l2state(b) === 'timer';
@@ -1963,7 +1938,7 @@ function l2Checkout(L, b){
       <div class="lx2-ccard__price"><p class="lx2-ccard__label">Balance to pay</p><p class="lx2-bigprice">${l2big(balance, b.region)}</p>${b.waiver ? `<span class="lx2-save">Scholarship ${m(b.waiver)}</span>` : ''}${b.paid ? `<p class="lx2-ccard__note">Paid so far ${m(b.paid)}</p>` : ''}</div>
     </section>
     <div class="lx2-layout">
-      <section class="lx2-card" aria-labelledby="lx2-po">${l2v2() ? l2zip(b) : ''}<h2 class="lx2-card__title" id="lx2-po">${l2v2() ? '2. ' : ''}Payment Options</h2>
+      <section class="lx2-card" aria-labelledby="lx2-po"><h2 class="lx2-card__title" id="lx2-po">Payment Options</h2>
         <div class="lx2-options">
           <div class="lx2-tabs" role="tablist" aria-label="Payment options">${tabs.map(k => `<button class="lx2-tab" role="tab" type="button" aria-selected="${s.tab === k}" data-act="l2tab" data-v="${k}"><span class="lx2-tab__label">${l2ic(l2icon(k, b))}<span>${L2_TABS[k].name}</span></span><span class="lx2-chip">${chip(k)}</span>${k === 'full' ? '<span class="lx2-tab__tag">Recommended</span>' : ''}</button>`).join('')}</div>
           <div class="lx2-panel" role="tabpanel">${l2panel(b)}
@@ -1983,7 +1958,7 @@ function l2CheckoutMobile(L, b){
   const g = [group('full', on ? 'Keeps your scholarship' : 'Pay upfront', `<p class="lx2-pmcard__label">Pay in full</p><p class="lx2-pmcard__big">Pay ${l2inr(balance, b.region)} now</p>${on ? `<p class="lx2-pmcard__text">Pay now and your ${m(b.waiver)} scholarship is locked in.</p>` : ''}${list('full')}`)];
   if (b.region === 'IN') g.push(group('emi', '0% interest, 6 months', `<p class="lx2-pmcard__label">No cost EMI</p><p class="lx2-pmcard__big">${l2inr(l2emi(b), b.region)}/mo for 6 months</p><p class="lx2-pmcard__text">${on ? `Your scholarship is confirmed when you submit the loan application.` : 'Through a loan partner, with no extra charges.'}</p><div class="lx2-pmmethods">${L2_PARTNERS.map(([n, k]) => `<button class="lx2-pmmethod" type="button" data-act="l2pick" data-v="emi|${n}">${LX2S[k]}<span>${n}</span>${LX2S.go}</button>`).join('')}</div>`));
   if (l2canBlock(b)) g.push(group('block', 'Pay the rest later', `<p class="lx2-pmcard__label">Reserve a seat</p><p class="lx2-pmcard__big">Pay ${l2inr(b.block, b.region)} now</p><p class="lx2-pmcard__text">${on ? `Reserving doesn’t keep the scholarship: pay the remaining ${m(balance - b.block)} by ${l2when(b.validEnd, b.region)} to keep it.` : `and the remaining ${m(balance - b.block)} later.`}</p>${list('block')}`));
-  return `${l2pmHead(L, b, 'Payment Options', 62)}<div class="lx2-pmbody">${l2v2() ? l2zip(b, true) : ''}<h2 class="lx2-pmtitle">${l2v2() ? '2. ' : ''}Choose a payment option</h2>${g.join('')}</div>`;
+  return `${l2pmHead(L, b, 'Payment Options', 62)}<div class="lx2-pmbody"><h2 class="lx2-pmtitle">Choose a payment option</h2>${g.join('')}</div>`;
 }
 function l2pmHead(L, b, title, pct){
   const p = prog(b.ppk), on = l2state(b) === 'timer', m = n => money(n, b.region);
@@ -2339,9 +2314,6 @@ setInterval(() => {
 }, 1000);
 
 S = seed();
-/* V2's postal code: kept as typed; the place shows once the code is whole */
-document.addEventListener('input', e => { const i = e.target; if (i.id !== 'lx2-zip') return; i.value = i.value.replace(/\D/g, ''); L2().zip = i.value; i.closest('.lx2-zip').classList.toggle('is-bad', i.value.length !== +i.dataset.len); });
-document.addEventListener('click', e => { if (e.target.closest('[data-zip-edit]')){ const i = $('lx2-zip'); if (i){ i.focus(); i.select(); } } });
 if (new URLSearchParams(location.search).has('preview')){ S.role = 'learn'; S.lv.preview = true; }
 { const d = new URLSearchParams(location.search).get('design'); if (d === 'v1' || d === 'v2' || d === 'original'){ S.role = 'learn'; S.lv.design = d === 'v1' ? 'new' : d; } } // ?design=v2 opens the learner on V2
 render();
