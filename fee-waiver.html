@@ -334,7 +334,7 @@ table.sample td,table.sample th{font-family:ui-monospace,SFMono-Regular,Menlo,mo
 }
 .lx2 *,.lx2 *::before,.lx2 *::after{box-sizing:border-box}
 .lx2 :where(p,h1,h2,h3,dl,dd,ul){margin:0}
-.lx2 button{font:inherit;color:inherit}
+:where(.lx2) button{font:inherit;color:inherit} /* zero-weight, so each button's own type wins */
 .lx2 :focus-visible{outline:2px solid var(--cofocus);outline-offset:2px}
 .lx2-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .lx2-i{display:block;flex:0 0 auto;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -406,10 +406,9 @@ table.sample td,table.sample th{font-family:ui-monospace,SFMono-Regular,Menlo,mo
 .lx2-lines>.lx2-lines__sub{align-items:center;padding-top:10px;border-top:1px solid #ECECEF}
 .lx2-lines__sub dt{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;color:var(--ink);font-weight:500}
 .lx2-lines__sub dd{font-weight:600}
-.lx2-lines__sub .lx2-save{padding:2px 8px;font-size:12px}
 .lx2-total{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-top:16px;border-top:1.5px dashed var(--dash)}
 .lx2-total__label{padding-bottom:5px;color:var(--ink);font-size:15px;font-weight:500;line-height:20px}
-.lx2-total__amt{color:var(--ink);font-size:32px;font-weight:500;line-height:1.1;letter-spacing:-.03em;white-space:nowrap}
+.lx2-total__amt{color:var(--ink);font-size:30px;font-weight:500;line-height:1.1;letter-spacing:-.03em;white-space:nowrap}
 .lx2-plan{margin:0;border:1px solid #DADAE0;border-radius:16px;overflow:hidden}
 .lx2-plan>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
 .lx2-plan>div+div{border-top:1px dashed var(--dash)}
@@ -425,6 +424,11 @@ table.sample td,table.sample th{font-family:ui-monospace,SFMono-Regular,Menlo,mo
 .lx2-ends.is-tick strong{font-variant-numeric:tabular-nums}
 .lx2-ends__at{color:var(--t2)}
 .lx2-ends__at::before{content:"·";margin-right:6px}
+.lx2-price{container-type:inline-size}
+@container (max-width:360px){.lx2-price .lx2-ends .lx2-ends__at{flex-basis:100%}.lx2-price .lx2-ends .lx2-ends__at::before{content:none}}
+.lx2-price .lx2-ends{font-size:14px;color:var(--red)}
+.lx2-price .lx2-ends strong{font-size:17px;font-weight:700}
+.lx2.m .lx2-price .lx2-ends strong{font-size:16px}
 .lx2-ends.is-low{justify-self:center;padding:4px 12px;border-radius:999px;background:#FDECEE}
 .lx2-locked{display:flex;align-items:center;justify-content:center;gap:6px;color:var(--save);font-size:13px;font-weight:500;line-height:20px;text-align:center}
 .lx2-ended{display:flex;align-items:center;justify-content:center;gap:6px;color:var(--t2);font-size:13px;line-height:20px;text-align:center}
@@ -441,7 +445,7 @@ table.sample td,table.sample th{font-family:ui-monospace,SFMono-Regular,Menlo,mo
 .lx2-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;padding:0 24px;border:0;border-radius:999px;background:var(--red);color:#fff !important;font-size:16px;font-weight:500;cursor:pointer;transition:background-color .15s ease,box-shadow .15s ease,transform .1s ease}
 .lx2-cta:hover{background:var(--red-d);box-shadow:0 8px 20px -10px rgba(190,35,48,.55)}
 .lx2-cta:active{transform:scale(.985)}
-.lx2-hint{color:var(--t2);font-size:13px;line-height:18px;text-align:center;text-wrap:balance}
+.lx2-hint{color:var(--t2);font-size:13px;line-height:19.5px;text-align:center;text-wrap:balance}
 
 /* ---------- 2. Checkout: upGrad's payment page ---------- */
 .lx2-uh{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px;padding:6px 24px 0;background:#fff;box-shadow:var(--sh-head)}
@@ -627,18 +631,22 @@ html[data-preview] .lx2-sum__proto,html[data-preview] .lx2-paid__proto,html[data
 .pvw-bar button:focus-visible{outline:2px solid #4F8AFB;outline-offset:2px}
 .pvw-seg{display:flex;gap:2px;padding-right:4px;margin-right:2px;border-right:1px solid rgba(255,255,255,.14)}
 .pvw-bar kbd{padding:2px 6px;border-radius:5px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);font:500 11px/1.2 "IBM Plex Sans",system-ui,sans-serif}
-@media (max-width:500px){.pvw-bar{bottom:12px}.pvw-bar kbd{display:none}.pvw-bar button{padding:0 11px}}
+@media (max-width:500px){.pvw-bar{bottom:12px}.pvw-bar kbd{display:none}.pvw-bar button{padding:0 11px}
+  html[data-preview] .lx-device{display:block;min-height:0;padding:0}
+  html[data-preview] .lx-phone{height:auto}
+  html[data-preview] .lx2.m{min-height:100vh;min-height:100dvh}}
+@media (max-width:560px){.lx2-ctrls .roles[aria-label="Checkout version"],.pvw-bar--auto .pvw-seg{display:none}}
 @media (prefers-reduced-motion:reduce){.pvw-bar{transition:none}}
 .lx2-phone::-webkit-scrollbar{display:none}
 .lx2-ctrls{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
 .lx2-ctrls .roles{margin-left:0}
 .lx2.m{margin:0;border-radius:0;min-height:100%;overflow:visible}
-.lx2.m .lx2-sumpage{padding:20px 8px 40px}
-.lx2.m .lx2-top{padding:16px 16px 0}
+.lx2.m .lx2-sumpage{padding:46px 2px 40px}
 .lx2.m .lx2-total__amt{font-size:28px}
 .lx2.m .lx2-receipt{width:auto;max-width:none;margin:16px 20px 0}
 .lx2.m{--pad:20px}
-.lx2.m .lx2-printer{--side:14px;--gap:6px}
+.lx2.m .lx2-printer{--side:14px;--gap:6px;width:100%}
+.lx2.m .lx2-cta{font-size:15px;line-height:22.5px}
 .lx2.m .lx2-housing{border-radius:22px}
 .lx2.m .lx2-back{border-radius:22px 22px 0 0}
 .lx2.m .lx2-window{border-radius:10px 10px 8px 8px}
@@ -656,7 +664,7 @@ html[data-preview] .lx2-sum__proto,html[data-preview] .lx2-paid__proto,html[data
 .lx2.m.lx2--checkout,.lx2.m.lx2--review{background:var(--copage)}
 .lx2-pmhead{position:sticky;top:0;z-index:5;padding:6px 20px 0;background:#fff;color:var(--co1);box-shadow:0 1px 0 var(--cob)}
 .lx2-pmhead .lx2-prog{position:absolute}
-.lx2.m.lx2--summary>.lx2-prog{display:none}
+.lx2.m .lx2-top{display:none}
 .lx2-pmhead__nav{display:flex;align-items:center;height:50px}
 .lx2-pmhead__nav .lx2-pmhead__back{margin-left:-12px}
 .lx2-pmhead__title{flex:1 1 auto;padding-right:32px;text-align:center;font-size:18px;line-height:23px}
@@ -1742,6 +1750,11 @@ const l2canBlock = b => b.paid === 0 && b.block > 0 && b.block < bal(b);
 const l2tabs = b => ['full'].concat(b.region === 'IN' ? ['emi'] : [], l2canBlock(b) ? ['block'] : []);
 const l2emi = b => Math.ceil(bal(b) / 6);
 const l2img = (k, w, h, cls) => `<img${cls ? ` class="${cls}"` : ''} src="${LX2A[k]}" width="${w}" height="${h}" alt="">`;
+// a phone-width screen (a real phone, or the prototype opened on one) gets the phone design, as V11 is
+// responsive; the Desktop/Mobile switch then has nothing to choose, so it is hidden there
+const L2_NARROW = window.matchMedia ? matchMedia('(max-width: 560px)') : null;
+const l2mob = () => S.lv.device === 'mobile' || !!(L2_NARROW && L2_NARROW.matches);
+if (L2_NARROW){ const re = () => { if (S.role === 'learn' && (S.lv.design || 'new') === 'new') render(); }; if (L2_NARROW.addEventListener) L2_NARROW.addEventListener('change', re); else if (L2_NARROW.addListener) L2_NARROW.addListener(re); }
 const l2ic = k => `<i class="lx2-ic lx2-ic--${k}" aria-hidden="true"></i>`;
 const l2icon = (k, b) => k === 'full' && RG(b.region).currency !== 'INR' ? 'cash' : L2_TABS[k].icon; // ₹ only on rupee bills
 const l2facts = (p, b) => [p.centre, p.dur, b.batch].filter(Boolean).join(' · ');
@@ -1767,7 +1780,7 @@ function viewLearn2(){
   const st = l2state(b);
   if (s.screen !== 'summary' && s.screen !== 'done' && (st === 'paid' || st === 'loan' || st === 'refund')) s.screen = 'summary';
   if (!l2tabs(b).includes(s.tab)) s.tab = 'full';
-  const mob = S.lv.device === 'mobile';
+  const mob = l2mob();
   const opts = allBills().map(([l, x]) => `<option value="${x.id}" ${x.id === b.id ? 'selected' : ''}>${esc(l.name)}: ${x.ppk}, ${RG(x.region).name}, ${esc(x.batch)}</option>`).join('');
   const screen = s.screen === 'checkout' ? l2Checkout(L, b) : s.screen === 'review' ? l2Review(L, b) : s.screen === 'done' && s.done ? l2Done(L, b) : l2Summary(L, b);
   const inner = `<div class="lx2${mob ? ' m' : ''} lx2--${s.screen === 'done' && s.done ? 'done' : s.screen}">${screen}</div>`;
@@ -1892,7 +1905,7 @@ function l2cardForm(L){ // display only: autocomplete off, so no saved card is e
 function l2ready(){ const s = L2(); return s.tab === 'emi' ? !!s.partner : !!s.method; }
 function l2Checkout(L, b){
   const s = L2(), p = prog(b.ppk), m = n => money(n, b.region), balance = bal(b), tabs = l2tabs(b), on = l2state(b) === 'timer';
-  if (S.lv.device === 'mobile') return l2CheckoutMobile(L, b);
+  if (l2mob()) return l2CheckoutMobile(L, b);
   const chip = k => k === 'full' ? (on ? 'Keeps your scholarship' : 'Pay upfront') : k === 'emi' ? '0% interest, 6 months' : 'Pay the rest later';
   return `<div class="lx2-prog" aria-hidden="true"><span style="width:60%"></span></div>
   ${l2userHead(L)}
@@ -1952,7 +1965,7 @@ function l2notes(b){
   return out;
 }
 function l2Review(L, b){
-  const s = L2(), pay = l2pay(b), mob = S.lv.device === 'mobile', m = n => money(n, b.region), p = prog(b.ppk);
+  const s = L2(), pay = l2pay(b), mob = l2mob(), m = n => money(n, b.region), p = prog(b.ppk);
   if (!l2ready()){ s.screen = 'checkout'; return l2Checkout(L, b); }
   const notes = `<ul class="lx2-notes">${l2notes(b).map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
   if (mob){
@@ -2008,7 +2021,7 @@ const on2 = b => l2state(b) === 'timer';
 
 /* ---------- 4. Confirmation ---------- */
 function l2Done(L, b){
-  const d = L2().done, m = n => money(n, b.region), p = prog(b.ppk), balance = bal(b), on = on2(b), mob = S.lv.device === 'mobile';
+  const d = L2().done, m = n => money(n, b.region), p = prog(b.ppk), balance = bal(b), on = on2(b), mob = l2mob();
   let band, title, sub, cta, extra = '';
   if (d.kind === 'full'){
     band = 'You’re enrolled!'; title = 'Your seat is confirmed';
@@ -2091,7 +2104,7 @@ function pvwBar(){
   const again = neu && screen === 'summary'
     ? `<button type="button" data-act="l2replay">Print again</button>`
     : screen !== 'summary' ? `<button type="button" data-act="${neu ? 'l2go' : 'lgo'}" data-v="summary">Start over</button>` : '';
-  return `<div class="pvw-bar" role="toolbar" aria-label="Preview">
+  return `<div class="pvw-bar${neu ? ' pvw-bar--auto' : ''}" role="toolbar" aria-label="Preview">
     <div class="pvw-seg" role="group" aria-label="Device">${[['desktop', 'Desktop'], ['mobile', 'Mobile']].map(([k, l]) => `<button type="button" data-act="ldevice" data-v="${k}" aria-pressed="${S.lv.device === k}">${l}</button>`).join('')}</div>
     ${again}<button type="button" data-act="lpreview" data-v="off" aria-label="Exit preview">Exit preview <kbd aria-hidden="true">Esc</kbd></button>
   </div>`;
