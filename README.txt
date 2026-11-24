@@ -31,7 +31,12 @@ in the switch at the bottom left; in the Fee Waiver console, at the start of its
                18% a year, with a loan partner) and Other options (the balance upfront). Outside
                India: Reserve a Seat and Other options. Reserve a Seat shows only on a bill with
                nothing paid yet (Arjun has paid his ₹50,000, so his opens on Recommended;
-               Priya's has all four); then the review (UPI code and "Waiting for your payment…", Proceed to Pay, or
+               Priya's has all four). The discounts are the Original's: the course card's pill reads
+               "You save" with every discount on the bill (referral benefit, alumni waiver and
+               scholarship; Priya's ₹10,000 is her referral benefit), and the Summary lists each
+               line (Course Fee, Referral benefit, Alumni waiver, Scholarship, Course price, Paid
+               so far). On phones the same breakup ("Payment Details") sits under the options,
+               as the Original's Price breakup does, and again on the review; then the review (UPI code and "Waiting for your payment…", Proceed to Pay, or
                the loan partner) and the confirmation; phones get upGrad's mobile checkout. A bill
                with nothing left to pay shows its bill, standing still. Once a scholarship ends (the
                discount window still open), the countdown's place reads "Your ₹30,000 scholarship
