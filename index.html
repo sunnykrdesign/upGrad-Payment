@@ -2333,6 +2333,15 @@ button { font: inherit; }
 
 /* ---------- Payment card: the postal code, then the options ---------- */
 .v8 .v8-pay { display: flex; flex-direction: column; gap: 16px; }
+/* Figma 4:2581: 2. Billing Details, a card under the options, its title faded until it opens; open,
+   the learner's name, then the postal code field on one line with its label */
+.v8 .v8-billing:not(.is-open) .ug-card__title { opacity: 0.5; }
+.v8 .v8-billing__body { margin-top: 24px; }
+.v8 .v8-billing .co-billing__name { margin-bottom: 16px; color: var(--co-text-primary); }
+.v8 .v8-billing .v8-zip { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.v8 .v8-billing .v8-zip__title { font-size: 16px; line-height: 24px; color: var(--co-text-secondary); }
+/* open, its Next is the one that goes on: step 1's Next steps aside */
+.v8 .v8-pay:has(~ .v8-billing.is-open) .co-cta { display: none; }
 /* one line: the label (sized as the "Payment Options" heading under it), the field, then what it
    means (the help, the place it found or the error); a hairline sets it apart from the options */
 /* the field lines up with the first plan card below it: it starts after the option tabs
@@ -4803,22 +4812,11 @@ html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hid
       <div class="co-layout">
         <div class="co-main">
 
-          <!-- Choose: the postal code, then the payment options -->
-          <div data-v8-view="choose">
+          <!-- Choose (Figma 4:2581): 1. Payment Options, then 2. Billing Details, faded until it is
+               needed (EDIT on the review's billing, or a postal code that can't be found) -->
+          <div class="co-stack" data-v8-view="choose">
             <section class="ug-card v8-pay" aria-labelledby="v9-options-title">
-              <div class="v8-zip" data-v8-zip-wrap>
-                <label class="v8-zip__title" for="v9-zip">1. Billing postal code</label>
-                <div class="v8-zip__field" data-v8-zip-field>
-                  <input class="v8-zip__input" id="v9-zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="6" placeholder="6 digits" aria-describedby="v9-zip-help">
-                  <!-- the code comes from the learner's account; the pencil says it can be changed -->
-                  <button class="v8-zip__edit" type="button" aria-label="Edit postal code" data-v8-zip-edit>
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19.5 8.5a2.12 2.12 0 0 0-3-3L5 17v3Z"/><path d="m14.5 7.5 2 2"/></svg>
-                  </button>
-                </div>
-                <p class="v8-zip__help" id="v9-zip-help" aria-live="polite" data-v8-zip-help>For your invoice.</p>
-              </div>
-
-              <h2 id="v9-options-title" class="ug-card__title">2. Payment Options</h2>
+              <h2 id="v9-options-title" class="ug-card__title">1. Payment Options</h2>
               <div class="co-options">
                 <div class="co-tabs" role="tablist" aria-orientation="vertical" aria-labelledby="v9-options-title" data-v8-tabs>
                   <button class="ug-tab" role="tab" type="button" id="v9-tab-reserve" aria-controls="v9-panel-reserve" aria-selected="false" data-v8-tab="reserve">
@@ -4947,6 +4945,24 @@ html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hid
                     <div class="co-cta" data-v8-cta hidden><button class="ug-button" type="button" data-v8-next>Next<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzNfMTMxOSkiPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE1LjQ2NjcgNy45OTk4N0MxNS40NjY3IDguMTI5MjYgMTUuNDExMyA4LjI1Mjc4IDE1LjMxOTMgOC4zNDU3OUwxMC4zMzg2IDEzLjE5QzEwLjE0MTkgMTMuMzgxMyA5LjgyMzQyIDEzLjM4MDkgOS42MjcxNSAxMy4xOUM5LjQzMDQ2IDEyLjk5OTEgOS40MzA0NiAxMi42ODkgOS42MjcxNSAxMi40OTgyTDEzLjc0OTQgOC40ODkyMUgyLjYzNjQ5QzIuMzU4NzMgOC40ODkyMSAyLjEzMzM0IDguMjcwMjIgMi4xMzMzNCA3Ljk5OTg3QzIuMTMzMzQgNy43Mjk1OCAyLjM1ODczIDcuNTEwNTkgMi42MzY0OSA3LjUxMDU5SDEzLjc0ODlMOS42MjcxNSAzLjUwMTYzQzkuNDMwNDYgMy4zMTA3NSA5LjQzMDk0IDMuMDAwNjcgOS42MjcxNSAyLjgwOTc5QzkuODIzOSAyLjYxODkxIDEwLjE0MjQgMi42MTg5MSAxMC4zMzg2IDIuODA5NzlMMTUuMzE5MyA3LjY1NDAxQzE1LjQxMzMgNy43NDU1MyAxNS40NjUyIDcuODcxNSAxNS40NjY3IDcuOTk5ODdaIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzNfMTMxOSI+CjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0ibWF0cml4KC0xIDAgMCAtMSAxNiAxNikiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K" width="16" height="16" alt=""></button></div>
                   </div>
                 </div>
+              </div>
+            </section>
+            <section class="ug-card v8-billing" aria-labelledby="v9-billing-title" data-v8-billing>
+              <h2 id="v9-billing-title" class="ug-card__title">2. Billing Details</h2>
+              <div class="v8-billing__body" data-v8-billing-body hidden>
+                <p class="co-billing__name t-16" data-v8-billing-name>Sunny Kumar</p>
+                <div class="v8-zip" data-v8-zip-wrap>
+                  <label class="v8-zip__title" for="v9-zip">Billing postal code</label>
+                  <div class="v8-zip__field" data-v8-zip-field>
+                    <input class="v8-zip__input" id="v9-zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="6" placeholder="6 digits" aria-describedby="v9-zip-help">
+                    <!-- the code comes from the learner's account; the pencil says it can be changed -->
+                    <button class="v8-zip__edit" type="button" aria-label="Edit postal code" data-v8-zip-edit>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19.5 8.5a2.12 2.12 0 0 0-3-3L5 17v3Z"/><path d="m14.5 7.5 2 2"/></svg>
+                    </button>
+                  </div>
+                  <p class="v8-zip__help" id="v9-zip-help" aria-live="polite" data-v8-zip-help>For your invoice.</p>
+                </div>
+                <div class="co-cta"><button class="ug-button" type="button" data-v8-next>Next<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzNfMTMxOSkiPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE1LjQ2NjcgNy45OTk4N0MxNS40NjY3IDguMTI5MjYgMTUuNDExMyA4LjI1Mjc4IDE1LjMxOTMgOC4zNDU3OUwxMC4zMzg2IDEzLjE5QzEwLjE0MTkgMTMuMzgxMyA5LjgyMzQyIDEzLjM4MDkgOS42MjcxNSAxMy4xOUM5LjQzMDQ2IDEyLjk5OTEgOS40MzA0NiAxMi42ODkgOS42MjcxNSAxMi40OTgyTDEzLjc0OTQgOC40ODkyMUgyLjYzNjQ5QzIuMzU4NzMgOC40ODkyMSAyLjEzMzM0IDguMjcwMjIgMi4xMzMzNCA3Ljk5OTg3QzIuMTMzMzQgNy43Mjk1OCAyLjM1ODczIDcuNTEwNTkgMi42MzY0OSA3LjUxMDU5SDEzLjc0ODlMOS42MjcxNSAzLjUwMTYzQzkuNDMwNDYgMy4zMTA3NSA5LjQzMDk0IDMuMDAwNjcgOS42MjcxNSAyLjgwOTc5QzkuODIzOSAyLjYxODkxIDEwLjE0MjQgMi42MTg5MSAxMC4zMzg2IDIuODA5NzlMMTUuMzE5MyA3LjY1NDAxQzE1LjQxMzMgNy43NDU1MyAxNS40NjUyIDcuODcxNSAxNS40NjY3IDcuOTk5ODdaIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzNfMTMxOSI+CjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0ibWF0cml4KC0xIDAgMCAtMSAxNiAxNikiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K" width="16" height="16" alt=""></button></div>
               </div>
             </section>
           </div>
@@ -6498,7 +6514,7 @@ html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hid
   const fresh = () => ({
     view: 'choose', tab: V11() ? 'reserve' : 'recommended', // preview V11: the ₹5,000 option open first
     method: { reserve: null, other: null }, plan: null, partner: null, amount: null,
-    zip: ME_ZIP, zipError: '', deadline: offerDeadline(), opensAt: null, name: ME,
+    zip: ME_ZIP, zipError: '', billing: false, deadline: offerDeadline(), opensAt: null, name: ME,
     centre: SAMPLE_CENTRE, // preview V11: the centre picked on the details page
     scenario: BASE, // 2: the countdown on a band across the course card's top; 3: under the summary's total
     held: null, // { price, until }: the price held from the review on, even if the offer ends meanwhile
@@ -6599,6 +6615,11 @@ html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hid
     });
     $$('[data-v8-zip-field]').forEach((el) => el.classList.toggle('is-error', Boolean(state.zipError)));
     zipInputs().forEach((el) => el.setAttribute('aria-invalid', String(Boolean(state.zipError))));
+    // 2. Billing Details opens to change the code (EDIT on the review), or when it can't be found
+    const billingOpen = state.billing || Boolean(state.zipError);
+    $('[data-v8-billing]').classList.toggle('is-open', billingOpen);
+    $('[data-v8-billing-body]').hidden = !billingOpen;
+    $('[data-v8-billing-name]').textContent = state.name || ME;
     // preview V9: Billing details, the state and the PIN code
     const msPlace = $('[data-ms-place]');
     if (msPlace) msPlace.textContent = place ? place.split(', ').pop() + ', ' + state.zip : (state.zip || 'Add your billing PIN code');
@@ -6813,6 +6834,7 @@ html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hid
   function go(view) {
     clearTimeout(qrTimer);
     state.view = view;
+    if (view !== 'choose') state.billing = false;
     // the payment session starts at the review: the price is held, even if the offer ends meanwhile
     if (view === 'review' && live() && !holding() && !LOCKS()) state.held = { price: price(), until: new Date(Date.now() + HOLD_MINUTES * 60 * 1000) };
     $('[data-v8-qr]').classList.remove('co-qr--revealed');
@@ -6831,6 +6853,7 @@ html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hid
   function next() {
     if (!ready()) return;
     if (!lookup(state.zip)) {
+      state.billing = true;
       state.zipError = state.zip.length < 6 ? 'Enter your 6-digit ' + zipWord() + '.' : 'We couldn’t find this ' + zipWord() + '.';
       render();
       const zip = zipOnScreen();
@@ -6890,7 +6913,7 @@ html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hid
   }));
   $$('[data-v8-next]').forEach((el) => el.addEventListener('click', next));
   $$('[data-v8-edit]').forEach((el) => el.addEventListener('click', () => go('choose')));
-  $$('[data-v8-edit-zip]').forEach((el) => el.addEventListener('click', () => { go('choose'); zipOnScreen().focus(); }));
+  $$('[data-v8-edit-zip]').forEach((el) => el.addEventListener('click', () => { state.billing = true; go('choose'); zipOnScreen().focus(); }));
   // the pencil in the field: edit the code, selected so typing replaces it
   $$('[data-v8-zip-edit]').forEach((edit) => edit.addEventListener('click', () => { const zip = edit.parentElement.querySelector('input'); zip.focus(); zip.select(); }));
   // the QR: once it shows, the page waits for the payment (here, it comes a few seconds later)
@@ -7454,7 +7477,7 @@ html[data-pv-project="fee-waiver"] body { min-width: 0 !important; overflow: hid
   var zipEditAsBuilt = zipEdit ? zipEdit.getAttribute('aria-label') : '';
   function setZip(v) {
     if (!zipTitle) return;
-    zipTitle.textContent = /^[6-9]$/.test(v) ? '1. Billing Postal Code / PIN Code' : zipTitleAsBuilt;
+    zipTitle.textContent = /^[6-9]$/.test(v) ? 'Billing Postal Code / PIN Code' : zipTitleAsBuilt;
     if (zipEdit) zipEdit.setAttribute('aria-label', /^[6-9]$/.test(v) ? 'Edit postal code / PIN code' : zipEditAsBuilt);
     alignZip();
   }

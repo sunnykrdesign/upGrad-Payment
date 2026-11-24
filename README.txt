@@ -23,9 +23,15 @@ in the switch at the bottom left; in the Fee Waiver console, at the start of its
                "Original" (the learner design as it was).
                V2 lands the learner straight on V11's payment page, with no printed bill: Welcome,
                the course card (the countdown on its grey band; the balance to pay, the
-               scholarship and what's paid so far, flush right), then Payment Options (Pay in
-               Full, No Cost EMI with a loan partner and Reserve a Seat) with the Summary beside
-               them; then the review (UPI code and "Waiting for your payment…", Proceed to Pay, or
+               scholarship and what's paid so far, flush right), then Payment Options with the
+               Summary beside them. The options are Figma 4:2581's, in its order: Reserve a Seat
+               (a method, then an amount from the bill's minimum up to the balance; Next waits
+               for one in range), Recommended (Credit Card EMI, or No Cost Cardless EMI over 6
+               months with a loan partner), Pocket-Friendly (Standard Cardless EMI, 36 months at
+               18% a year, with a loan partner) and Other options (the balance upfront). Outside
+               India: Reserve a Seat and Other options. Reserve a Seat shows only on a bill with
+               nothing paid yet (Arjun has paid his ₹50,000, so his opens on Recommended;
+               Priya's has all four); then the review (UPI code and "Waiting for your payment…", Proceed to Pay, or
                the loan partner) and the confirmation; phones get upGrad's mobile checkout. A bill
                with nothing left to pay shows its bill, standing still. Once a scholarship ends (the
                discount window still open), the countdown's place reads "Your ₹30,000 scholarship
@@ -170,9 +176,16 @@ V11          V10, the final direction: the link names no centre or batch, and th
                 thirds (the phone frame caught its animation before the badge). Back starts the
                 flow again.
                 On phones the billing postal code / PIN code is now shown too, in a card over
-                "Choose a payment option" (desktop has it as step 1): filled in, editable, with
-                the place it finds under it. It is the same code as desktop's field. Tapping an
-                option with a code missing or wrong says so under it and moves to it.
+                "Choose a payment option" (desktop has it under Billing Details): filled in,
+                editable, with the place it finds under it. It is the same code as desktop's
+                field. Tapping an option with a code missing or wrong says so under it and moves
+                to it.
+                Desktop's steps follow Figma 4:2581: "1. Payment Options" is the first card (the
+                billing postal code is no longer above it), and "2. Billing Details" is a card of
+                its own under it, its title faded. The code comes from the learner's account, so
+                Next goes straight to the review, as before. Billing Details opens (the name, the
+                PIN code field and the place it finds, and its own Next) when the review's
+                billing EDIT is pressed, or when Next finds the code missing or wrong.
              Journey progress: one bar from the offer page to the payment, at the top of
              the flow's pages (they have no top bar: no logo, "Secure checkout" or Log in) and
              under the payment page's header. A light track shows the
