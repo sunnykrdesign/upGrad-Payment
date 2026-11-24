@@ -547,6 +547,9 @@ table.sample td,table.sample th{font-family:ui-monospace,SFMono-Regular,Menlo,mo
 .lx2-amount__input[aria-invalid="true"]{border-color:#E53935}
 .lx2-amount__note{display:flex;align-items:center;gap:8px;margin-top:15px;padding-top:16px;border-top:1px solid #F4F5F7;color:var(--co3);font-size:12px;line-height:17px;text-align:left}
 .lx2-amount__note .lx2-i{width:16px;height:16px}
+.lx2-rvfee__sub dt{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.lx2-rvfee__sub .lx2-save{font-size:12px;line-height:16px;padding:2px 8px}
+.lx2-pmbody > .lx2-rv:last-child{margin-top:24px}
 .lx2-next:disabled{background:var(--cobs);box-shadow:none;cursor:not-allowed}
 .lx2-sum{position:sticky;top:76px;padding-bottom:16px;border:1px solid var(--cob);border-radius:8px;background:#fff}
 .lx2-sum__title{padding:32px 20px 10px;font-size:18px;line-height:27px;font-weight:400;color:var(--co1)}
@@ -2001,7 +2004,7 @@ function l2Checkout(L, b){
     <section class="lx2-ccard" aria-label="Your course">
       ${l2band(b)}
       <div class="lx2-ccard__info"><span class="lx2-ccard__logo">${l2img('course-logo', 120, 40)}</span><div class="lx2-ccard__text"><p class="lx2-ccard__eyebrow">Your course</p><h2 class="lx2-ccard__name">${esc(p.name)}</h2><p class="lx2-ccard__facts">${esc(l2facts(p, b))}</p><p class="lx2-ccard__entity">Billed by upGrad Education Pvt Ltd</p></div></div>
-      <div class="lx2-ccard__price"><p class="lx2-ccard__label">Balance to pay</p><p class="lx2-bigprice">${l2big(balance, b.region)}</p>${b.waiver ? `<span class="lx2-save">Scholarship ${m(b.waiver)}</span>` : ''}${b.paid ? `<p class="lx2-ccard__note">Paid so far ${m(b.paid)}</p>` : ''}</div>
+      <div class="lx2-ccard__price"><p class="lx2-ccard__label">Balance to pay</p><p class="lx2-bigprice">${l2big(balance, b.region)}</p>${l2off(b) ? `<span class="lx2-save">You save ${m(l2off(b))}</span>` : ''}${b.paid ? `<p class="lx2-ccard__note">Paid so far ${m(b.paid)}</p>` : ''}</div>
     </section>
     <div class="lx2-layout">
       <section class="lx2-card" aria-labelledby="lx2-po"><h2 class="lx2-card__title" id="lx2-po">Payment Options</h2>
@@ -2031,7 +2034,7 @@ function l2CheckoutMobile(L, b){
     g.push(group('pocket', L2_TABS.pocket.chip, `<p class="lx2-pmcard__label">Standard cardless EMI</p><p class="lx2-pmcard__big">From ${l2inr(l2std(b), b.region)}/mo for 36 months</p><p class="lx2-pmcard__text">${on ? loanNote : 'Through a loan partner, at 18% a year.'}</p>${loanList('pocket')}`));
   }
   g.push(group('full', L2_TABS.full.chip, `<p class="lx2-pmcard__label">Other options</p><p class="lx2-pmcard__big">Pay ${l2inr(balance, b.region)} upfront</p>${on ? `<p class="lx2-pmcard__text">Pay now and your ${m(b.waiver)} scholarship is locked in.</p>` : ''}${list('full')}`));
-  return `${l2pmHead(L, b, 'Payment Options', 62)}<div class="lx2-pmbody"><h2 class="lx2-pmtitle">Choose a payment option</h2>${g.join('')}</div>`;
+  return `${l2pmHead(L, b, 'Payment Options', 62)}<div class="lx2-pmbody"><h2 class="lx2-pmtitle">Choose a payment option</h2>${g.join('')}${l2feeCard(b)}</div>`;
 }
 function l2pmHead(L, b, title, pct){
   const p = prog(b.ppk), on = l2state(b) === 'timer', m = n => money(n, b.region);
@@ -2074,14 +2077,7 @@ function l2Review(L, b){
     return `${l2pmHead(L, b, 'Review', 88)}<div class="lx2-pmbody">
       <div class="lx2-rv"><h2 class="lx2-rv__label">Program</h2><div class="lx2-rv__card lx2-rv__program"><span class="lx2-pmcourse__logo">${l2img('course-logo', 120, 40)}</span><div><p class="lx2-pmcourse__name">${esc(p.name)}</p><p class="lx2-pmcourse__facts">${esc(l2facts(p, b))}</p><p class="lx2-pmcourse__entity">Billed by upGrad Education Pvt Ltd</p></div></div></div>
       ${on2(b) ? `<div class="lx2-rv">${l2ends(b, 'lx2-ends--rv')}</div>` : ''}
-      <div class="lx2-rv"><h2 class="lx2-rv__label">Payment Details</h2><div class="lx2-rv__card"><dl class="lx2-rvfee">
-        <div><dt>Course Fee</dt><dd>${l2inr(b.fee, b.region)}</dd></div>
-        ${b.referral ? `<div><dt>Referral benefit</dt><dd class="is-off">${l2inr(-b.referral, b.region)}</dd></div>` : ''}
-        ${b.alumni ? `<div><dt>Alumni waiver</dt><dd class="is-off">${l2inr(-b.alumni, b.region)}</dd></div>` : ''}
-        ${b.waiver ? `<div><dt>Scholarship</dt><dd class="is-off">${l2inr(-b.waiver, b.region)}</dd></div>` : ''}
-        ${b.paid ? `<div><dt>Paid so far</dt><dd>${l2inr(b.paid, b.region)}</dd></div>` : ''}
-        <div class="lx2-rvfee__total"><dt>Balance to pay</dt><dd>${l2inr(bal(b), b.region)}</dd></div>
-      </dl></div></div>
+      ${l2feeCard(b)}
       <div class="lx2-rv"><h2 class="lx2-rv__label">Payment</h2><div class="lx2-rv__card"><div class="lx2-rv__row"><div><p class="lx2-rv__opt">${esc(pay.opt)} · ${esc(pay.how)}</p><p class="lx2-rv__k">${pay.label}</p><p class="lx2-rv__amt">${l2inr(pay.amount, b.region)}</p></div><button class="lx2-change" type="button" data-act="l2go" data-v="checkout">CHANGE</button></div></div></div>
       ${finish}
       <div class="lx2-rv lx2-rv--last"><h2 class="lx2-rv__title">Please Note</h2>${notes}</div>
@@ -2113,6 +2109,20 @@ function l2Review(L, b){
   </div>`;
 }
 const on2 = b => l2state(b) === 'timer';
+// every discount on the bill, as the Original's "You save": referral benefit, alumni waiver, scholarship
+const l2off = b => b.referral + b.alumni + b.waiver;
+// the price breakup on phones (checkout and review), line by line as the Original's
+function l2feeCard(b){
+  const m = n => l2inr(n, b.region), row = (k, v, cls) => `<div${cls ? ` class="${cls}"` : ''}><dt>${k}</dt><dd${cls === 'is-off' ? '' : ''}>${v}</dd></div>`;
+  const off = (k, n) => n ? `<div><dt>${k}</dt><dd class="is-off">${m(-n)}</dd></div>` : '';
+  return `<div class="lx2-rv"><h2 class="lx2-rv__label">Payment Details</h2><div class="lx2-rv__card"><dl class="lx2-rvfee">
+        ${row('Course Fee', m(b.fee))}
+        ${off('Referral benefit', b.referral)}${off('Alumni waiver', b.alumni)}${off('Scholarship', b.waiver)}
+        ${l2off(b) ? row(`Course price <span class="lx2-save">You save ${money(l2off(b), b.region)}</span>`, m(net(b)), 'lx2-rvfee__sub') : ''}
+        ${b.paid ? row('Paid so far', m(b.paid)) : ''}
+        <div class="lx2-rvfee__total"><dt>Balance to pay</dt><dd>${m(bal(b))}</dd></div>
+      </dl></div></div>`;
+}
 
 /* ---------- 4. Confirmation ---------- */
 function l2Done(L, b){
