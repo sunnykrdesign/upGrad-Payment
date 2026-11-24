@@ -24,11 +24,43 @@ in the switch at the bottom left; in the Fee Waiver console, at the start of its
                V2 lands the learner straight on V11's payment page, with no printed bill: Welcome,
                the course card (the countdown on its grey band; the balance to pay, the
                scholarship and what's paid so far, flush right), then Payment Options with the
-               Summary beside them. The options are Figma 4:2581's, in its order: Reserve a Seat
-               (a method, then an amount from the bill's minimum up to the balance; Next waits
-               for one in range), Recommended (Credit Card EMI, or No Cost Cardless EMI over 6
-               months with a loan partner), Pocket-Friendly (Standard Cardless EMI, 36 months at
-               18% a year, with a loan partner) and Other options (the balance upfront). Outside
+               Summary beside them. The options are Figma 4:2581's, in its order: Reserve a Seat,
+               Recommended, Pocket-Friendly and Other options. On desktop each follows its Figma
+               flow (157:5499, 157:8982, 157:11255, 157:12290):
+                 Reserve a Seat: a method, then the amount box (from the bill's minimum up to the
+                 balance; Next greyed until it's in range).
+                 Recommended: Credit Card EMI or No Cost Cardless EMI. Credit Card EMI: Choose a
+                 Bank (17 banks with their logos, 14 No Cost), then Full amount or Custom amount
+                 (the rest within 7 days). No Cost Cardless EMI: a loan partner (Fibe, Propelld),
+                 the down payment on a slider, an EMI plan (0%), then how the down payment is paid.
+                 Pocket-Friendly: Standard Cardless EMI, the same steps at 18% a year (Fibe,
+                 Propelld; Northern Arc shows "No plans available!").
+                 Other options: the balance upfront by any method.
+                 Net Banking (Other options and Reserve a Seat; Figma 161:12435): Select a Bank
+                 (14 sample banks with the logos from 157:9078), then More Banks with a search;
+                 Next waits for a bank, and the review shows the one picked.
+               The scholarship rule: any payment made while the scholarship is live keeps it,
+               a block payment (Reserve a Seat) too. Every option says so in green while the
+               countdown runs ("Pay ₹50,000 or more now and your ₹20,000 scholarship is locked in.
+               Pay the rest within 7 days."; Credit Card EMI: "… locked in once this card payment
+               goes through"; the loans: "… confirmed when you submit the loan application"),
+               on phones too and in the Original design. Paying a block stops the countdown;
+               the confirmation says the scholarship is locked in and the rest is due within 7
+               days, and the counsellor sees the bill under Closed as "Locked by block" ("Block
+               payment received, fee waiver locked"). In the demo data, the blocks already paid
+               (Arjun, Divya, Ankit, Rohan) were paid before their scholarships were applied, so
+               their countdowns still run.
+               With no scholarship running, a bill's other offer gets the same green line on
+               every option (and on phones): "Your ₹10,000 referral benefit is already applied:
+               the course costs you ₹3,40,000, not ₹3,50,000." (alumni waiver too, and both
+               together; Rohan's referral benefit after his scholarship ended). A bill with no
+               offer left shows none.
+               The Summary follows what is picked (down payment, interest, total cost, EMI, Paying
+               Now) and a Paying Now bar sits at the foot. Next opens 2. Billing Details (name,
+               address, PIN code, city; State follows the PIN code), then the review, where paying
+               is step 3. Net Banking's banks show their logos. Phones keep their one-tap list
+               (Credit Card EMI picks HDFC Bank for the full balance; a loan, its first plan with
+               the down payment by UPI) and have no billing step. Outside
                India: Reserve a Seat and Other options. Reserve a Seat shows only on a bill with
                nothing paid yet (Arjun has paid his ₹50,000, so his opens on Recommended;
                Priya's has all four). The discounts are the Original's: the course card's pill reads
