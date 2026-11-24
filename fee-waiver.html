@@ -2059,8 +2059,8 @@ function l2Done(L, b){
   let band, title, sub, cta, extra = '';
   if (d.kind === 'full'){
     band = 'You’re enrolled!'; title = 'Your seat is confirmed';
-    sub = 'The receipt is on its way to your email.';
-    cta = `<button class="lx2-gbtn lx2-gbtn--arrow" type="button" data-act="l2receipt">DOWNLOAD RECEIPT${LX2S.arrow}</button>`;
+    sub = `You’re all set for ${esc(b.batch)}.`; // no receipt: there is no download (or email) of one yet
+    cta = `<button class="lx2-gbtn lx2-gbtn--arrow" type="button" data-act="l2go" data-v="summary">VIEW BILLING SUMMARY${LX2S.arrow}</button>`;
   } else if (d.kind === 'loan'){
     band = 'Loan application submitted'; title = b.waiver ? 'Your scholarship is confirmed' : 'You’re almost done';
     sub = `${esc(d.partner)} will contact you to complete your ${m(d.amount)} loan.` + (b.waiver ? ` Your ${m(b.waiver)} scholarship stays, whatever the decision.` : '');
@@ -2129,8 +2129,7 @@ Object.assign(ACT, {
   l2reveal(){ const s = L2(); s.revealed = true; render(); clearTimeout(l2Wait); l2Wait = setTimeout(() => { if (S.role === 'learn' && L2().screen === 'review' && L2().revealed) l2complete(); }, 3500); },
   l2paynow(){ l2complete(); },
   l2remaining(){ const s = L2(); s.screen = 'checkout'; s.tab = 'full'; s.method = null; s.done = null; render(); l2top(); },
-  l2replay(){ const s = L2(); s.again = !(l2Feed && l2Feed.playState === 'running'); s.printed[lvBill()[1].id] = false; render(); },
-  l2receipt(){ toast('Prototype: the receipt isn’t generated here.'); }
+  l2replay(){ const s = L2(); s.again = !(l2Feed && l2Feed.playState === 'running'); s.printed[lvBill()[1].id] = false; render(); }
 });
 /* ---------- preview mode ---------- */
 function pvwBar(){
